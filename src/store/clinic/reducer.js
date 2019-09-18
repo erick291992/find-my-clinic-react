@@ -13,4 +13,4 @@ export default (state = initialState, action) => {
     return state;
 };
 
-export const selectActiveClinics = state => state.clinicListReducer.clinics;
+export const selectActiveClinics = state => state.clinicReducer.clinics;

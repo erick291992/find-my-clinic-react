@@ -7,6 +7,10 @@ import {
   Input,
   DropdownToggle
 } from "reactstrap";
+import { Route, Link, BrowserRouter as Router } from "react-router-dom";
+import { withRouter } from "react-router-dom";
+import { browserHistory } from "react-router";
+import createHistory from "history/createBrowserHistory";
 import addFilter from "../store/filter/action";
 import { connect } from "react-redux";
 import { relative } from "path";
@@ -30,7 +34,8 @@ class Filter extends Component {
 
   handleFilter = select => {
     this.props.addFilter(select);
-    changeTo("results");
+    //changeTo("results");
+    this.props.history.push("/results");
   };
 
   render() {
@@ -218,7 +223,7 @@ class Filter extends Component {
 export default connect(
   null,
   { addFilter }
-)(Filter);
+)(withRouter(Filter));
 
 const buttonStyle = {
   padding: "5px",

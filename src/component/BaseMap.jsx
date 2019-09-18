@@ -4,20 +4,24 @@ import { selectActiveClinics } from "../store/clinic/reducer";
 import { GoogleMap, Marker } from "react-google-maps";
 import { getClinics } from "../service/clinicService";
 
-const mapStateToProps = state => {
-  return {
-    clients: selectActiveClinics(state)
-  };
-};
-
 class BaseMap extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = { list: [] };
+  }
+
+  componentDidMount() {
+    // const res = getClinics();
+    // res.then(clinicsList => {
+    //   this.setState({ list: clinicsList });
+    // });
+
+    this.setState({ list: this.props.mylist });
   }
 
   render() {
-    let list = this.clients;
+    let list = this.state.list;
+    console.log(this.props.mylist);
     return (
       <GoogleMap
         defaultZoom={10}
@@ -31,5 +35,12 @@ class BaseMap extends Component {
   }
 }
 
-export default connect(this.mapStateToProps)(BaseMap);
-// export default BaseMap;
+const mapStateToProps = state => {
+  console.log("->", selectActiveClinics(state));
+  return {
+    mylist: selectActiveClinics(state)
+  };
+};
+
+export default connect(mapStateToProps)(BaseMap);
+//export default BaseMap;

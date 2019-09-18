@@ -1,10 +1,10 @@
 import { createStore, combineReducers } from 'redux';
 import filterReducer from '../store/filter/reducer';
-import clinicListReducer from '../store/clinic/reducer'
+import clinicReducer from '../store/clinic/reducer'
 
 const reducers = combineReducers({
     filterReducer,
-    clinicListReducer
+    clinicReducer
 });
 
 const store = createStore(
