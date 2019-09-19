@@ -5,6 +5,7 @@ import Home from './container/Home'
 import About from './container/About'
 import Lawyer from './container/Lawyers'
 import Results from './container/Results'
+import Details from './container/Details'
 import Notfound from './container/Notfound'
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
           <Route exact path="/home" component={Home} />
           <Route path="/about" component={About} />
           <Route path="/lawyer" component={Lawyer} />
+          <Route path="/clinic-details" component={Details} />
           <Route path="/results" component={Results} />
           <Route component={Notfound} />
         </Switch>

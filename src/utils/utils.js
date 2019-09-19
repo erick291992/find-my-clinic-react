@@ -10,3 +10,9 @@ export let changeTo = (path) => {
 export let savelist = (list) => {
     sessionStorage.setItem('clinicList', JSON.stringify(list));
 }
+
+export let removeCategory = (list, category) =>{
+    return list.filter(function(ele){
+        return ele != category;
+    });
+}

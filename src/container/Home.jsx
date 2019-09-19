@@ -36,5 +36,5 @@ class Home extends Component {
 
 export default connect(
   null,
-  { addClinics }
+  addClinics
 )(Home);

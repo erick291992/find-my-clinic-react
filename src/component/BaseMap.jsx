@@ -11,12 +11,14 @@ class BaseMap extends Component {
   }
 
   componentDidMount() {
-    // const res = getClinics();
-    // res.then(clinicsList => {
-    //   this.setState({ list: clinicsList });
-    // });
-
-    this.setState({ list: this.props.mylist });
+    if (this.props.mylist.length === 0) {
+      let res = getClinics();
+      res.then(clinics => {
+        this.setState({ list: clinics });
+      });
+    } else {
+      this.setState({ list: this.props.mylist });
+    }
   }
 
   render() {
@@ -43,4 +45,3 @@ const mapStateToProps = state => {
 };
 
 export default connect(mapStateToProps)(BaseMap);
-//export default BaseMap;
