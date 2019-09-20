@@ -1,17 +1,17 @@
-import React, {Component} from 'react'
+import React, { Component } from "react";
 
-class Notfound extends Component{
-    constructor(props){
-        super(props)
-    }
+class Notfound extends Component {
+  constructor(props) {
+    super(props);
+  }
 
-    render(){
-        return(
-            <div>
-                <h2>Sorry! this pages doesn't exists</h2>
-            </div>
-        )
-    }
+  render() {
+    return (
+      <div>
+        <h2>Sorry! this pages doesn't exists</h2>
+      </div>
+    );
+  }
 }
 
-export default Notfound
+export default Notfound;

@@ -1,21 +1,17 @@
-import React, {Component} from 'react'
-import Menu from '../component/Menu'
+import React, { Component } from "react";
 
-class About extends Component{
-    constructor(props){
-        super(props)
-    }
+class About extends Component {
+  constructor(props) {
+    super(props);
+  }
 
-    render(){
-        return(
-            <div>
-                <Menu/>
-                <div>
-                    <h2>About Us</h2>
-                </div>
-            </div>
-        )
-    }
+  render() {
+    return (
+      <div>
+        <h2>About Us</h2>
+      </div>
+    );
+  }
 }
 
-export default About
+export default About;

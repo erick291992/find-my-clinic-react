@@ -2,8 +2,8 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
-import Tooltip from "@material-ui/core/Tooltip";
-import Filter2 from "../component/Filter2";
+import Link from "@material-ui/core/Link";
+import Filter from "./Filter";
 import Signup from "../component/Signup";
 const useStyles = makeStyles(theme => ({
   root: {
@@ -17,7 +17,8 @@ const useStyles = makeStyles(theme => ({
     border: "none",
     "&:hover": {
       //you want this to be the same as the backgroundColor above
-      backgroundColor: "transparent"
+      backgroundColor: "transparent",
+      border: "none"
     }
   }
 }));
@@ -32,16 +33,30 @@ export default function DenseAppBar() {
           <Button class={classes.button}>
             <p style={{ textAlign: "left", marginTop: "8px" }}>
               <label>NYC’s legal aid providers. All in one place</label>
-              <Filter2 />
+              <Filter />
             </p>
           </Button>
           <Button>
-            <Signup />
+            <Signup style={linkStyle} />
           </Button>
-          <Button>Needs a Lawyed?</Button>
-          <Button>About us</Button>
+          <Button>
+            <Link style={linkStyle} href={"/lawyer"}>
+              Needs a Lawyed?
+            </Link>
+          </Button>
+          <Button>
+            <Link style={linkStyle} href={"/about"}>
+              About us
+            </Link>
+          </Button>
         </Grid>
       </Grid>
     </div>
   );
 }
+
+const linkStyle = {
+  textDecoration: "none",
+  color: "#000000",
+  cursor: "pointer"
+};

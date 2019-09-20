@@ -1,10 +1,13 @@
 import React, { Component } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import Popper from "@material-ui/core/Popper";
+import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
-import Fade from "@material-ui/core/Fade";
-import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
+import Dialog from "@material-ui/core/Dialog";
+import MuiDialogTitle from "@material-ui/core/DialogTitle";
+import MuiDialogContent from "@material-ui/core/DialogContent";
+import MuiDialogActions from "@material-ui/core/DialogActions";
+import IconButton from "@material-ui/core/IconButton";
+import CloseIcon from "@material-ui/icons/Close";
+import Typography from "@material-ui/core/Typography";
 import { withRouter } from "react-router-dom";
 import addFilter from "../store/filter/action";
 import { connect } from "react-redux";
@@ -24,17 +27,52 @@ import {
 } from "../utils/constants";
 import { removeCategory } from "../utils/utils";
 
-const useStyles = makeStyles(theme => ({
+const styles = theme => ({
   root: {
-    width: 500
+    margin: 0,
+    padding: theme.spacing(2)
   },
-  typography: {
+  closeButton: {
+    position: "absolute",
+    right: theme.spacing(1),
+    top: theme.spacing(1),
+    color: theme.palette.grey[500]
+  }
+});
+
+const DialogTitle = withStyles(styles)(props => {
+  const { children, classes, onClose } = props;
+  return (
+    <MuiDialogTitle disableTypography className={classes.root}>
+      <Typography variant="h6">{children}</Typography>
+      {onClose ? (
+        <IconButton
+          aria-label="close"
+          className={classes.closeButton}
+          onClick={onClose}
+        >
+          <CloseIcon />
+        </IconButton>
+      ) : null}
+    </MuiDialogTitle>
+  );
+});
+
+const DialogContent = withStyles(theme => ({
+  root: {
     padding: theme.spacing(2)
   }
-}));
+}))(MuiDialogContent);
+
+const DialogActions = withStyles(theme => ({
+  root: {
+    margin: 0,
+    padding: theme.spacing(1)
+  }
+}))(MuiDialogActions);
 
 class Filter extends Component {
-  constructor(props, anchorEl, setAnchorEl) {
+  constructor(props) {
     super(props);
 
     this.state = {
@@ -52,11 +90,18 @@ class Filter extends Component {
       isImigration: false,
       isGeneral: false,
       categoryList: [],
-      anchorEl: null,
-      open: null
+      open: false
     };
     this.handleFilter = this.handleFilter.bind();
   }
+
+  handleClickOpen = () => {
+    this.setState({ open: true });
+  };
+
+  handleClose = () => {
+    this.setState({ open: false });
+  };
 
   handleHousing = () => {
     let isHousing = Object.assign({}, this.state.isHousingActivate);
@@ -259,9 +304,7 @@ class Filter extends Component {
   handleFilter = select => {
     this.props.addFilter(select);
     this.props.history.push("/results");
-  };
-  handleClick = event => {
-    this.setState({ anchorEl: "pop", open: !this.state.open });
+    this.handleClose();
   };
 
   render() {
@@ -303,192 +346,189 @@ class Filter extends Component {
     console.log("LIST CATEGORY", this.state.categoryList);
     let popupStyle =
       window.innerWidth < 600 ? dropDwonSmallDevice : dropDwonDesktop;
-
+    let isFullScreen = window.innerWidth < 600 ? true : false;
     return (
       <div>
-        <Grid container justify="center">
-          <Grid item xs={12}>
-            <Popper
-              anchorEl={this.state.anchorEl}
-              open={this.state.open}
-              transition
-              placement="bottom"
-            >
-              {({ TransitionProps }) => (
-                <Fade {...TransitionProps} timeout={350}>
-                  <Paper elevation={10} style={popupStyle}>
-                    <div>
-                      <p>Select All that apply</p>
-                      <center>
-                        <table>
-                          <tr>
-                            <th style={marginRight}>
-                              <Button
-                                style={buttonHousingActivate}
-                                color="default"
-                                onClick={() => this.handleHousing()}
-                              >
-                                Housing
-                                <img
-                                  src="../icons/Shape.png"
-                                  width="18px"
-                                  height="18px"
-                                  style={{ marginLeft: "10px" }}
-                                />
-                              </Button>
-                            </th>
-                            <th style={marginLeft}>
-                              <Button
-                                style={buttonTrustActivate}
-                                color="default"
-                                onClick={() => this.handleTrust()}
-                              >
-                                Trust & States
-                                <img
-                                  src="../icons/shape 7.png"
-                                  width="18px"
-                                  height="18px"
-                                  style={{ marginLeft: "10px" }}
-                                />
-                              </Button>
-                            </th>
-                          </tr>
-                          <tr>
-                            <th style={marginRight}>
-                              <Button
-                                style={buttonConsumerActivate}
-                                color="default"
-                                onClick={() => this.handleConsumer()}
-                              >
-                                Consumer
-                                <img
-                                  src="../icons/shape 2.png"
-                                  width="18px"
-                                  height="18px"
-                                  style={{ marginLeft: "10px" }}
-                                />
-                              </Button>
-                            </th>
-                            <th style={marginLeft}>
-                              <Button
-                                style={buttonMedicalActivate}
-                                color="default"
-                                onClick={() => this.handleMedical()}
-                              >
-                                Medical
-                              </Button>
-                            </th>
-                          </tr>
-                          <tr>
-                            <th style={marginRight}>
-                              <Button
-                                style={buttonFamilyActivate}
-                                color="default"
-                                onClick={() => this.handleFamily()}
-                              >
-                                Family
-                              </Button>
-                            </th>
-                            <th style={marginLeft}>
-                              <Button
-                                style={buttonLegalActivate}
-                                color="default"
-                                onClick={() => this.handleLegal()}
-                              >
-                                Legal Procedure
-                              </Button>
-                            </th>
-                          </tr>
-                          <tr>
-                            <th style={marginRight}>
-                              <Button
-                                style={buttonBusinessActivate}
-                                color="default"
-                                onClick={() => this.handleBusiness()}
-                              >
-                                Business
-                              </Button>
-                            </th>
-                            <th style={marginLeft}>
-                              <Button
-                                style={buttonCriminalActivate}
-                                color="default"
-                                onClick={() => this.handleLCriminal()}
-                              >
-                                Criminal
-                              </Button>
-                            </th>
-                          </tr>
-                          <tr>
-                            <th style={marginRight}>
-                              <Button
-                                style={buttonRealActivate}
-                                color="default"
-                                onClick={() => this.handleRealState()}
-                              >
-                                Real State
-                              </Button>
-                            </th>
-                            <th style={marginLeft}>
-                              <Button
-                                style={buttonEmploymentActivate}
-                                color="default"
-                                onClick={() => this.handleEmployment()}
-                              >
-                                Employment
-                              </Button>
-                            </th>
-                          </tr>
-                          <tr>
-                            <th style={marginRight}>
-                              <Button
-                                style={buttonImigrationActivate}
-                                color="default"
-                                onClick={() => this.handleImigration()}
-                              >
-                                Inmigration
-                              </Button>
-                            </th>
-                            <th style={marginLeft}>
-                              <Button
-                                style={buttonGeneralActivate}
-                                color="default"
-                                onClick={() => this.handleGeneral()}
-                              >
-                                General
-                              </Button>
-                            </th>
-                          </tr>
-                        </table>
-                      </center>
-                      <br />
-                      <center>
-                        <Button
-                          style={{
-                            width: "50%",
-                            marginTop: "10px",
-                            border: "1px solid #000000"
-                          }}
-                          outline
-                          onClick={this.handleFilter}
-                        >
-                          Search
-                        </Button>
-                      </center>
-                    </div>
-                  </Paper>
-                </Fade>
-              )}
-            </Popper>
-            <Button
-              aria-describedby={"pop"}
-              variant="contained"
-              onClick={this.handleClick}
-            >
-              What can we help you with?
-            </Button>
-          </Grid>
-        </Grid>
+        <center>
+          <Button
+            variant="outlined"
+            color="default"
+            onClick={this.handleClickOpen}
+          >
+            What can we help you with?
+          </Button>
+        </center>
+
+        <Dialog
+          onClose={this.handleClose}
+          aria-labelledby="customized-dialog-title"
+          open={this.state.open}
+          fullScreen={isFullScreen}
+        >
+          <DialogTitle id="customized-dialog-title" onClose={this.handleClose}>
+            Select All that apply
+          </DialogTitle>
+          <DialogContent dividers>
+            <div>
+              <center>
+                <table>
+                  <tr>
+                    <th style={marginRight}>
+                      <Button
+                        style={buttonHousingActivate}
+                        color="default"
+                        onClick={() => this.handleHousing()}
+                      >
+                        Housing
+                        <img
+                          src="../icons/Shape.png"
+                          width="18px"
+                          height="18px"
+                          style={{ marginLeft: "10px" }}
+                        />
+                      </Button>
+                    </th>
+                    <th style={marginLeft}>
+                      <Button
+                        style={buttonTrustActivate}
+                        color="default"
+                        onClick={() => this.handleTrust()}
+                      >
+                        Trust & States
+                        <img
+                          src="../icons/shape 7.png"
+                          width="18px"
+                          height="18px"
+                          style={{ marginLeft: "10px" }}
+                        />
+                      </Button>
+                    </th>
+                  </tr>
+                  <tr>
+                    <th style={marginRight}>
+                      <Button
+                        style={buttonConsumerActivate}
+                        color="default"
+                        onClick={() => this.handleConsumer()}
+                      >
+                        Consumer
+                        <img
+                          src="../icons/shape 2.png"
+                          width="18px"
+                          height="18px"
+                          style={{ marginLeft: "10px" }}
+                        />
+                      </Button>
+                    </th>
+                    <th style={marginLeft}>
+                      <Button
+                        style={buttonMedicalActivate}
+                        color="default"
+                        onClick={() => this.handleMedical()}
+                      >
+                        Medical
+                      </Button>
+                    </th>
+                  </tr>
+                  <tr>
+                    <th style={marginRight}>
+                      <Button
+                        style={buttonFamilyActivate}
+                        color="default"
+                        onClick={() => this.handleFamily()}
+                      >
+                        Family
+                      </Button>
+                    </th>
+                    <th style={marginLeft}>
+                      <Button
+                        style={buttonLegalActivate}
+                        color="default"
+                        onClick={() => this.handleLegal()}
+                      >
+                        Legal Procedure
+                      </Button>
+                    </th>
+                  </tr>
+                  <tr>
+                    <th style={marginRight}>
+                      <Button
+                        style={buttonBusinessActivate}
+                        color="default"
+                        onClick={() => this.handleBusiness()}
+                      >
+                        Business
+                      </Button>
+                    </th>
+                    <th style={marginLeft}>
+                      <Button
+                        style={buttonCriminalActivate}
+                        color="default"
+                        onClick={() => this.handleLCriminal()}
+                      >
+                        Criminal
+                      </Button>
+                    </th>
+                  </tr>
+                  <tr>
+                    <th style={marginRight}>
+                      <Button
+                        style={buttonRealActivate}
+                        color="default"
+                        onClick={() => this.handleRealState()}
+                      >
+                        Real State
+                      </Button>
+                    </th>
+                    <th style={marginLeft}>
+                      <Button
+                        style={buttonEmploymentActivate}
+                        color="default"
+                        onClick={() => this.handleEmployment()}
+                      >
+                        Employment
+                      </Button>
+                    </th>
+                  </tr>
+                  <tr>
+                    <th style={marginRight}>
+                      <Button
+                        style={buttonImigrationActivate}
+                        color="default"
+                        onClick={() => this.handleImigration()}
+                      >
+                        Inmigration
+                      </Button>
+                    </th>
+                    <th style={marginLeft}>
+                      <Button
+                        style={buttonGeneralActivate}
+                        color="default"
+                        onClick={() => this.handleGeneral()}
+                      >
+                        General
+                      </Button>
+                    </th>
+                  </tr>
+                </table>
+              </center>
+              <br />
+              <center>
+                <Button
+                  style={{
+                    width: "50%",
+                    marginTop: "10px",
+                    border: "1px solid #000000"
+                  }}
+                  outline
+                  onClick={this.handleFilter}
+                >
+                  Search
+                </Button>
+              </center>
+            </div>
+          </DialogContent>
+        </Dialog>
       </div>
     );
   }
@@ -517,13 +557,16 @@ const marginRight = {
 };
 
 const dropDwonSmallDevice = {
-  marginTop: "149px",
   padding: "5%",
   width: "100vw",
-  height: "90vh"
+  height: "100vh"
 };
 
 const dropDwonDesktop = {
-  marginTop: "149px",
   padding: "5%"
+};
+
+const buttonSearchStyle = {
+  width: "100%",
+  border: "1px solid #000000"
 };

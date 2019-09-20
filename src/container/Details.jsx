@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Container, Row, Col } from "reactstrap";
-import Menu from "../component/Menu";
 import Map from "../component/Map";
 import CardEntity from "../component/CardEntity";
 import { connect } from "react-redux";
@@ -21,7 +20,6 @@ class Details extends Component {
   render() {
     return (
       <div>
-        <Menu />
         <Container
           fluid
           style={{ height: "250px", backgroundColor: "red" }}

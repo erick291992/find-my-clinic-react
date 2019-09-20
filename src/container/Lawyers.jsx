@@ -1,21 +1,17 @@
-import React, {Component} from 'react'
-import Menu from '../component/Menu'
+import React, { Component } from "react";
 
-class Lawyer extends Component{
-    constructor(props){
-        super(props)
-    }
+class Lawyer extends Component {
+  constructor(props) {
+    super(props);
+  }
 
-    render(){
-        return(
-            <div>
-                <Menu/>
-                <div>
-                    <h2>Lawyers</h2>
-                </div>
-            </div>
-        )
-    }
+  render() {
+    return (
+      <div>
+        <h2>Lawyers</h2>
+      </div>
+    );
+  }
 }
 
-export default Lawyer
+export default Lawyer;

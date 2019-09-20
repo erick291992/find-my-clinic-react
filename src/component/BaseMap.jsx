@@ -1,13 +1,14 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { selectActiveClinics } from "../store/clinic/reducer";
-import { GoogleMap, Marker } from "react-google-maps";
+import { GoogleMap, Marker, InfoWindow } from "react-google-maps";
 import { getClinics } from "../service/clinicService";
+import { thisExpression } from "@babel/types";
 
 class BaseMap extends Component {
   constructor(props) {
     super(props);
-    this.state = { list: [] };
+    this.state = { list: [], selectedClinic: null };
   }
 
   componentDidMount() {
@@ -21,6 +22,15 @@ class BaseMap extends Component {
     }
   }
 
+  handleSelectedClinic = clinic => {
+    //console.log("selected : ", clinic.name);
+    this.setState({ selectedClinic: clinic });
+  };
+  handleSelectedClose = () => {
+    //console.log("selected : ", clinic.name);
+    this.setState({ selectedClinic: null });
+  };
+
   render() {
     let list = this.state.list;
     console.log(this.props.mylist);
@@ -30,8 +40,38 @@ class BaseMap extends Component {
         defaultCenter={{ lat: 40.725288, lng: -74.007854 }}
       >
         {list.map(clinic => {
-          return <Marker key={clinic._id} position={clinic.location} />;
+          return (
+            <Marker
+              key={clinic._id}
+              position={clinic.location}
+              onClick={() => {
+                this.handleSelectedClinic(clinic);
+              }}
+            />
+          );
         })}
+
+        {this.state.selectedClinic && (
+          <InfoWindow
+            position={this.state.selectedClinic.location}
+            onCloseClick={() => this.handleSelectedClose()}
+          >
+            <div>
+              <h5>{this.state.selectedClinic.name}</h5>
+              <p>
+                <lable>Address: </lable>
+                {this.state.selectedClinic.address}
+                <br />
+                <lable>Openning: </lable>
+                {this.state.selectedClinic.operatingHours}
+                <br />
+                <lable>Phone: </lable>
+                {this.state.selectedClinic.phone}
+                <br />
+              </p>
+            </div>
+          </InfoWindow>
+        )}
       </GoogleMap>
     );
   }
