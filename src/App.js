@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import createBrowserHistory from 'history/createBrowserHistory';
-import Home from './container/Home'
+import Main from './container/Main'
 import About from './container/About'
 import Lawyer from './container/Lawyers'
 import Results from './container/Results'
@@ -13,8 +13,8 @@ function App() {
     <Router history={createBrowserHistory()}>
       <div >
         <Switch>
-          <Route exact path="/" component={Home} exact />
-          <Route exact path="/home" component={Home} />
+          <Route exact path="/" component={Main} exact />
+          <Route exact path="/home" component={Main} />
           <Route path="/about" component={About} />
           <Route path="/lawyer" component={Lawyer} />
           <Route path="/clinic-details" component={Details} />

@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import addClinics from "../store/clinic/action";
 import { connect } from "react-redux";
-import Menu from "../component/Menu";
 import Map from "../component/Map";
 import Filter from "../component/Filter";
 import { getClinics } from "../service/clinicService";
@@ -24,13 +23,7 @@ class Home extends Component {
     if (width < 600) {
       filterSmallDevice = <Filter />;
     }
-    return (
-      <div>
-        <Menu />
-        {filterSmallDevice}
-        <Map w={"100vw"} h={"100vh"} />
-      </div>
-    );
+    return <div></div>;
   }
 }
 
