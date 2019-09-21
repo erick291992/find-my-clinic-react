@@ -63,6 +63,7 @@ class Drawer extends Component {
   }
 
   render() {
+    let handlerClose = this.props.handleDrawerClose;
     return (
       <Drawer
         className={classes.drawer}
@@ -74,7 +75,7 @@ class Drawer extends Component {
         }}
       >
         <div className={classes.drawerHeader}>
-          <IconButton onClick={this.props.handleDrawerClose}>
+          <IconButton onClick={() => handlerClose()}>
             {theme.direction === "rtl" ? (
               <ChevronLeftIcon />
             ) : (

@@ -81,7 +81,7 @@ function Navbar(props) {
           color="inherit"
           aria-label="open drawer"
           edge="end"
-          onClick={handleDrawerOpen}
+          onClick={() => handleDrawerOpen()}
           className={clsx(open && classes.hide)}
         >
           <MenuIcon style={{ color: "#000000" }} />
