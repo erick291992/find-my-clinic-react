@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import createBrowserHistory from 'history/createBrowserHistory';
-import Navbar from './container/Navbar'
+import Navbar from './component/Navbar'
 import Home from './container/Home'
 import About from './container/About'
 import Lawyer from './container/Lawyers'
@@ -10,23 +10,13 @@ import Details from './container/Details'
 import Notfound from './container/Notfound'
 import clsx from "clsx";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
-import Drawer from "@material-ui/core/Drawer";
-import Link from '@material-ui/core/Link';
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import List from "@material-ui/core/List";
 import Grid from "@material-ui/core/Grid";
-import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
-import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import ChevronRightIcon from "@material-ui/icons/ChevronRight";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
 import Filter from "./component/Filter";
 import MenuItemDesktop from "./component/MenuItemDesktop";
-import Signup from './component/Signup'
+import Mydrawer from './component/Mydrawer'
 const drawerWidth = 240;
 
 
@@ -119,15 +109,12 @@ function App() {
     </Grid>
   );
 
-  let mymenu = window.innerWidth < 600 ? linksMovil : linksDesktop;
-  let filter22 = window.innerWidth < 600 ? <Filter /> : "";
-
   return (
     <Router history={createBrowserHistory()}>
     <div className={classes.root}>
 
       <CssBaseline />
-      <Navbar handleDrawerOpen={handleDrawerOpen} />
+      <Navbar handleDrawerOpen={handleDrawerOpen} open={open} />
       <main
         className={clsx(classes.content, {
           [classes.contentShift]: open
@@ -147,52 +134,15 @@ function App() {
             </Switch>
           </div>
       </main>
-      <Drawer handleDrawerClose={handleDrawerClose}/>
-      
+      <Mydrawer 
+          open={open}
+          handleDrawerClose={handleDrawerClose}
+          drawer={classes.drawer} 
+          drawerPaper={classes.drawerPaper} 
+          drawerHeader={classes.drawerHeader}/>
     </div>
     </Router>
   );
 }
 
 export default App;
-
-/*
-<Drawer
-        className={classes.drawer}
-        variant="persistent"
-        anchor="right"
-        open={open}
-        classes={{
-          paper: classes.drawerPaper
-        }}
-      >
-        <div className={classes.drawerHeader}>
-          <IconButton onClick={handleDrawerClose}>
-            {theme.direction === "rtl" ? (
-              <ChevronLeftIcon />
-            ) : (
-              <ChevronRightIcon />
-            )}
-          </IconButton>
-        </div>
-        <Divider />
-        <List>
-          <ListItem button>
-            {<ListItemText primary={"Sign Up For Updates!"} /> }
-            <Signup/>
-          </ListItem>
-          <Divider />
-          <ListItem button>
-            <Link href={"/lawyer"}><ListItemText primary={"Needs a Lawyer?"} /></Link>
-          </ListItem>
-          <Divider />
-          <ListItem button>
-          <Link href={"/clinics"}><ListItemText primary={"All Clinics"} /></Link>
-          </ListItem>
-          <Divider />
-          <ListItem button>
-          <Link href={"/about"}><ListItemText primary={"About us"} /></Link>
-          </ListItem>
-        </List>
-      </Drawer>
-*/
