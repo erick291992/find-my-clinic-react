@@ -26,7 +26,11 @@ import ListItemText from "@material-ui/core/ListItemText";
 import Filter from "./component/Filter";
 import MenuItemDesktop from "./component/MenuItemDesktop";
 import Signup from './component/Signup'
+import {changeTo} from "./utils/utils"
+import Nav from "./component/Nav"
+
 const drawerWidth = 240;
+
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -99,46 +103,66 @@ function App() {
     setOpen(false);
   }
 
-  let linksDesktop = <MenuItemDesktop />;
+  function navigate(i){
+    switch(i){
+      case 1:
+        //lawyer
+        changeTo("lawyer")
+        
+    }
 
-  let linksMovil = (
-    <Grid container justify="flex-end">
-      <Grid item>
-        <IconButton
-          color="inherit"
-          aria-label="open drawer"
-          edge="end"
-          onClick={handleDrawerOpen}
-          className={clsx(open && classes.hide)}
-        >
-          <MenuIcon style={{ color: "#000000" }} />
-        </IconButton>
-      </Grid>
-    </Grid>
-  );
+    
+  }
+
+	let linksDesktop = <MenuItemDesktop />;
+	let linksMovil = (
+		<Grid container justify="flex-end">
+			<Grid item>
+				<IconButton
+					color="inherit"
+					aria-label="open drawer"
+					edge="end"
+					onClick={handleDrawerOpen}
+					className={clsx(open && classes.hide)}
+				>
+					<MenuIcon style={{ color: "#000000" }} />
+				</IconButton>
+			</Grid>
+		</Grid>
+	);
+
+  
 
   let mymenu = window.innerWidth < 600 ? linksMovil : linksDesktop;
   let filter22 = window.innerWidth < 600 ? <Filter /> : "";
+
+  const appBar = (
+    <AppBar
+    position="absolute"
+    style={{ padding: "10px 0", backgroundColor: "#FFFFFF" }} >
+    <Toolbar>
+      <Link href={"/"}><img
+        src="legal4all-logo.png"
+        alt="Legal4All"
+        height="auto"
+        width="100"
+      /></Link>
+      {mymenu}
+    </Toolbar>
+    <div style={{ width: "90%", margin: "20px 5% 5px 5%" }}>{filter22}</div>
+  </AppBar>
+
+  )
+
+
 
   return (
     <Router history={createBrowserHistory()}>
     <div className={classes.root}>
 
       <CssBaseline />
-      <AppBar
-        position="absolute"
-        style={{ padding: "10px 0", backgroundColor: "#FFFFFF" }} >
-        <Toolbar>
-          <Link href={"/"}><img
-            src="legal4all-logo.png"
-            alt="Legal4All"
-            height="auto"
-            width="100"
-          /></Link>
-          {mymenu}
-        </Toolbar>
-        <div style={{ width: "90%", margin: "20px 5% 5px 5%" }}>{filter22}</div>
-      </AppBar>
+	  <Nav handleDrawerClose={handleDrawerClose} handleDrawerOpen={handleDrawerOpen} />
+     
       <main
         className={clsx(classes.content, {
           [classes.contentShift]: open
@@ -196,6 +220,7 @@ function App() {
           </ListItem>
         </List>
       </Drawer>
+
     </div>
     </Router>
   );
