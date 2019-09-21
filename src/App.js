@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import createBrowserHistory from 'history/createBrowserHistory';
+import Navbar from './container/Navbar'
 import Home from './container/Home'
 import About from './container/About'
 import Lawyer from './container/Lawyers'
@@ -27,6 +28,7 @@ import Filter from "./component/Filter";
 import MenuItemDesktop from "./component/MenuItemDesktop";
 import Signup from './component/Signup'
 const drawerWidth = 240;
+
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -125,20 +127,7 @@ function App() {
     <div className={classes.root}>
 
       <CssBaseline />
-      <AppBar
-        position="absolute"
-        style={{ padding: "10px 0", backgroundColor: "#FFFFFF" }} >
-        <Toolbar>
-          <Link href={"/"}><img
-            src="legal4all-logo.png"
-            alt="Legal4All"
-            height="auto"
-            width="100"
-          /></Link>
-          {mymenu}
-        </Toolbar>
-        <div style={{ width: "90%", margin: "20px 5% 5px 5%" }}>{filter22}</div>
-      </AppBar>
+      <Navbar handleDrawerOpen={handleDrawerOpen} />
       <main
         className={clsx(classes.content, {
           [classes.contentShift]: open
@@ -158,7 +147,16 @@ function App() {
             </Switch>
           </div>
       </main>
-      <Drawer
+      <Drawer handleDrawerClose={handleDrawerClose}/>
+    </div>
+    </Router>
+  );
+}
+
+export default App;
+
+/*
+<Drawer
         className={classes.drawer}
         variant="persistent"
         anchor="right"
@@ -179,7 +177,7 @@ function App() {
         <Divider />
         <List>
           <ListItem button>
-            {/* <ListItemText primary={"Sign Up For Updates!"} /> */}
+            {<ListItemText primary={"Sign Up For Updates!"} /> }
             <Signup/>
           </ListItem>
           <Divider />
@@ -196,9 +194,4 @@ function App() {
           </ListItem>
         </List>
       </Drawer>
-    </div>
-    </Router>
-  );
-}
-
-export default App;
+*/
