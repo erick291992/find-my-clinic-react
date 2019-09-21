@@ -71,7 +71,7 @@ function Navbar(props) {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-
+  let handleDrawerOpen = props.handleDrawerOpen;
   let linksDesktop = <MenuItemDesktop />;
 
   let linksMovil = (
@@ -81,7 +81,7 @@ function Navbar(props) {
           color="inherit"
           aria-label="open drawer"
           edge="end"
-          onClick={props.handleDrawerOpen}
+          onClick={handleDrawerOpen}
           className={clsx(open && classes.hide)}
         >
           <MenuIcon style={{ color: "#000000" }} />
