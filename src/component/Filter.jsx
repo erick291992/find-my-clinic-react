@@ -347,6 +347,7 @@ class Filter extends Component {
     let popupStyle =
       window.innerWidth < 600 ? dropDwonSmallDevice : dropDwonDesktop;
     let isFullScreen = window.innerWidth < 600 ? true : false;
+
     return (
       <div>
         <center>

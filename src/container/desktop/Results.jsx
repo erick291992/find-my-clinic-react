@@ -1,15 +1,15 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
-import Map from "../component/Map";
+import Map from "../../component/Map";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
-import CardEntity from "../component/CardEntity";
+import CardEntity from "../../component/CardEntity";
 import { connect } from "react-redux";
-import { selectActiveClinics } from "../store/clinic/reducer";
-import addClinics from "../store/clinic/action";
+import { selectActiveClinics } from "../../store/clinic/reducer";
+import addClinics from "../../store/clinic/action";
 import { withStyles } from "@material-ui/core";
 import PropTypes from "prop-types";
-import Clinics from "../component/Clinics";
+import Clinics from "../../component/Clinics";
 //import * as funClinic from "../store/clinic/action";
 
 const styles = theme => ({
@@ -59,7 +59,7 @@ class Results extends Component {
         <Grid container spacing={0}>
           <Grid item xs={12} md={6} lg={6}>
             <div style={{ height: "80vh" }}>
-              <div style={divStyle}>
+              <div style={showList}>
                 <Paper className={classes.paper}>
                   {this.state.list.map(clinic => {
                     return (

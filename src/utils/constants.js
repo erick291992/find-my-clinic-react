@@ -10,3 +10,6 @@ export const TRUST_STATE_CATEGORY = "Trusts & Estates"
 export const REAL_STATE_CATEGORY = "Real Estate"
 export const MEDICAL_CATEGORY = "Medical"
 export const CRIMINAL_CATEGORY = "Criminal"
+
+//Links:
+export const LINK_RESULT_MOVIL = ""

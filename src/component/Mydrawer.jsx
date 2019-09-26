@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { withRouter } from "react-router-dom";
 import Signup from "./Signup";
 import { useTheme } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
@@ -50,21 +51,24 @@ class Mydrawer extends Component {
           </ListItem>
           <Divider />
           <ListItem button>
-            <Link href={"/lawyer"}>
-              <ListItemText primary={"Needs a Lawyer?"} />
-            </Link>
+            <ListItemText
+              primary={"Needs a Lawyer?"}
+              onClick={() => this.props.history.push("/lawyer")}
+            />
           </ListItem>
           <Divider />
           <ListItem button>
-            <Link href={"/clinics"}>
-              <ListItemText primary={"All Clinics"} />
-            </Link>
+            <ListItemText
+              primary={"All Clinics"}
+              onClick={() => this.props.history.push("/clinics")}
+            />
           </ListItem>
           <Divider />
           <ListItem button>
-            <Link href={"/about"}>
-              <ListItemText primary={"About us"} />
-            </Link>
+            <ListItemText
+              primary={"About us"}
+              onClick={() => this.props.history.push("/about")}
+            />
           </ListItem>
         </List>
       </Drawer>
@@ -72,4 +76,4 @@ class Mydrawer extends Component {
   }
 }
 
-export default Mydrawer;
+export default withRouter(Mydrawer);

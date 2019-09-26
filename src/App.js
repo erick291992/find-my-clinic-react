@@ -5,7 +5,8 @@ import Navbar from './component/Navbar'
 import Home from './container/Home'
 import About from './container/About'
 import Lawyer from './container/Lawyers'
-import Results from './container/Results'
+import ResultsDetails from './container/movil/ResultsDetails'
+import FilterResults from './container/FilterResults'
 import Details from './container/Details'
 import Notfound from './container/Notfound'
 import clsx from "clsx";
@@ -14,7 +15,6 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import Grid from "@material-ui/core/Grid";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
-import Filter from "./component/Filter";
 import MenuItemDesktop from "./component/MenuItemDesktop";
 import Mydrawer from './component/Mydrawer'
 const drawerWidth = 240;
@@ -82,7 +82,8 @@ function App() {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-
+  let width = window.innerWidth
+  let styleMain = width<600?MainStyleMovil:MainStyleDesktop
   function handleDrawerOpen() {
     setOpen(true);
   }
@@ -119,7 +120,7 @@ function App() {
         className={clsx(classes.content, {
           [classes.contentShift]: open
         })}
-        style={{paddingTop:"52px"}}
+        style={styleMain}
       >
         <div className={classes.drawerHeader} />
           <div >
@@ -129,7 +130,8 @@ function App() {
               <Route path="/about" component={About} />
               <Route path="/lawyer" component={Lawyer} />
               <Route path="/clinic-details" component={Details} />
-              <Route path="/results" component={Results} />
+              <Route path="/results" component={FilterResults} />
+              <Route path="/clinics" component={ResultsDetails} />
               <Route component={Notfound} />
             </Switch>
           </div>
@@ -146,3 +148,11 @@ function App() {
 }
 
 export default App;
+
+const MainStyleDesktop ={
+  paddingTop:"52px"
+}
+
+const MainStyleMovil ={
+  paddingTop:"102px"
+}

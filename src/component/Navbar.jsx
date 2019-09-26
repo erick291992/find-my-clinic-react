@@ -1,4 +1,5 @@
 import React from "react";
+import { withRouter } from "react-router-dom";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import Link from "@material-ui/core/Link";
@@ -65,7 +66,7 @@ function Navbar(props) {
       style={{ padding: "10px 0", backgroundColor: "#FFFFFF" }}
     >
       <Toolbar>
-        <Link href={"/"}>
+        <Link onClick={() => props.history.push("/")}>
           <img
             src="legal4all-logo.png"
             alt="Legal4All"
@@ -80,4 +81,4 @@ function Navbar(props) {
   );
 }
 
-export default Navbar;
+export default withRouter(Navbar);
