@@ -13,4 +13,4 @@ export default (state = initialState, action) => {
     return state;
 };
 
-export const selectActiveWord = state => state.filterReducer.selectedFilter;
+export const selectActiveFilter = state => state.filterReducer.selectedFilter;

@@ -37,9 +37,27 @@ const useStyles = makeStyles(theme => ({
 
 function Navbar(props) {
   const classes = useStyles();
+  let width = window.innerWidth;
   let handleDrawerOpen = props.handleDrawerOpen;
   let open = props.open;
   let linksDesktop = <MenuItemDesktop />;
+  let filterDesktop =
+    width < 600 ? (
+      ""
+    ) : (
+      <p
+        style={{
+          textAlign: "left",
+          marginTop: "25px",
+          paddingLeft: "40px"
+        }}
+      >
+        <label style={{ color: "#000000", color: "#000000" }}>
+          NYC’s legal aid providers. All in one place
+        </label>
+        <Filter />
+      </p>
+    );
 
   let linksMovil = (
     <Grid container justify="flex-end">
@@ -58,7 +76,7 @@ function Navbar(props) {
   );
 
   let mymenu = window.innerWidth < 600 ? linksMovil : linksDesktop;
-  let filter22 = window.innerWidth < 600 ? <Filter /> : "";
+  let filterMovil = window.innerWidth < 600 ? <Filter /> : "";
 
   return (
     <AppBar
@@ -74,9 +92,12 @@ function Navbar(props) {
             width="100"
           />
         </Link>
+        <div>{filterDesktop}</div>
         {mymenu}
       </Toolbar>
-      <div style={{ width: "90%", margin: "20px 5% 5px 5%" }}>{filter22}</div>
+      <div style={{ width: "90%", margin: "20px 5% 5px 5%" }}>
+        {filterMovil}
+      </div>
     </AppBar>
   );
 }

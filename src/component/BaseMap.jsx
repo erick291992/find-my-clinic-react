@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 import { selectActiveClinics } from "../store/clinic/reducer";
+import clinicSelected from "../store/clinic/action";
 import { GoogleMap, Marker, InfoWindow } from "react-google-maps";
 import { getClinics } from "../service/clinicService";
 import { thisExpression } from "@babel/types";
@@ -22,9 +24,11 @@ class BaseMap extends Component {
     }
   }
 
-  handleSelectedClinic = clinic => {
+  handleSelectedClinic = (clinic, path) => {
     //console.log("selected : ", clinic.name);
+    this.props.clinicSelected(clinic);
     this.setState({ selectedClinic: clinic });
+    this.props.history.push(path);
   };
   handleSelectedClose = () => {
     //console.log("selected : ", clinic.name);
@@ -33,7 +37,10 @@ class BaseMap extends Component {
 
   render() {
     let list = this.state.list;
+    let width = window.innerWidth;
+    let path = width < 600 ? "/clinics" : "/results";
     console.log(this.props.mylist);
+
     return (
       <GoogleMap
         defaultZoom={10}
@@ -45,7 +52,7 @@ class BaseMap extends Component {
               key={clinic._id}
               position={clinic.location}
               onClick={() => {
-                this.handleSelectedClinic(clinic);
+                this.handleSelectedClinic(clinic, path);
               }}
             />
           );
@@ -59,7 +66,7 @@ class BaseMap extends Component {
             <div>
               <h5>{this.state.selectedClinic.name}</h5>
               <p>
-                <lable>Address: </lable>
+                {/* <lable>Address: </lable>
                 {this.state.selectedClinic.address}
                 <br />
                 <lable>Openning: </lable>
@@ -67,7 +74,7 @@ class BaseMap extends Component {
                 <br />
                 <lable>Phone: </lable>
                 {this.state.selectedClinic.phone}
-                <br />
+                <br /> */}
               </p>
             </div>
           </InfoWindow>
@@ -84,4 +91,7 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(BaseMap);
+export default connect(
+  mapStateToProps,
+  clinicSelected
+)(withRouter(BaseMap));

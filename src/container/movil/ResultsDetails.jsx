@@ -15,7 +15,7 @@ const styles = theme => ({
     margin: "0px"
   },
   paper: {
-    padding: theme.spacing(0),
+    width: "100%",
     textAlign: "center",
     margin: "0px"
   }
@@ -46,8 +46,8 @@ class ResultsDetails extends Component {
   render() {
     const { classes } = this.props;
     return (
-      <div style={{ height: "80vh" }}>
-        <div>
+      <div className={classes.root}>
+        <div style={divStyle}>
           <Paper className={classes.paper}>
             {this.state.list.map(clinic => {
               return (
@@ -85,3 +85,9 @@ export default connect(
   mapStateToProps,
   addClinics
 )(withRouter(withStyles(styles)(ResultsDetails)));
+
+const divStyle = {
+  overflowY: "scroll",
+  height: "70vh",
+  margin: 0
+};

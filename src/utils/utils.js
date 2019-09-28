@@ -16,3 +16,16 @@ export let removeCategory = (list, category) =>{
         return ele != category;
     });
 }
+
+export let filteredList = (list,filters) => {
+        let listFiltered = []
+        list.forEach(clinic=>{
+            clinic.searchCategories.forEach(cat=>{
+                if(filters.includes(cat)){
+                    listFiltered.push(clinic)
+                    return
+                }
+            })
+        })
+        return listFiltered
+}

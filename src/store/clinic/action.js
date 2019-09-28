@@ -15,4 +15,11 @@ const addFiltered = (clinics) => {
     }
 }
 
-export default ({addClinics,addFiltered})
+const clinicSelected = (clinic) => {
+    return {
+        type:'SELECTED_CLINIC',
+        payload:clinic
+    }
+}
+
+export default ({addClinics,addFiltered,clinicSelected})

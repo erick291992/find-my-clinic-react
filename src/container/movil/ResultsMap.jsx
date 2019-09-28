@@ -10,7 +10,7 @@ import addClinics from "../../store/clinic/action";
 import { withStyles } from "@material-ui/core";
 import PropTypes from "prop-types";
 import Clinics from "../../component/Clinics";
-//import * as funClinic from "../store/clinic/action";
+import Footer from "../../component/Footer";
 
 const styles = theme => ({
   root: {
@@ -59,7 +59,8 @@ class Results extends Component {
         <Grid container spacing={0}>
           <Grid item xs={12}>
             <Paper className={classes.paper}>
-              <Map w={"100%"} h={"80vh"} />
+              <Map w={"100%"} h={"64vh"} />
+              <Footer />
             </Paper>
           </Grid>
         </Grid>

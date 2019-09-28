@@ -7,22 +7,25 @@ import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
 
-//const useStyles = makeStyles(theme => ({
 const styles = theme => ({
-  card: {
-    display: "flex",
+  cardMovil: {
+    //display: "flex",
     margin: "0",
-    width: "98%"
+    width: "100vW"
   },
-  details: {
-    display: "flex",
-    flexDirection: "column"
+  cardDesktop: {
+    //display: "flex",
+    margin: "0",
+    width: "100%"
+  },
+  detailsActive: {
+    backgroundColor: "#AED6F1"
+  },
+  detailsNoActive: {
+    backgroundColor: "#FFFFFF"
   },
   content: {
-    flex: "1 0 auto"
-  },
-  cover: {
-    width: 100
+    //flex: "1 0 auto"
   }
 });
 
@@ -32,11 +35,18 @@ class CardEntity extends Component {
   }
 
   render() {
+    const width = window.innerWidth;
     const { classes } = this.props;
 
+    let styleCard = width < 600 ? classes.cardMovil : classes.cardDesktop;
+
     return (
-      <Card className={classes.card}>
-        <div className={classes.details}>
+      <Card className={styleCard}>
+        <div
+          className={
+            this.props.active ? classes.detailsActive : classes.detailsNoActive
+          }
+        >
           <CardContent className={classes.content}>
             <Typography component="h5" variant="h5">
               {this.props.title}

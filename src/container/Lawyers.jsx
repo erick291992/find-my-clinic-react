@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Footer from "../component/Footer";
 
 class Lawyer extends Component {
   constructor(props) {
@@ -9,6 +10,7 @@ class Lawyer extends Component {
     return (
       <div>
         <h2>Lawyers</h2>
+        <Footer />
       </div>
     );
   }

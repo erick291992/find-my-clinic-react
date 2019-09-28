@@ -25,7 +25,7 @@ import {
   GENERAL_CATEGORY,
   CRIMINAL_CATEGORY
 } from "../utils/constants";
-import { removeCategory } from "../utils/utils";
+import { removeCategory, filteredList } from "../utils/utils";
 
 const styles = theme => ({
   root: {
@@ -101,6 +101,24 @@ class Filter extends Component {
 
   handleClose = () => {
     this.setState({ open: false });
+  };
+
+  cleanStates = () => {
+    this.setState({
+      isHousingActivate: false,
+      isConsumerActivate: false,
+      isTrustActivate: false,
+      isMedicalActivate: false,
+      isFamilyActivate: false,
+      isLegalActivate: false,
+      isBusinessActivate: false,
+      isRealActivate: false,
+      isCriminal: false,
+      isEmployment: false,
+      isImigration: false,
+      isGeneral: false,
+      categoryList: []
+    });
   };
 
   handleHousing = () => {
@@ -301,8 +319,9 @@ class Filter extends Component {
       this.setState({ categoryList: newList, isGeneralActivate: isGeneral });
     }
   };
-  handleFilter = select => {
-    this.props.addFilter(select);
+  handleFilter = () => {
+    this.props.addFilter(this.state.categoryList);
+    this.cleanStates();
     this.props.history.push("/results");
     this.handleClose();
   };
@@ -351,12 +370,10 @@ class Filter extends Component {
     return (
       <div>
         <center>
-          <Button
-            variant="outlined"
-            color="default"
-            onClick={this.handleClickOpen}
-          >
-            What can we help you with?
+          <Button variant="outlined" onClick={this.handleClickOpen}>
+            <label style={{ color: "#A6ACAF" }}>
+              What can we help you with?
+            </label>
           </Button>
         </center>
 

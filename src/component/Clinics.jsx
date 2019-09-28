@@ -13,6 +13,9 @@ const styles = theme => ({
     flexGrow: 1,
     width: "98%",
     margin: "0px"
+    // overflowY: "scroll",
+    // height: "70vh",
+    // margin: 0
   },
   paper: {
     padding: theme.spacing(0),

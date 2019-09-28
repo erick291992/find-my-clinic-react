@@ -32,12 +32,6 @@ function DenseAppBar(props) {
     <div className={classes.root}>
       <Grid container justify="flex-end">
         <Grid item>
-          <Button class={classes.button}>
-            <p style={{ textAlign: "left", marginTop: "8px" }}>
-              <label>NYC’s legal aid providers. All in one place</label>
-              <Filter />
-            </p>
-          </Button>
           <Button>
             <Signup style={linkStyle} />
           </Button>
