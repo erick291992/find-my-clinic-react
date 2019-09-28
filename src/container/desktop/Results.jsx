@@ -7,9 +7,10 @@ import CardEntity from "../../component/CardEntity";
 import { connect } from "react-redux";
 import {
   selectActiveClinics,
-  selectedClinic
+  selectedClinic,
+  selectFilteredClinics
 } from "../../store/clinic/reducer";
-import addClinics from "../../store/clinic/action";
+import { addClinics } from "../../store/clinic/action";
 import { withStyles } from "@material-ui/core";
 import PropTypes from "prop-types";
 import Footer from "../../component/Footer";
@@ -29,10 +30,10 @@ const styles = theme => ({
 });
 
 const mapStateToProps = state => {
-  console.log("This is selected: ", selectedClinic(state));
   return {
     mylist: selectActiveClinics(state),
-    clinic: selectedClinic(state)
+    clinic: selectedClinic(state),
+    mylistfiltered: selectFilteredClinics(state)
   };
 };
 
@@ -46,7 +47,12 @@ class Results extends Component {
   }
 
   componentDidMount() {
-    this.setState({ list: this.props.mylist });
+    this.setState({
+      list:
+        this.props.mylistfiltered != null
+          ? this.props.mylistfiltered
+          : this.props.mylist
+    });
   }
 
   handleSelection = clinicId => {
@@ -106,7 +112,7 @@ class Results extends Component {
           openingHours += hours + " ";
         });
         return (
-          <div>
+          <div onClick={() => this.handleSelection(clinic._id)}>
             <CardEntity
               title={clinic.name}
               subtitle=""
@@ -149,7 +155,7 @@ Results.propTypes = {
 
 export default connect(
   mapStateToProps,
-  addClinics
+  { addClinics }
 )(withRouter(withStyles(styles)(Results)));
 const hideListStyle = {
   display: "block"

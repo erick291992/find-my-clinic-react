@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import addClinics from "../store/clinic/action";
+import { addClinics } from "../store/clinic/action";
 import { connect } from "react-redux";
 import Map from "../component/Map";
 import { getClinics } from "../service/clinicService";
@@ -11,6 +11,7 @@ class Home extends Component {
   }
 
   componentDidMount() {
+    this.loadClinics();
     // const res = getClinics();
     // res.then(clinicsList => {
     //   this.props.addClinics(clinicsList);
@@ -25,7 +26,6 @@ class Home extends Component {
   };
 
   render() {
-    console.log("homeeeee");
     this.loadClinics();
     let width = window.innerWidth;
     let heightMap = width < 600 ? "64vh" : "74vh";
@@ -40,5 +40,5 @@ class Home extends Component {
 
 export default connect(
   null,
-  addClinics
+  { addClinics }
 )(Home);

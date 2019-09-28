@@ -1,8 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { selectActiveClinics } from "../store/clinic/reducer";
-import clinicSelected from "../store/clinic/action";
+import {
+  selectActiveClinics,
+  selectFilteredClinics
+} from "../store/clinic/reducer";
+import { addClinics, clinicSelected } from "../store/clinic/action";
 import { GoogleMap, Marker, InfoWindow } from "react-google-maps";
 import { getClinics } from "../service/clinicService";
 import { thisExpression } from "@babel/types";
@@ -13,33 +16,54 @@ class BaseMap extends Component {
     this.state = { list: [], selectedClinic: null };
   }
 
+  loadClinics = () => {
+    //this.setState({ list: this.props.mylist });
+    // if (this.props.mylist.length === 0) {
+    //   let res = getClinics();
+    //   res.then(clinics => {
+    //     this.setState({ list: clinics });
+    //   });
+    // } else {
+    //   this.setState({ list: this.props.mylist });
+    // }
+  };
+
   componentDidMount() {
-    if (this.props.mylist.length === 0) {
-      let res = getClinics();
-      res.then(clinics => {
-        this.setState({ list: clinics });
-      });
-    } else {
-      this.setState({ list: this.props.mylist });
-    }
+    const res = getClinics();
+    res.then(clinicsList => {
+      this.props.addClinics(clinicsList);
+    });
+    //this.loadClinics();
+    //this.setState({ list: this.props.mylist });
+    // if (this.props.mylist.length === 0) {
+    //   let res = getClinics();
+    //   res.then(clinics => {
+    //     this.setState({ list: clinics });
+    //   });
+    // } else {
+    //   this.setState({ list: this.props.mylist });
+    // }
   }
 
   handleSelectedClinic = (clinic, path) => {
-    //console.log("selected : ", clinic.name);
     this.props.clinicSelected(clinic);
     this.setState({ selectedClinic: clinic });
     this.props.history.push(path);
   };
   handleSelectedClose = () => {
-    //console.log("selected : ", clinic.name);
     this.setState({ selectedClinic: null });
   };
 
   render() {
-    let list = this.state.list;
+    let list =
+      this.props.mylistfiltered != null
+        ? this.props.mylistfiltered
+        : this.props.mylist;
+    console.log("reciving clinic on map base:");
+    console.log("-------------------");
+    console.log(list.length);
     let width = window.innerWidth;
     let path = width < 600 ? "/clinics" : "/results";
-    console.log(this.props.mylist);
 
     return (
       <GoogleMap
@@ -85,13 +109,13 @@ class BaseMap extends Component {
 }
 
 const mapStateToProps = state => {
-  console.log("->", selectActiveClinics(state));
   return {
-    mylist: selectActiveClinics(state)
+    mylist: selectActiveClinics(state),
+    mylistfiltered: selectFilteredClinics(state)
   };
 };
 
 export default connect(
   mapStateToProps,
-  clinicSelected
+  { clinicSelected, addClinics }
 )(withRouter(BaseMap));

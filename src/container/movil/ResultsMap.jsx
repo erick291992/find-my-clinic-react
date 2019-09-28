@@ -6,7 +6,7 @@ import Grid from "@material-ui/core/Grid";
 import CardEntity from "../../component/CardEntity";
 import { connect } from "react-redux";
 import { selectActiveClinics } from "../../store/clinic/reducer";
-import addClinics from "../../store/clinic/action";
+import { addClinics } from "../../store/clinic/action";
 import { withStyles } from "@material-ui/core";
 import PropTypes from "prop-types";
 import Clinics from "../../component/Clinics";

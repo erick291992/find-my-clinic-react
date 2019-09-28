@@ -19,13 +19,18 @@ export let removeCategory = (list, category) =>{
 
 export let filteredList = (list,filters) => {
         let listFiltered = []
+        
         list.forEach(clinic=>{
+            let hasCategory = false
             clinic.searchCategories.forEach(cat=>{
-                if(filters.includes(cat)){
+                if(filters.includes(cat) && hasCategory===false){
+                    hasCategory = true
                     listFiltered.push(clinic)
-                    return
                 }
             })
         })
+        console.log("From Util Function:")
+        console.log("-------------------")
+        console.log(listFiltered.length)
         return listFiltered
 }

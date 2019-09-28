@@ -6,7 +6,7 @@ import Paper from "@material-ui/core/Paper";
 import CardEntity from "../../component/CardEntity";
 import { connect } from "react-redux";
 import { selectActiveClinics } from "../../store/clinic/reducer";
-import addClinics from "../../store/clinic/action";
+import { addClinics } from "../../store/clinic/action";
 
 const styles = theme => ({
   root: {
