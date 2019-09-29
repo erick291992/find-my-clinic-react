@@ -10,10 +10,12 @@ import {
   selectedClinic,
   selectFilteredClinics
 } from "../../store/clinic/reducer";
-import { addClinics } from "../../store/clinic/action";
+import { addClinics, addSingleClinic } from "../../store/clinic/action";
 import { withStyles } from "@material-ui/core";
 import PropTypes from "prop-types";
 import Footer from "../../component/Footer";
+import { getFilterList } from "../../utils/utils";
+import { getClinics } from "../../service/clinicService";
 
 const styles = theme => ({
   root: {
@@ -61,7 +63,7 @@ class Results extends Component {
       if (clinic._id === clinicId) {
         this.setState({ clinicSelected: clinic });
         listSelected.push(clinic);
-        this.props.addClinics(listSelected);
+        this.props.addSingleClinic(listSelected);
       }
     });
 
@@ -71,7 +73,7 @@ class Results extends Component {
   reOrderList = clinic => {
     let newList = [];
     newList.push(clinic);
-    this.state.list.forEach(lis => {
+    this.props.mylistfiltered.forEach(lis => {
       if (clinic._id != lis._id) {
         newList.push(lis);
       }
@@ -82,11 +84,14 @@ class Results extends Component {
   render() {
     const { classes } = this.props;
     let showList = window.innerWidth < 600 ? showListStyle : hideListStyle;
+
     let selected = this.props.clinic;
 
     let listOfClinics = "";
+    let listForMap = [];
     if (selected != null) {
-      listOfClinics = this.reOrderList(selected).map(clinic => {
+      let listForMap = this.reOrderList(selected);
+      listOfClinics = listForMap.map(clinic => {
         let openingHours = "";
         clinic.operatingHours.forEach(hours => {
           openingHours += hours + " ";
@@ -106,7 +111,8 @@ class Results extends Component {
         );
       });
     } else {
-      listOfClinics = this.state.list.map(clinic => {
+      listForMap = this.props.mylistfiltered;
+      listOfClinics = listForMap.map(clinic => {
         let openingHours = "";
         clinic.operatingHours.forEach(hours => {
           openingHours += hours + " ";
@@ -139,7 +145,7 @@ class Results extends Component {
           </Grid>
           <Grid item xs={12} md={6} lg={6}>
             <Paper className={classes.paper}>
-              <Map w={"100%"} h={"70vh"} />
+              <Map w={"100%"} h={"70vh"} list={this.props.mylistfiltered} />
             </Paper>
           </Grid>
         </Grid>
@@ -155,7 +161,7 @@ Results.propTypes = {
 
 export default connect(
   mapStateToProps,
-  { addClinics }
+  { addClinics, addSingleClinic }
 )(withRouter(withStyles(styles)(Results)));
 const hideListStyle = {
   display: "block"

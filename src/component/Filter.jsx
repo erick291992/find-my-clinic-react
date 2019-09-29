@@ -10,6 +10,7 @@ import CloseIcon from "@material-ui/icons/Close";
 import Typography from "@material-ui/core/Typography";
 import { withRouter } from "react-router-dom";
 import addFilter from "../store/filter/action";
+import { deleteClinicSelected } from "../store/clinic/action";
 import { connect } from "react-redux";
 import {
   HOUSING_CATEGORY,
@@ -25,7 +26,7 @@ import {
   GENERAL_CATEGORY,
   CRIMINAL_CATEGORY
 } from "../utils/constants";
-import { removeCategory, filteredList } from "../utils/utils";
+import { removeCategory, filteredList, saveFilters } from "../utils/utils";
 
 const styles = theme => ({
   root: {
@@ -117,7 +118,8 @@ class Filter extends Component {
       isEmployment: false,
       isImigration: false,
       isGeneral: false,
-      categoryList: []
+      categoryList: [],
+      open: false
     });
   };
 
@@ -322,7 +324,9 @@ class Filter extends Component {
   handleFilter = () => {
     this.props.addFilter(this.state.categoryList);
     this.cleanStates();
+    this.props.deleteClinicSelected();
     this.props.history.push("/results");
+    saveFilters(this.state.categoryList);
     this.handleClose();
   };
 
@@ -554,7 +558,7 @@ class Filter extends Component {
 
 export default connect(
   null,
-  { addFilter }
+  { addFilter, deleteClinicSelected }
 )(withRouter(Filter));
 
 const activate = {

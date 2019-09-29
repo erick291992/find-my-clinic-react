@@ -16,7 +16,7 @@ const styles = theme => ({
   },
   paper: {
     width: "100%",
-    textAlign: "center",
+    textAlign: "left",
     margin: "0px"
   }
 });

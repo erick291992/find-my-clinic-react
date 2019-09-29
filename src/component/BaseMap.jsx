@@ -16,35 +16,6 @@ class BaseMap extends Component {
     this.state = { list: [], selectedClinic: null };
   }
 
-  loadClinics = () => {
-    //this.setState({ list: this.props.mylist });
-    // if (this.props.mylist.length === 0) {
-    //   let res = getClinics();
-    //   res.then(clinics => {
-    //     this.setState({ list: clinics });
-    //   });
-    // } else {
-    //   this.setState({ list: this.props.mylist });
-    // }
-  };
-
-  componentDidMount() {
-    const res = getClinics();
-    res.then(clinicsList => {
-      this.props.addClinics(clinicsList);
-    });
-    //this.loadClinics();
-    //this.setState({ list: this.props.mylist });
-    // if (this.props.mylist.length === 0) {
-    //   let res = getClinics();
-    //   res.then(clinics => {
-    //     this.setState({ list: clinics });
-    //   });
-    // } else {
-    //   this.setState({ list: this.props.mylist });
-    // }
-  }
-
   handleSelectedClinic = (clinic, path) => {
     this.props.clinicSelected(clinic);
     this.setState({ selectedClinic: clinic });
@@ -55,13 +26,13 @@ class BaseMap extends Component {
   };
 
   render() {
-    let list =
-      this.props.mylistfiltered != null
-        ? this.props.mylistfiltered
-        : this.props.mylist;
-    console.log("reciving clinic on map base:");
-    console.log("-------------------");
-    console.log(list.length);
+    let list = this.props.clinics;
+    //   this.props.mylistfiltered.length != 0
+    //     ? this.props.mylistfiltered
+    //     : this.props.mylist;
+    // console.log("reciving clinic on map base:");
+    // console.log("-------------------");
+    // console.log(list.length);
     let width = window.innerWidth;
     let path = width < 600 ? "/clinics" : "/results";
 
@@ -108,14 +79,16 @@ class BaseMap extends Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    mylist: selectActiveClinics(state),
-    mylistfiltered: selectFilteredClinics(state)
-  };
-};
+// const mapStateToProps = state => {
+//   return {
+//     mylist: selectActiveClinics(state),
+//     mylistfiltered: selectFilteredClinics(state)
+//   };
+// };
 
 export default connect(
-  mapStateToProps,
-  { clinicSelected, addClinics }
+  null,
+  { clinicSelected }
 )(withRouter(BaseMap));
+
+//export default withRouter(BaseMap);

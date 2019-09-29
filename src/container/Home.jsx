@@ -8,30 +8,30 @@ import Footer from "../component/Footer";
 class Home extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      clinics: []
+    };
   }
 
   componentDidMount() {
     this.loadClinics();
-    // const res = getClinics();
-    // res.then(clinicsList => {
-    //   this.props.addClinics(clinicsList);
-    // });
   }
 
   loadClinics = () => {
+    console.log("home");
     const res = getClinics();
     res.then(clinicsList => {
+      this.setState({ clinics: clinicsList });
       this.props.addClinics(clinicsList);
     });
   };
 
   render() {
-    this.loadClinics();
     let width = window.innerWidth;
     let heightMap = width < 600 ? "64vh" : "74vh";
     return (
       <div>
-        <Map w={"100vw"} h={heightMap} />
+        <Map w={"100vw"} h={heightMap} list={this.state.clinics} />
         <Footer />
       </div>
     );

@@ -11,6 +11,7 @@ import { withStyles } from "@material-ui/core";
 import PropTypes from "prop-types";
 import Clinics from "../../component/Clinics";
 import Footer from "../../component/Footer";
+import { getFilterList } from "../../utils/utils";
 
 const styles = theme => ({
   root: {
@@ -53,13 +54,13 @@ class Results extends Component {
 
   render() {
     const { classes } = this.props;
-
+    let list = getFilterList();
     return (
       <div className={classes.root}>
         <Grid container spacing={0}>
           <Grid item xs={12}>
             <Paper className={classes.paper}>
-              <Map w={"100%"} h={"64vh"} />
+              <Map w={"100%"} h={"64vh"} list={list} />
               <Footer />
             </Paper>
           </Grid>

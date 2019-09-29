@@ -1,59 +1,105 @@
-import React, { Component } from "react";
-import { Container, Row, Col } from "reactstrap";
+import React from "react";
 import Map from "../component/Map";
-import CardEntity from "../component/CardEntity";
+import Paper from "@material-ui/core/Paper";
+import Grid from "@material-ui/core/Grid";
+import PlaceIcon from "@material-ui/icons/Place";
+import PhoneEnabledIcon from "@material-ui/icons/PhoneEnabled";
+import AlternateEmailIcon from "@material-ui/icons/AlternateEmail";
+import LanguageIcon from "@material-ui/icons/Language";
+import GTranslateIcon from "@material-ui/icons/GTranslate";
+import { makeStyles } from "@material-ui/core/styles";
+import Footer from "../component/Footer";
 import { connect } from "react-redux";
-import { selectActiveClinics } from "../store/clinic/reducer";
+import {
+  selectActiveClinics,
+  selectedClinic,
+  singleListClinic
+} from "../store/clinic/reducer";
 
-class Details extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      list: []
-    };
+const useStyles = makeStyles(theme => ({
+  root: {
+    flexGrow: 1,
+    width: "98%",
+    margin: "0px",
+    paddingTop: "30px"
+  },
+  paper: {
+    padding: theme.spacing(3),
+    textAlign: "left",
+    margin: "0px",
+    height: "50vh",
+    paddingTop: "40px"
   }
+}));
 
-  componentDidMount() {
-    this.setState({ list: this.props.mylist });
-  }
+function Details(props) {
+  let classes = useStyles();
 
-  render() {
-    return (
-      <div>
-        <Container
-          fluid
-          style={{ height: "250px", backgroundColor: "red" }}
-        ></Container>
-        <Container fluid>
-          <Row noGutters>
-            <Col xs="6">
-              <div style={{ height: "80vh", width: "100%" }}>
-                <h5></h5>
-              </div>
-            </Col>
-            <Col xs="6">
-              <Map w={"100%"} h={"80vh"} />
-            </Col>
-          </Row>
-        </Container>
-      </div>
-    );
-  }
+  return (
+    <div>
+      <Grid container spacing={0} className={classes.root}>
+        <Grid
+          item
+          xs={12}
+          style={{ height: "20vh", backgroundColor: "A6ACAF" }}
+        ></Grid>
+        <Grid item xs={12} md={6} lg={6}>
+          <Paper className={classes.paper}>
+            {props.selectedClinicList.map(clinic => {
+              return (
+                <div>
+                  <h3>{clinic.name}</h3>
+                  <label>
+                    <PlaceIcon>Place</PlaceIcon> {clinic.address}
+                  </label>
+                  <br />
+                  <label>
+                    <PhoneEnabledIcon />
+                  </label>
+                  {clinic.phone.forEach(phone => {
+                    return <label>{phone}</label>;
+                  })}
+
+                  <br />
+                  <label>
+                    <AlternateEmailIcon /> {clinic.email}
+                  </label>
+                  <br />
+                  <label>
+                    <GTranslateIcon />
+                    {clinic.languages.forEach(language => {
+                      return <label>{language}</label>;
+                    })}
+                  </label>
+                  <br />
+                  <label>
+                    <LanguageIcon />
+                    {clinic.sourceWebsite}
+                  </label>
+                </div>
+              );
+            })}
+          </Paper>
+        </Grid>
+        <Grid item xs={12} md={6} lg={6}>
+          <Paper>
+            <Map w={"100%"} h={"50vh"} list={props.selectedClinicList} />
+          </Paper>
+        </Grid>
+      </Grid>
+      <Footer />
+    </div>
+  );
 }
-
 const mapStateToProps = state => {
-  console.log("->", selectActiveClinics(state));
+  console.log("Details ->", selectedClinic(state));
   return {
-    mylist: selectActiveClinics(state)
+    mylist: selectActiveClinics(state),
+    clinic: selectedClinic(state),
+    selectedClinicList: singleListClinic(state)
   };
 };
 
-export default connect(mapStateToProps)(Details);
+// export default connect(mapStateToProps)(Details);
 
-const divStyle = {
-  overflowY: "scroll",
-  width: "100%",
-  float: "left",
-  height: "80vh",
-  position: "relative"
-};
+export default connect(mapStateToProps)(Details);
