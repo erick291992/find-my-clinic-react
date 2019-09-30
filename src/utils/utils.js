@@ -13,6 +13,11 @@ export let removeCategory = (list, category) =>{
     });
 }
 
+//get path variable as string
+export let getVariablePathString = (isFirst, variableName,value) => {
+        return isFirst?"?"+variableName+"="+value:"&"+variableName+"="+value
+}
+
 // Return filterd list
 export let filteredList = (list,filters) => {
     let listFiltered = []

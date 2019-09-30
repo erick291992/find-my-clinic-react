@@ -1,4 +1,5 @@
 import { async } from "q";
+import {getVariablePathString} from "../utils/utils"
 
 export const getClinics = async()=>{
     const url = process.env.REACT_APP_API_SERVER + 'clinics'
@@ -14,17 +15,32 @@ export const getClinic = async(id)=>{
     return res
 }
 
-export const getFilteredClinics = async(filters) => {
-    const url = process.env.REACT_APP_API_SERVER + 'clinics'
-    let data = {"filters":filters}
-    let requestBody = {
-        method: 'post',
-        headers:  {
-                    'Content-Type':'application/json'
-                  },
-        body: JSON.stringify(data)
+export const getCategories = async() => {
+    const url = process.env.REACT_APP_API_SERVER + 'searchCategory'
+    const response = await fetch(url)
+    const res = await response.json()
+    return res
+}
+
+export const getFilteredClinics = async(categoryList, zipcode) => {
+    let path = "find/clinics"
+    let isFirst = true
+    if(zipcode != null){
+        isFirst = false
+        categoryList.forEach(category => {
+            path += getVariablePathString(isFirst,"searchCategories", category)
+        })
+        path+=getVariablePathString(isFirst,"zipcode",zipcode)
+
+    }else{
+        isFirst = false
+        categoryList.forEach(category => {
+            path += getVariablePathString(isFirst,"searchCategories", category)
+        })
     }
-    const response = await fetch(url,requestBody)
+    console.log("Searchng Path : " + path)
+    const url = process.env.REACT_APP_API_SERVER + path
+    const response = await fetch(url)
     const res = await response.json()
     return res
 }
