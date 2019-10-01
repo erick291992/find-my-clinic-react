@@ -14,8 +14,14 @@ import { addClinics, addSingleClinic } from "../../store/clinic/action";
 import { withStyles } from "@material-ui/core";
 import PropTypes from "prop-types";
 import Footer from "../../component/Footer";
-import { getFilterList } from "../../utils/utils";
-import { getClinics } from "../../service/clinicService";
+
+import {
+  getFilterList,
+  saveSelectedClinic,
+  getSelectedClinic,
+  reOrderList
+} from "../../utils/utils";
+import { getClinics, getFilteredClinics } from "../../service/clinicService";
 
 const styles = theme => ({
   root: {
@@ -48,21 +54,33 @@ class Results extends Component {
     };
   }
 
-  componentDidMount() {
-    this.setState({
-      list:
-        this.props.mylistfiltered != null
-          ? this.props.mylistfiltered
-          : this.props.mylist
+  loadClinics = () => {
+    const res = getFilteredClinics();
+    res.then(clinicsList => {
+      this.setState({ list: clinicsList });
     });
+  };
+
+  componentDidMount() {
+    this.loadClinics();
+  }
+
+  componentDidUpdate() {
+    console.log("update!");
+    //this.loadClinics();
   }
 
   handleSelection = clinicId => {
+    console.log("Click  ", clinicId);
+    console.log("List: ", this.state.list);
     let listSelected = [];
     this.state.list.forEach(clinic => {
+      console.log(clinic._id);
       if (clinic._id === clinicId) {
+        console.log("Click2");
         this.setState({ clinicSelected: clinic });
         listSelected.push(clinic);
+        saveSelectedClinic(listSelected);
         this.props.addSingleClinic(listSelected);
       }
     });
@@ -70,27 +88,17 @@ class Results extends Component {
     this.props.history.push("/clinic-details");
   };
 
-  reOrderList = clinic => {
-    let newList = [];
-    newList.push(clinic);
-    this.props.mylistfiltered.forEach(lis => {
-      if (clinic._id != lis._id) {
-        newList.push(lis);
-      }
-    });
-    return newList;
-  };
-
   render() {
     const { classes } = this.props;
     let showList = window.innerWidth < 600 ? showListStyle : hideListStyle;
+    let clinics = this.state.list;
 
-    let selected = this.props.clinic;
-
+    let selected = getSelectedClinic() != null ? getSelectedClinic() : null; //this.props.clinic;
+    console.log("selected : ", selected);
     let listOfClinics = "";
     let listForMap = [];
     if (selected != null) {
-      let listForMap = this.reOrderList(selected);
+      let listForMap = reOrderList(selected[0], this.state.list);
       listOfClinics = listForMap.map(clinic => {
         let openingHours = "";
         clinic.operatingHours.forEach(hours => {
@@ -104,14 +112,14 @@ class Results extends Component {
               hours={openingHours}
               categories={clinic.searchCategories.toString()}
               url={clinic.email}
-              active={selected._id === clinic._id ? true : false}
+              active={selected[0]._id === clinic._id ? true : false}
               style={{ margin: "0px", border: "1 solid #85C1E9" }}
             />
           </div>
         );
       });
     } else {
-      listForMap = this.props.mylistfiltered;
+      listForMap = clinics;
       listOfClinics = listForMap.map(clinic => {
         let openingHours = "";
         clinic.operatingHours.forEach(hours => {
@@ -145,7 +153,7 @@ class Results extends Component {
           </Grid>
           <Grid item xs={12} md={6} lg={6}>
             <Paper className={classes.paper}>
-              <Map w={"100%"} h={"70vh"} list={this.props.mylistfiltered} />
+              <Map w={"100%"} h={"70vh"} list={clinics} />
             </Paper>
           </Grid>
         </Grid>
@@ -158,11 +166,12 @@ class Results extends Component {
 Results.propTypes = {
   classes: PropTypes.object.isRequired
 };
-
+//export default withRouter(withStyles(styles)(Results));
 export default connect(
   mapStateToProps,
   { addClinics, addSingleClinic }
 )(withRouter(withStyles(styles)(Results)));
+
 const hideListStyle = {
   display: "block"
 };

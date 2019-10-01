@@ -9,6 +9,7 @@ import { addClinics, clinicSelected } from "../store/clinic/action";
 import { GoogleMap, Marker, InfoWindow } from "react-google-maps";
 import { getClinics } from "../service/clinicService";
 import { thisExpression } from "@babel/types";
+import { getSelectedClinic, saveSelectedClinic } from "../utils/utils";
 
 class BaseMap extends Component {
   constructor(props) {
@@ -18,6 +19,10 @@ class BaseMap extends Component {
 
   handleSelectedClinic = (clinic, path) => {
     this.props.clinicSelected(clinic);
+    let list = [];
+    list.push(clinic);
+    saveSelectedClinic(list);
+
     this.setState({ selectedClinic: clinic });
     this.props.history.push(path);
   };

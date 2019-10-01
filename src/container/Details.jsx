@@ -15,6 +15,7 @@ import {
   selectedClinic,
   singleListClinic
 } from "../store/clinic/reducer";
+import { getSelectedClinic } from "../utils/utils";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -29,11 +30,26 @@ const useStyles = makeStyles(theme => ({
     margin: "0px",
     height: "50vh",
     paddingTop: "40px"
+  },
+  contentDetail: {
+    height: "100%"
   }
 }));
 
 function Details(props) {
   let classes = useStyles();
+  let clinic = getSelectedClinic();
+  let width = window.innerWidth;
+
+  const rowMap = (
+    <Grid item xs={12} md={6} lg={6}>
+      <Paper>
+        <Map w={"100%"} h={"50vh"} list={clinic} />
+      </Paper>
+    </Grid>
+  );
+
+  let showMap = width > 600 ? rowMap : "";
 
   return (
     <div>
@@ -45,9 +61,9 @@ function Details(props) {
         ></Grid>
         <Grid item xs={12} md={6} lg={6}>
           <Paper className={classes.paper}>
-            {props.selectedClinicList.map(clinic => {
+            {clinic.map(clinic => {
               return (
-                <div>
+                <div className={classes.contentDetail}>
                   <h3>{clinic.name}</h3>
                   <label>
                     <PlaceIcon>Place</PlaceIcon> {clinic.address}
@@ -81,13 +97,9 @@ function Details(props) {
             })}
           </Paper>
         </Grid>
-        <Grid item xs={12} md={6} lg={6}>
-          <Paper>
-            <Map w={"100%"} h={"50vh"} list={props.selectedClinicList} />
-          </Paper>
-        </Grid>
+        {showMap}
+        <Footer />
       </Grid>
-      <Footer />
     </div>
   );
 }
@@ -99,7 +111,5 @@ const mapStateToProps = state => {
     selectedClinicList: singleListClinic(state)
   };
 };
-
-// export default connect(mapStateToProps)(Details);
 
 export default connect(mapStateToProps)(Details);

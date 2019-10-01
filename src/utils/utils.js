@@ -51,6 +51,18 @@ export let saveFilters = (filters) => {
 export let getFilters = () => {
     return JSON.parse(localStorage.getItem("filters"))
 }
+//save zipcode
+export let saveZipcode = (zipcode) => {
+    localStorage.setItem("zipcode",zipcode)
+}
+
+export let getZipcode = () => {
+    return localStorage.getItem("zipcode")
+}
+
+export let cleanFilterStorage = () => {
+    localStorage.clear()
+}
 
 //save Clinic Id
 export let saveClinicId = (id) => {
@@ -72,9 +84,23 @@ export let getFilterList = () => {
 
 //Save Selected Clinic from map
 export let saveSelectedClinic = (clinic) => {
+    console.log("Saving Selection")
     localStorage.setItem("selectedClinic",JSON.stringify(clinic))
 }
 
 export let getSelectedClinic = () => {
     return JSON.parse(localStorage.getItem("selectedClinic"))
+}
+
+export let reOrderList = (clinic,list) =>{
+
+        let newList = [];
+        newList.push(clinic);
+        list.forEach(lis => {
+          if (clinic._id != lis._id) {
+            newList.push(lis);
+          }
+        });
+        console.log("Re order: ", newList.length);
+        return newList;
 }

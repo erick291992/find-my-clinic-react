@@ -27,7 +27,13 @@ import {
   GENERAL_CATEGORY,
   CRIMINAL_CATEGORY
 } from "../utils/constants";
-import { removeCategory, filteredList, saveFilters } from "../utils/utils";
+import {
+  removeCategory,
+  filteredList,
+  saveFilters,
+  saveZipcode,
+  cleanFilterStorage
+} from "../utils/utils";
 import { getCategories } from "../service/clinicService";
 import { selectFilteredClinics } from "../store/clinic/reducer";
 
@@ -112,10 +118,12 @@ class Filter extends Component {
   }
 
   handleClickOpen = () => {
+    cleanFilterStorage();
     this.setState({ open: true });
   };
 
   handleClose = () => {
+    this.cleanStates();
     this.setState({ open: false });
   };
 
@@ -338,12 +346,20 @@ class Filter extends Component {
   //   }
   // };
   handleFilter = () => {
-    this.props.addFilter(this.state.categoryList);
+    // this.props.addFilter(this.state.categoryList);
     this.cleanStates();
-    this.props.deleteClinicSelected();
+    // this.props.deleteClinicSelected();
+    saveFilters(this.state.categoriesSelected);
+    saveZipcode(this.state.zipcode);
     this.props.history.push("/results");
-    saveFilters(this.state.categoryList);
     this.handleClose();
+  };
+
+  handleZipcode = event => {
+    console.log("handle zipcode");
+    let zip = Object.assign({}, this.state.zipcode);
+    zip = event.target.value;
+    this.setState({ zipcode: zip });
   };
 
   handleFilterSelection = selection => {
@@ -396,7 +412,7 @@ class Filter extends Component {
 
     // let popupStyle =
     //   window.innerWidth < 600 ? dropDwonSmallDevice : dropDwonDesktop;
-    // let isFullScreen = window.innerWidth < 600 ? true : false;
+    let isFullScreen = window.innerWidth < 600 ? true : false;
 
     return (
       <div>
@@ -449,10 +465,11 @@ class Filter extends Component {
                     id="filled-number"
                     placeholder="ZIPCODE"
                     type="number"
-                    defaultValue={this.state.zipcode}
+                    value={this.state.zipcode}
                     margin="normal"
                     variant="outlined"
                     inputProps={{ "aria-label": "bare" }}
+                    onChange={this.handleZipcode}
                   />
                 </div>
               </center>

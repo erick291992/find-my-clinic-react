@@ -1,5 +1,5 @@
 import { async } from "q";
-import {getVariablePathString} from "../utils/utils"
+import {getVariablePathString,getFilters,getZipcode} from "../utils/utils"
 
 export const getClinics = async()=>{
     const url = process.env.REACT_APP_API_SERVER + 'clinics'
@@ -22,25 +22,34 @@ export const getCategories = async() => {
     return res
 }
 
-export const getFilteredClinics = async(categoryList, zipcode) => {
+export const getFilteredClinics = async() => {
     let path = "find/clinics"
     let isFirst = true
-    if(zipcode != null){
-        isFirst = false
-        categoryList.forEach(category => {
-            path += getVariablePathString(isFirst,"searchCategories", category)
-        })
-        path+=getVariablePathString(isFirst,"zipcode",zipcode)
-
+    let zipcode = getZipcode()
+    let categoryList =getFilters()
+    if(categoryList!=null){
+        if(zipcode != null){
+        
+            categoryList.forEach(category => {
+                path += getVariablePathString(isFirst,"searchCategories", category)
+                isFirst = false
+            });
+            path+=getVariablePathString(isFirst,"zipcode",zipcode)
+    
+        }else{
+            categoryList.forEach(category => {
+                path += getVariablePathString(isFirst,"searchCategories", category)
+                isFirst = false
+            });
+        }
     }else{
-        isFirst = false
-        categoryList.forEach(category => {
-            path += getVariablePathString(isFirst,"searchCategories", category)
-        })
+        path = "clinics"
     }
-    console.log("Searchng Path : " + path)
+    
+    console.log("Searching Path : " + path)
     const url = process.env.REACT_APP_API_SERVER + path
     const response = await fetch(url)
     const res = await response.json()
+    console.log("total clinic search: " + res.length)
     return res
 }
