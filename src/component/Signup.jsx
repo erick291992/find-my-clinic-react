@@ -16,11 +16,20 @@ import SubscriptionPopup from "../component/SubscriptionPopup";
 
 const styles = theme => ({
   root: {
-    margin: 0,
-    paddingLeft: theme.spacing(9),
-    paddingRight: theme.spacing(9),
-    paddingTop: "50px",
-    textAlign: "center"
+    [theme.breakpoints.down("sm")]: {
+      margin: 0,
+      paddingLeft: theme.spacing(4),
+      paddingRight: theme.spacing(4),
+      paddingTop: "80px",
+      textAlign: "center"
+    },
+    [theme.breakpoints.up("md")]: {
+      margin: 0,
+      paddingLeft: theme.spacing(9),
+      paddingRight: theme.spacing(9),
+      paddingTop: "50px",
+      textAlign: "center"
+    }
   },
   closeButton: {
     position: "absolute",
@@ -50,9 +59,16 @@ const DialogTitle = withStyles(styles)(props => {
 
 const DialogContent = withStyles(theme => ({
   root: {
-    paddingLeft: theme.spacing(6),
-    paddingRight: theme.spacing(6),
-    paddingBottom: theme.spacing(6)
+    [theme.breakpoints.down("sm")]: {
+      paddingLeft: theme.spacing(0),
+      paddingRight: theme.spacing(0),
+      paddingBottom: theme.spacing(0)
+    },
+    [theme.breakpoints.down("sm")]: {
+      paddingLeft: theme.spacing(6),
+      paddingRight: theme.spacing(6),
+      paddingBottom: theme.spacing(6)
+    }
   }
 }))(MuiDialogContent);
 

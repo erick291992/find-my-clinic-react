@@ -32,7 +32,7 @@ function Footer(props) {
             className={classes.link}
             underline={"none"}
             onClick={() => {
-              props.history.push("/about");
+              props.history.push("/privacy-policy");
             }}
           >
             Privacy Policy
@@ -41,7 +41,7 @@ function Footer(props) {
             className={classes.link}
             underline={"none"}
             onClick={() => {
-              props.history.push("/lawyer");
+              props.history.push("/terms-of-service");
             }}
           >
             Terms of Use

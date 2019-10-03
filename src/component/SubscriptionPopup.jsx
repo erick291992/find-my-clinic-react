@@ -9,8 +9,14 @@ import Typography from "@material-ui/core/Typography";
 
 const styles = theme => ({
   root: {
-    margin: 0,
-    padding: theme.spacing(2)
+    [theme.breakpoints.down("sm")]: {
+      margin: 0,
+      padding: theme.spacing(0)
+    },
+    [theme.breakpoints.up("md")]: {
+      margin: 0,
+      padding: theme.spacing(2)
+    }
   },
   closeButton: {
     position: "absolute",
@@ -40,8 +46,14 @@ const DialogTitle = withStyles(styles)(props => {
 
 const DialogContent = withStyles(theme => ({
   root: {
-    padding: theme.spacing(8),
-    textAlign: "center"
+    [theme.breakpoints.down("sm")]: {
+      padding: theme.spacing(4),
+      textAlign: "center"
+    },
+    [theme.breakpoints.up("md")]: {
+      padding: theme.spacing(8),
+      textAlign: "center"
+    }
   }
 }))(MuiDialogContent);
 
