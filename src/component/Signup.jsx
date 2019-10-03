@@ -8,13 +8,19 @@ import MuiDialogActions from "@material-ui/core/DialogActions";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import Typography from "@material-ui/core/Typography";
-import DialogContentText from "@material-ui/core/DialogContentText";
+import { withRouter } from "react-router-dom";
+import Link from "@material-ui/core/Link";
 import TextField from "@material-ui/core/TextField";
+import { subscription } from "../service/subscriptionService";
+import SubscriptionPopup from "../component/SubscriptionPopup";
 
 const styles = theme => ({
   root: {
     margin: 0,
-    padding: theme.spacing(2)
+    paddingLeft: theme.spacing(9),
+    paddingRight: theme.spacing(9),
+    paddingTop: "50px",
+    textAlign: "center"
   },
   closeButton: {
     position: "absolute",
@@ -44,7 +50,9 @@ const DialogTitle = withStyles(styles)(props => {
 
 const DialogContent = withStyles(theme => ({
   root: {
-    padding: theme.spacing(2)
+    paddingLeft: theme.spacing(6),
+    paddingRight: theme.spacing(6),
+    paddingBottom: theme.spacing(6)
   }
 }))(MuiDialogContent);
 
@@ -59,7 +67,10 @@ class Signup extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      open: false
+      open: false,
+      isSubscripted: false,
+      userName: null,
+      userEmail: null
     };
   }
 
@@ -71,7 +82,26 @@ class Signup extends React.Component {
     this.setState({ open: false });
   };
 
+  handleName = e => {
+    console.log("NAME: ", e.target.value);
+    this.setState({ userName: e.target.value });
+  };
+
+  handleEmail = e => {
+    this.setState({ userEmail: e.target.value });
+    console.log("EMAIL: ", e.target.value);
+  };
+
+  handleSubscription = () => {
+    const res = subscription(this.state.userName, this.state.userEmail);
+    res.then(response => {
+      this.setState({ isSubscripted: response });
+      this.handleClose();
+    });
+  };
+
   render() {
+    let popupMessage = this.state.isSubscripted ? <SubscriptionPopup /> : "";
     return (
       <div>
         <label onClick={this.handleClickOpen} style={linkStyle}>
@@ -81,17 +111,14 @@ class Signup extends React.Component {
           onClose={this.handleClose}
           aria-labelledby="customized-dialog-title"
           open={this.state.open}
-          //fullScreen={isFullScreen}
         >
           <DialogTitle id="customized-dialog-title" onClose={this.handleClose}>
-            {
-              <p>
-                Want to receive updates
-                <br /> about our site?
-              </p>
-            }
+            <Typography gutterBottom variant="h5">
+              Want to receive updates
+              <br /> about our site?
+            </Typography>
           </DialogTitle>
-          <DialogContent dividers>
+          <DialogContent>
             <form>
               <TextField
                 id="outlined-bare"
@@ -100,6 +127,7 @@ class Signup extends React.Component {
                 defaultValue={this.state.name}
                 margin="normal"
                 variant="outlined"
+                onChange={this.handleName}
               />
               <br />
               <TextField
@@ -109,17 +137,33 @@ class Signup extends React.Component {
                 defaultValue={this.state.email}
                 margin="normal"
                 variant="outlined"
+                onChange={this.handleEmail}
               />
               <center>
                 <label style={{ fontSize: "12px", margin: "15px 0" }}>
                   By providing my name and email, you agree to
                   <br />
-                  Legalforall’s Terms of Service and Privacy Policy
+                  Legalforall’s{" "}
+                  <Link
+                    color="primary"
+                    //underline
+                    onClick={() => this.props.history.push("/terms-of-service")}
+                  >
+                    Terms of Service
+                  </Link>{" "}
+                  and{" "}
+                  <Link
+                    color="primary"
+                    //underline
+                    onClick={() => this.props.history.push("/privacy-policy")}
+                  >
+                    Privacy Policy
+                  </Link>
                 </label>
                 <br />
                 <br />
                 <Button
-                  onClick={this.handleClose}
+                  onClick={this.handleSubscription}
                   style={submitStyle}
                   color="default"
                   autoFocus
@@ -130,12 +174,13 @@ class Signup extends React.Component {
             </form>
           </DialogContent>
         </Dialog>
+        {popupMessage}
       </div>
     );
   }
 }
 
-export default Signup;
+export default withRouter(Signup);
 
 const termStyle = {
   fontSize: "10px",

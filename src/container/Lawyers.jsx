@@ -1,19 +1,10 @@
-import React, { Component } from "react";
-import Footer from "../component/Footer";
+import React, { useState, useEffect } from "react";
+import { Typography } from "@material-ui/core";
 
-class Lawyer extends Component {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    return (
-      <div>
-        <h2>Lawyers</h2>
-        <Footer />
-      </div>
-    );
-  }
+export default function Lawyer() {
+  return (
+    <div style={{ padding: "50px 10px" }}>
+      <Typography variant="h2">Lawyer Page</Typography>
+    </div>
+  );
 }
-
-export default Lawyer;

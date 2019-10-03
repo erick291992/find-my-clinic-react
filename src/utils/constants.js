@@ -10,6 +10,7 @@ export const TRUST_STATE_CATEGORY = "Trusts & Estates"
 export const REAL_STATE_CATEGORY = "Real Estate"
 export const MEDICAL_CATEGORY = "Medical"
 export const CRIMINAL_CATEGORY = "Criminal"
+export const MESSAGE_EMPTY_RESULTS = "We don't have any clinic searching with the filters."
 
 //Links:
 export const LINK_RESULT_MOVIL = ""

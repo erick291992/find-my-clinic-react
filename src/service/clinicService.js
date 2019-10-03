@@ -8,13 +8,6 @@ export const getClinics = async()=>{
     return res
 }
 
-export const getClinic = async(id)=>{
-    const url = process.env.REACT_APP_API_SERVER + 'clinics/'+ id
-    const response = await fetch(url)
-    const res = await response.json()
-    return res
-}
-
 export const getCategories = async() => {
     const url = process.env.REACT_APP_API_SERVER + 'searchCategory'
     const response = await fetch(url)

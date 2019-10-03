@@ -1,6 +1,7 @@
 import React from "react";
 import Map from "../component/Map";
 import Paper from "@material-ui/core/Paper";
+import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import PlaceIcon from "@material-ui/icons/Place";
 import PhoneEnabledIcon from "@material-ui/icons/PhoneEnabled";
@@ -9,30 +10,57 @@ import LanguageIcon from "@material-ui/icons/Language";
 import GTranslateIcon from "@material-ui/icons/GTranslate";
 import { makeStyles } from "@material-ui/core/styles";
 import Footer from "../component/Footer";
-import { connect } from "react-redux";
-import {
-  selectActiveClinics,
-  selectedClinic,
-  singleListClinic
-} from "../store/clinic/reducer";
-import { getSelectedClinic } from "../utils/utils";
+import { getSelectedClinic, findIconPath } from "../utils/utils";
 
 const useStyles = makeStyles(theme => ({
   root: {
-    flexGrow: 1,
-    width: "98%",
-    margin: "0px",
-    paddingTop: "30px"
+    [theme.breakpoints.down("sm")]: {
+      flexGrow: 1,
+      width: "100vw",
+      margin: "0px",
+      paddingTop: "0px"
+    },
+    [theme.breakpoints.up("md")]: {
+      flexGrow: 1,
+      width: "100vw",
+      margin: "0px",
+      paddingTop: "30px"
+    }
   },
   paper: {
-    padding: theme.spacing(3),
-    textAlign: "left",
-    margin: "0px",
-    height: "50vh",
-    paddingTop: "40px"
+    [theme.breakpoints.down("sm")]: {
+      padding: theme.spacing(3),
+      textAlign: "left",
+      margin: "0px",
+      height: "70vh",
+      paddingTop: "40px"
+    },
+    [theme.breakpoints.up("md")]: {
+      padding: theme.spacing(3),
+      textAlign: "left",
+      margin: "0px",
+      height: "70vh",
+      paddingTop: "40px"
+    }
   },
   contentDetail: {
     height: "100%"
+  },
+  labels: {
+    marginLeft: "5px"
+  },
+  list: {
+    listStyle: "none",
+    marginLeft: "-5px"
+  },
+  listCategory: {
+    listStyle: "none",
+    marginLeft: "-5px",
+    margintTop: "100px"
+  },
+  icons: {
+    marginRight: "5px",
+    paddingTop: "8px"
   }
 }));
 
@@ -44,7 +72,7 @@ function Details(props) {
   const rowMap = (
     <Grid item xs={12} md={6} lg={6}>
       <Paper>
-        <Map w={"100%"} h={"50vh"} list={clinic} />
+        <Map w={"100%"} h={"70vh"} list={clinic} />
       </Paper>
     </Grid>
   );
@@ -54,62 +82,100 @@ function Details(props) {
   return (
     <div>
       <Grid container spacing={0} className={classes.root}>
-        <Grid
-          item
-          xs={12}
-          style={{ height: "20vh", backgroundColor: "A6ACAF" }}
-        ></Grid>
         <Grid item xs={12} md={6} lg={6}>
           <Paper className={classes.paper}>
             {clinic.map(clinic => {
               return (
                 <div className={classes.contentDetail}>
                   <h3>{clinic.name}</h3>
-                  <label>
-                    <PlaceIcon>Place</PlaceIcon> {clinic.address}
-                  </label>
+                  <li className={classes.list}>
+                    {clinic.address ? (
+                      <PlaceIcon className={classes.icons} />
+                    ) : (
+                      ""
+                    )}
+                    {""}
+                    {clinic.address ? clinic.address : ""}
+                  </li>
                   <br />
-                  <label>
-                    <PhoneEnabledIcon />
-                  </label>
-                  {clinic.phone.forEach(phone => {
-                    return <label>{phone}</label>;
-                  })}
+                  <li className={classes.list}>
+                    {clinic.phone.lenght === 0 ? (
+                      ""
+                    ) : (
+                      <PhoneEnabledIcon className={classes.icons} />
+                    )}
 
+                    {clinic.phone.length > 0
+                      ? clinic.phone.map(phone => {
+                          return (
+                            <label className={classes.labels}>{phone}</label>
+                          );
+                        })
+                      : ""}
+                  </li>
                   <br />
-                  <label>
-                    <AlternateEmailIcon /> {clinic.email}
-                  </label>
+                  <li className={classes.list}>
+                    {clinic.email ? (
+                      <AlternateEmailIcon className={classes.icons} />
+                    ) : (
+                      ""
+                    )}
+                    {clinic.email ? clinic.email : ""}
+                  </li>
                   <br />
-                  <label>
-                    <GTranslateIcon />
-                    {clinic.languages.forEach(language => {
-                      return <label>{language}</label>;
+                  <li className={classes.list}>
+                    {clinic.languages.length > 0 ? (
+                      <GTranslateIcon className={classes.icons} />
+                    ) : (
+                      ""
+                    )}
+                    {clinic.languages.length > 0
+                      ? clinic.languages.map(language => {
+                          return (
+                            <label className={classes.labels}>{language}</label>
+                          );
+                        })
+                      : ""}
+                  </li>
+                  <br />
+                  <li className={classes.list}>
+                    {clinic.sourceWebsite ? (
+                      <LanguageIcon className={classes.icons} />
+                    ) : (
+                      ""
+                    )}
+                    {clinic.sourceWebsite ? clinic.sourceWebsite : ""}
+                  </li>
+                  <div style={{ marginTop: "40px" }}>
+                    {clinic.searchCategories.map(category => {
+                      return (
+                        <Button
+                          size="small"
+                          variant="outlined"
+                          disabled
+                          style={{ margin: "0 5px" }}
+                        >
+                          <img
+                            src={findIconPath(category)}
+                            alt="Legal4All"
+                            height="auto"
+                            width="15px"
+                            height="15px"
+                          />
+                        </Button>
+                      );
                     })}
-                  </label>
-                  <br />
-                  <label>
-                    <LanguageIcon />
-                    {clinic.sourceWebsite}
-                  </label>
+                  </div>
                 </div>
               );
             })}
           </Paper>
         </Grid>
         {showMap}
-        <Footer />
       </Grid>
+      <Footer />
     </div>
   );
 }
-const mapStateToProps = state => {
-  console.log("Details ->", selectedClinic(state));
-  return {
-    mylist: selectActiveClinics(state),
-    clinic: selectedClinic(state),
-    selectedClinicList: singleListClinic(state)
-  };
-};
 
-export default connect(mapStateToProps)(Details);
+export default Details;

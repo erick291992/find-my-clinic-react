@@ -5,23 +5,19 @@ import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import CardEntity from "../../component/CardEntity";
 import { connect } from "react-redux";
-import {
-  selectActiveClinics,
-  selectedClinic,
-  selectFilteredClinics
-} from "../../store/clinic/reducer";
-import { addClinics, addSingleClinic } from "../../store/clinic/action";
+import { selectFilteredClinics } from "../../store/clinic/reducer";
+import { addFiltered } from "../../store/clinic/action";
 import { withStyles } from "@material-ui/core";
 import PropTypes from "prop-types";
 import Footer from "../../component/Footer";
 
 import {
-  getFilterList,
   saveSelectedClinic,
   getSelectedClinic,
   reOrderList
 } from "../../utils/utils";
 import { getClinics, getFilteredClinics } from "../../service/clinicService";
+import { MESSAGE_EMPTY_RESULTS } from "../../utils/constants";
 
 const styles = theme => ({
   root: {
@@ -39,8 +35,6 @@ const styles = theme => ({
 
 const mapStateToProps = state => {
   return {
-    mylist: selectActiveClinics(state),
-    clinic: selectedClinic(state),
     mylistfiltered: selectFilteredClinics(state)
   };
 };
@@ -49,15 +43,14 @@ class Results extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      list: [],
-      clinicSelected: null
+      list: []
     };
   }
 
   loadClinics = () => {
     const res = getFilteredClinics();
     res.then(clinicsList => {
-      this.setState({ list: clinicsList });
+      this.props.addFiltered(clinicsList);
     });
   };
 
@@ -65,23 +58,12 @@ class Results extends Component {
     this.loadClinics();
   }
 
-  componentDidUpdate() {
-    console.log("update!");
-    //this.loadClinics();
-  }
-
   handleSelection = clinicId => {
-    console.log("Click  ", clinicId);
-    console.log("List: ", this.state.list);
     let listSelected = [];
-    this.state.list.forEach(clinic => {
-      console.log(clinic._id);
+    this.props.mylistfiltered.forEach(clinic => {
       if (clinic._id === clinicId) {
-        console.log("Click2");
-        this.setState({ clinicSelected: clinic });
         listSelected.push(clinic);
         saveSelectedClinic(listSelected);
-        this.props.addSingleClinic(listSelected);
       }
     });
 
@@ -91,14 +73,14 @@ class Results extends Component {
   render() {
     const { classes } = this.props;
     let showList = window.innerWidth < 600 ? showListStyle : hideListStyle;
-    let clinics = this.state.list;
+    let clinics = this.props.mylistfiltered;
+    console.log("Total Clinics: ", clinics);
+    let selected = getSelectedClinic() != null ? getSelectedClinic() : null;
 
-    let selected = getSelectedClinic() != null ? getSelectedClinic() : null; //this.props.clinic;
-    console.log("selected : ", selected);
     let listOfClinics = "";
     let listForMap = [];
     if (selected != null) {
-      let listForMap = reOrderList(selected[0], this.state.list);
+      let listForMap = reOrderList(selected[0], this.props.mylistfiltered);
       listOfClinics = listForMap.map(clinic => {
         let openingHours = "";
         clinic.operatingHours.forEach(hours => {
@@ -147,7 +129,11 @@ class Results extends Component {
           <Grid item xs={12} md={6} lg={6}>
             <div style={divStyle}>
               <div style={showList}>
-                <Paper className={classes.paper}>{listOfClinics}</Paper>
+                <Paper className={classes.paper}>
+                  {listOfClinics.length > 0
+                    ? listOfClinics
+                    : MESSAGE_EMPTY_RESULTS}
+                </Paper>
               </div>
             </div>
           </Grid>
@@ -166,10 +152,10 @@ class Results extends Component {
 Results.propTypes = {
   classes: PropTypes.object.isRequired
 };
-//export default withRouter(withStyles(styles)(Results));
+
 export default connect(
   mapStateToProps,
-  { addClinics, addSingleClinic }
+  { addFiltered }
 )(withRouter(withStyles(styles)(Results)));
 
 const hideListStyle = {
@@ -183,4 +169,3 @@ const divStyle = {
   height: "70vh",
   margin: 0
 };
-// onClick={() => this.handleSelection(clinic._id)}

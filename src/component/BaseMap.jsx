@@ -1,15 +1,12 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import {
-  selectActiveClinics,
-  selectFilteredClinics
-} from "../store/clinic/reducer";
-import { addClinics, clinicSelected } from "../store/clinic/action";
+import { connect } from "react-redux";
+import { selectFilteredClinics } from "../store/clinic/reducer";
+import { addFiltered } from "../store/clinic/action";
 import { GoogleMap, Marker, InfoWindow } from "react-google-maps";
-import { getClinics } from "../service/clinicService";
-import { thisExpression } from "@babel/types";
-import { getSelectedClinic, saveSelectedClinic } from "../utils/utils";
+import { saveSelectedClinic } from "../utils/utils";
+
+const epiCenter = { lat: 40.725288, lng: -74.007854 };
 
 class BaseMap extends Component {
   constructor(props) {
@@ -18,7 +15,6 @@ class BaseMap extends Component {
   }
 
   handleSelectedClinic = (clinic, path) => {
-    this.props.clinicSelected(clinic);
     let list = [];
     list.push(clinic);
     saveSelectedClinic(list);
@@ -30,22 +26,20 @@ class BaseMap extends Component {
     this.setState({ selectedClinic: null });
   };
 
+  getEpiCenter = () => {};
+
   render() {
+    let actualEpiCenter =
+      this.props.mylistfiltered.length > 0
+        ? this.props.mylistfiltered[0].location
+        : epiCenter;
     let list = this.props.clinics;
-    //   this.props.mylistfiltered.length != 0
-    //     ? this.props.mylistfiltered
-    //     : this.props.mylist;
-    // console.log("reciving clinic on map base:");
-    // console.log("-------------------");
-    // console.log(list.length);
     let width = window.innerWidth;
     let path = width < 600 ? "/clinics" : "/results";
+    console.log("Epicenter for Map : ", actualEpiCenter);
 
     return (
-      <GoogleMap
-        defaultZoom={10}
-        defaultCenter={{ lat: 40.725288, lng: -74.007854 }}
-      >
+      <GoogleMap defaultZoom={10} defaultCenter={actualEpiCenter}>
         {list.map(clinic => {
           return (
             <Marker
@@ -84,16 +78,13 @@ class BaseMap extends Component {
   }
 }
 
-// const mapStateToProps = state => {
-//   return {
-//     mylist: selectActiveClinics(state),
-//     mylistfiltered: selectFilteredClinics(state)
-//   };
-// };
+const mapStateToProps = state => {
+  return {
+    mylistfiltered: selectFilteredClinics(state)
+  };
+};
 
 export default connect(
-  null,
-  { clinicSelected }
+  mapStateToProps,
+  { addFiltered }
 )(withRouter(BaseMap));
-
-//export default withRouter(BaseMap);

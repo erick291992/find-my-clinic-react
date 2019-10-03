@@ -3,13 +3,11 @@ import { withRouter } from "react-router-dom";
 import Map from "../../component/Map";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
-import CardEntity from "../../component/CardEntity";
 import { connect } from "react-redux";
-import { selectActiveClinics } from "../../store/clinic/reducer";
-import { addClinics } from "../../store/clinic/action";
+import { selectFilteredClinics } from "../../store/clinic/reducer";
+import { addClinics, addFiltered } from "../../store/clinic/action";
 import { withStyles, Button } from "@material-ui/core";
 import PropTypes from "prop-types";
-import Clinics from "../../component/Clinics";
 import Footer from "../../component/Footer";
 import { getFilteredClinics } from "../../service/clinicService";
 import { cleanFilterStorage } from "../../utils/utils";
@@ -48,7 +46,7 @@ class Results extends Component {
   loadClinics = () => {
     const res = getFilteredClinics();
     res.then(clinicsList => {
-      this.setState({ list: clinicsList });
+      this.props.addFiltered(clinicsList);
     });
   };
 
@@ -67,8 +65,7 @@ class Results extends Component {
 
   render() {
     const { classes } = this.props;
-    let list = this.state.list;
-    console.log(list.length);
+    let list = this.props.mylistfiltered;
     return (
       <div className={classes.root}>
         <Grid container spacing={0}>
@@ -101,16 +98,16 @@ class Results extends Component {
 }
 
 const mapStateToProps = state => {
-  console.log("->", selectActiveClinics(state));
   return {
-    mylist: selectActiveClinics(state)
+    mylistfiltered: selectFilteredClinics(state)
   };
 };
+
 Results.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
 export default connect(
   mapStateToProps,
-  addClinics
+  { addFiltered }
 )(withRouter(withStyles(styles)(Results)));

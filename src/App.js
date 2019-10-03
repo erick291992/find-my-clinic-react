@@ -17,6 +17,8 @@ import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import MenuItemDesktop from "./component/MenuItemDesktop";
 import Mydrawer from './component/Mydrawer'
+import Termsofservice from './container/Termsofservice';
+import PrivacyPolicy from './container/PrivacyPolicy';
 const drawerWidth = 240;
 
 
@@ -132,6 +134,8 @@ function App() {
               <Route path="/clinic-details" component={Details} />
               <Route path="/results" component={FilterResults} />
               <Route path="/clinics" component={ResultsDetails} />
+              <Route path="/terms-of-service" component={Termsofservice} />
+              <Route path="/privacy-policy" component={PrivacyPolicy} />
               <Route component={Notfound} />
             </Switch>
           </div>
