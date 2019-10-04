@@ -5,13 +5,20 @@ import PropTypes from "prop-types";
 import Paper from "@material-ui/core/Paper";
 import CardEntity from "../../component/CardEntity";
 import { connect } from "react-redux";
-import { selectActiveClinics } from "../../store/clinic/reducer";
-import { addClinics } from "../../store/clinic/action";
+import { addFiltered } from "../../store/clinic/action";
+import { selectFilteredClinics } from "../../store/clinic/reducer";
+import { getFilteredClinics } from "../../service/clinicService";
+import {
+  saveSelectedClinic,
+  getSelectedClinic,
+  reOrderList
+} from "../../utils/utils";
+import Footer from "../../component/Footer";
 
 const styles = theme => ({
   root: {
     flexGrow: 1,
-    width: "98%",
+    width: "100vw",
     margin: "0px"
   },
   paper: {
@@ -26,44 +33,87 @@ class ResultsDetails extends Component {
     super(props);
     this.state = { list: [] };
   }
+
+  loadClinics = () => {
+    const res = getFilteredClinics();
+    res.then(clinicsList => {
+      this.props.addFiltered(clinicsList);
+    });
+  };
+
   componentDidMount() {
-    this.setState({ list: this.props.mylist });
+    this.loadClinics();
   }
 
   handleSelection = clinicId => {
     let listSelected = [];
-    this.state.list.forEach(clinic => {
+    this.props.mylistfiltered.forEach(clinic => {
       if (clinic._id === clinicId) {
-        this.setState({ clinicSelected: clinic });
         listSelected.push(clinic);
-        this.props.addClinics(listSelected);
+        saveSelectedClinic(listSelected);
       }
     });
-
     this.props.history.push("/clinic-details");
   };
 
   render() {
     const { classes } = this.props;
+    let clinics = this.props.mylistfiltered;
+    console.log("Total Clinics: ", clinics);
+
+    let selected = getSelectedClinic() ? getSelectedClinic() : null;
+
+    let listOfClinics = "";
+    let listForMap = [];
+    if (selected != null) {
+      let listForMap = reOrderList(selected[0], this.props.mylistfiltered);
+      listOfClinics = listForMap.map(clinic => {
+        let openingHours = "";
+        clinic.operatingHours.forEach(hours => {
+          openingHours += hours + " ";
+        });
+        return (
+          <div onClick={() => this.handleSelection(clinic._id)}>
+            <CardEntity
+              title={clinic.name}
+              subtitle=""
+              hours={openingHours}
+              categories={clinic.searchCategories.toString()}
+              url={clinic.email}
+              active={selected[0]._id === clinic._id ? true : false}
+              style={{ margin: "0px", border: "1 solid #85C1E9" }}
+            />
+          </div>
+        );
+      });
+    } else {
+      listForMap = clinics;
+      listOfClinics = listForMap.map(clinic => {
+        let openingHours = "";
+        clinic.operatingHours.forEach(hours => {
+          openingHours += hours + " ";
+        });
+        return (
+          <div onClick={() => this.handleSelection(clinic._id)}>
+            <CardEntity
+              title={clinic.name}
+              subtitle=""
+              hours={openingHours}
+              categories={clinic.searchCategories.toString()}
+              url={clinic.email}
+              active={false}
+              style={{ margin: "0px" }}
+            />
+          </div>
+        );
+      });
+    }
+
     return (
       <div className={classes.root}>
         <div style={divStyle}>
-          <Paper className={classes.paper}>
-            {this.state.list.map(clinic => {
-              return (
-                <div onClick={() => this.handleSelection(clinic._id)}>
-                  <CardEntity
-                    title={clinic.name}
-                    subtitle={clinic.operatingHours[0]}
-                    hours="9:00"
-                    categories="cat"
-                    url="/#"
-                    style={{ margin: "0px" }}
-                  />
-                </div>
-              );
-            })}
-          </Paper>
+          <Paper className={classes.paper}>{listOfClinics}</Paper>
+          <Footer />
         </div>
       </div>
     );
@@ -75,15 +125,14 @@ ResultsDetails.propTypes = {
 };
 
 const mapStateToProps = state => {
-  console.log("->", selectActiveClinics(state));
   return {
-    mylist: selectActiveClinics(state)
+    mylistfiltered: selectFilteredClinics(state)
   };
 };
 
 export default connect(
   mapStateToProps,
-  addClinics
+  { addFiltered }
 )(withRouter(withStyles(styles)(ResultsDetails)));
 
 const divStyle = {

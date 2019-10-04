@@ -1,4 +1,3 @@
-import React from 'react'
 import createHistory from 'history/createBrowserHistory';
 
 export let changeTo = (path) => {
@@ -13,29 +12,9 @@ export let removeCategory = (list, category) =>{
     });
 }
 
-// Return filterd list
-export let filteredList = (list,filters) => {
-    let listFiltered = []
-    if(filters.length==0){
-        listFiltered = list
-    }else{
-        
-    list.forEach(clinic=>{
-        let hasCategory = false
-        clinic.searchCategories.forEach(cat=>{
-            if(filters.includes(cat) && hasCategory===false){
-                hasCategory = true
-                listFiltered.push(clinic)
-            }
-        })
-    })
-    console.log("From Util Function:")
-    console.log("-------------------")
-    console.log(listFiltered.length)
-    
-    }
-    return listFiltered
-        
+//get path variable as string
+export let getVariablePathString = (isFirst, variableName,value) => {
+        return isFirst?"?"+variableName+"="+value:"&"+variableName+"="+value
 }
 
 // save filters(category)
@@ -46,23 +25,17 @@ export let saveFilters = (filters) => {
 export let getFilters = () => {
     return JSON.parse(localStorage.getItem("filters"))
 }
-
-//save Clinic Id
-export let saveClinicId = (id) => {
-    localStorage.setItem("clinicId",id)
+//save zipcode
+export let saveZipcode = (zipcode) => {
+    localStorage.setItem("zipcode",zipcode)
 }
 
-export let getClinicId = () => {
-    return JSON.stringify(localStorage.getItem("clinicId"))
+export let getZipcode = () => {
+    return localStorage.getItem("zipcode")
 }
 
-//save filtered list
-export let saveFilterList = (list) => {
-    localStorage.setItem("filterList",JSON.stringify(list))
-}
-
-export let getFilterList = () => {
-    return JSON.parse(localStorage.getItem("filterList"))
+export let cleanFilterStorage = () => {
+    localStorage.clear()
 }
 
 //Save Selected Clinic from map
@@ -72,4 +45,46 @@ export let saveSelectedClinic = (clinic) => {
 
 export let getSelectedClinic = () => {
     return JSON.parse(localStorage.getItem("selectedClinic"))
+}
+
+export let reOrderList = (clinic,list) =>{
+
+        let newList = [];
+        newList.push(clinic);
+        list.forEach(lis => {
+          if (clinic._id != lis._id) {
+            newList.push(lis);
+          }
+        });
+        console.log("Re order: ", newList.length);
+        return newList;
+}
+
+export let findIconPath = (categoryName) =>{
+    switch(categoryName){
+        case "Housing": return "./icons/housing-icon.png"
+            break;
+        case "Consumer": return "./icons/consumer-icon.png"
+            break;
+         case "Family": return "./icons/family-icon.png"
+            break;
+        case "Criminal": return "./icons/criminal-icon.png"
+            break;
+        case "Business": return "./icons/business-icon.png"
+            break;
+        case "Real Estate": return "./icons/realstate-icon.png"
+            break;
+        case "General": return "./icons/general-icon.png"
+            break;
+        case "Trusts & Estates": return "./icons/trustandstates-icon.png"
+            break;
+        case "Medical": return "./icons/medical-icon.png"
+            break;
+        case "Legal Procedure": return "./icons/legalprocedure-icon.png"
+            break;
+        case "Employment": return "./icons/employment-icon.png"
+            break;
+        case "Immigration": return "./icons/immigration-icon.png"
+            break;
+    }
 }
