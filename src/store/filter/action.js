@@ -1,4 +1,4 @@
-const addFilter = (selectedFilter) => {
+export const addFilter = (selectedFilter) => {
     console.log(selectedFilter)
     return {
             type:   'ADD_FILTER',
@@ -6,4 +6,11 @@ const addFilter = (selectedFilter) => {
     }
 }
 
-export default addFilter
+export const removeFilter = () => {
+    console.log("remove filter")
+    let empty = []
+    return {
+            type:   'REMOVE_FILTER',
+            payload: empty
+    }
+}

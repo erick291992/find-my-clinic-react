@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { selectFilteredClinics } from "../store/clinic/reducer";
 import { addFiltered } from "../store/clinic/action";
 import { GoogleMap, Marker, InfoWindow } from "react-google-maps";
-import { saveSelectedClinic } from "../utils/utils";
+import { saveSelectedClinic, getSelectedClinic } from "../utils/utils";
 
 const epiCenter = { lat: 40.725288, lng: -74.007854 };
 
@@ -26,20 +26,42 @@ class BaseMap extends Component {
     this.setState({ selectedClinic: null });
   };
 
-  getEpiCenter = () => {};
+  getBestEpicenter = list => {
+    let ramNumber = Math.floor(Math.random() * list.length);
+    let result = list[ramNumber].location;
+    return result;
+  };
 
   render() {
-    let actualEpiCenter =
-      this.props.mylistfiltered.length > 0
-        ? this.props.mylistfiltered[0].location
-        : epiCenter;
     let list = this.props.clinics;
+    let actualEpiCenter = null;
+    if (getSelectedClinic()) {
+      actualEpiCenter = getSelectedClinic()[0].location;
+    } else {
+      actualEpiCenter =
+        this.props.mylistfiltered.length > 0
+          ? this.props.mylistfiltered[0].location
+          : epiCenter;
+    }
+
     let width = window.innerWidth;
-    let path = width < 600 ? "/clinics" : "/results";
+    //let path = width < 600 ? "/clinics" : "/results";
+    let path = "";
+    let zoomValue = 0;
+    if (width < 600) {
+      path = "/clinics";
+      zoomValue = 14;
+    } else {
+      path = "/results";
+      zoomValue = 12;
+    }
     console.log("Epicenter for Map : ", actualEpiCenter);
 
     return (
-      <GoogleMap defaultZoom={10} defaultCenter={actualEpiCenter}>
+      <GoogleMap
+        defaultZoom={this.props.zoom ? this.props.zoom : zoomValue}
+        defaultCenter={actualEpiCenter}
+      >
         {list.map(clinic => {
           return (
             <Marker

@@ -5,7 +5,10 @@ import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import CardEntity from "../../component/CardEntity";
 import { connect } from "react-redux";
-import { selectFilteredClinics } from "../../store/clinic/reducer";
+import {
+  selectFilteredClinics,
+  selectActiveClinics
+} from "../../store/clinic/reducer";
 import { addFiltered } from "../../store/clinic/action";
 import { withStyles } from "@material-ui/core";
 import PropTypes from "prop-types";
@@ -24,7 +27,7 @@ const styles = theme => ({
     flexGrow: 1,
     width: "98%",
     margin: "0px",
-    paddingTop: "30px"
+    paddingTop: "3px"
   },
   paper: {
     padding: theme.spacing(0),
@@ -35,7 +38,8 @@ const styles = theme => ({
 
 const mapStateToProps = state => {
   return {
-    mylistfiltered: selectFilteredClinics(state)
+    mylistfiltered: selectFilteredClinics(state),
+    myclinics: selectActiveClinics(state)
   };
 };
 
@@ -60,7 +64,11 @@ class Results extends Component {
 
   handleSelection = clinicId => {
     let listSelected = [];
-    this.props.mylistfiltered.forEach(clinic => {
+    let list =
+      this.props.mylistfiltered.length > 0
+        ? this.props.mylistfiltered
+        : this.props.myclinics;
+    list.forEach(clinic => {
       if (clinic._id === clinicId) {
         listSelected.push(clinic);
         saveSelectedClinic(listSelected);
@@ -73,14 +81,16 @@ class Results extends Component {
   render() {
     const { classes } = this.props;
     let showList = window.innerWidth < 600 ? showListStyle : hideListStyle;
-    let clinics = this.props.mylistfiltered;
-    console.log("Total Clinics: ", clinics);
+    let clinics =
+      this.props.mylistfiltered.length === 0
+        ? this.props.myclinics
+        : this.props.mylistfiltered;
     let selected = getSelectedClinic() != null ? getSelectedClinic() : null;
 
     let listOfClinics = "";
     let listForMap = [];
     if (selected != null) {
-      let listForMap = reOrderList(selected[0], this.props.mylistfiltered);
+      let listForMap = reOrderList(selected[0], clinics);
       listOfClinics = listForMap.map(clinic => {
         let openingHours = "";
         clinic.operatingHours.forEach(hours => {
@@ -139,7 +149,7 @@ class Results extends Component {
           </Grid>
           <Grid item xs={12} md={6} lg={6}>
             <Paper className={classes.paper}>
-              <Map w={"100%"} h={"70vh"} list={clinics} />
+              <Map w={"100%"} h={"75vh"} list={clinics} />
             </Paper>
           </Grid>
         </Grid>
@@ -166,6 +176,6 @@ const showListStyle = {
 };
 const divStyle = {
   overflowY: "scroll",
-  height: "70vh",
+  height: "75vh",
   margin: 0
 };

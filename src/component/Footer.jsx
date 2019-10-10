@@ -7,18 +7,19 @@ import Link from "@material-ui/core/Link";
 
 const useStyles = makeStyles(theme => ({
   root: {
-    position: "absolute",
+    //position: "absolute",
     bottom: "0",
     marginLeft: "0",
     marginRight: "0",
-    padding: "15px 10px",
-    textAlign: "center"
+    padding: "5px 10px",
+    textAlign: "left"
   },
   link: {
-    margin: theme.spacing(1),
+    //margin: theme.spacing(1),
     color: "#566573",
     cursor: "pointer",
-    marginRight: "10px"
+    marginRight: "10px",
+    textAlign: "left"
   }
 }));
 

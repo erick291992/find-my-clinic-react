@@ -40,6 +40,7 @@ class Map extends Component {
           containerElement={<div style={{ height: "100%" }} />}
           mapElement={<div style={{ height: "100%" }} />}
           clinics={this.props.list}
+          zoom={this.props.z}
         />
       </div>
     );

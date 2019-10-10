@@ -12,11 +12,6 @@ export let removeCategory = (list, category) =>{
     });
 }
 
-//get path variable as string
-export let getVariablePathString = (isFirst, variableName,value) => {
-        return isFirst?"?"+variableName+"="+value:"&"+variableName+"="+value
-}
-
 // save filters(category)
 export let saveFilters = (filters) => {
     localStorage.setItem("filters",JSON.stringify(filters))
@@ -35,7 +30,10 @@ export let getZipcode = () => {
 }
 
 export let cleanFilterStorage = () => {
-    localStorage.clear()
+    //localStorage.clear()
+    localStorage.removeItem('zipcode');
+    localStorage.removeItem('filters');
+    localStorage.removeItem('selectedClinic');
 }
 
 //Save Selected Clinic from map

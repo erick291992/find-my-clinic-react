@@ -16,27 +16,21 @@ export const getCategories = async() => {
 }
 
 export const getFilteredClinics = async() => {
-    let path = "find/clinics"
-    let isFirst = true
+    let path = "find/clinics?"
+    let categoryList = getFilters()
+    let filters = categoryList?categoryList:[]
     let zipcode = getZipcode()
-    let categoryList =getFilters()
-    if(categoryList!=null){
-        if(zipcode != null){
-        
-            categoryList.forEach(category => {
-                path += getVariablePathString(isFirst,"searchCategories", category)
-                isFirst = false
-            });
-            path+=getVariablePathString(isFirst,"zipcode",zipcode)
-    
-        }else{
-            categoryList.forEach(category => {
-                path += getVariablePathString(isFirst,"searchCategories", category)
-                isFirst = false
-            });
-        }
+    if(filters.lenght > 0 && zipcode == null){
+        categoryList.forEach(category => {
+            path += "&searchCategories="+category//getVariablePathString(isFirst,"searchCategories", category)
+        });
+    }else if(filters.length == 0 && zipcode != null){
+            path+="&zipcode="+zipcode//getVariablePathString(isFirst,"zipcode",zipcode)
     }else{
-        path = "clinics"
+        filters.forEach(category => {
+            path += "&searchCategories="+category//getVariablePathString(isFirst,"searchCategories", category)
+        });
+        path+="&zipcode="+zipcode//getVariablePathString(isFirst,"zipcode",zipcode)
     }
     
     console.log("Searching Path : " + path)

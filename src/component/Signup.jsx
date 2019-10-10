@@ -138,7 +138,7 @@ class Signup extends React.Component {
             <form>
               <TextField
                 id="outlined-bare"
-                placeholder={"name"}
+                placeholder={"Name"}
                 style={textfieldStyle}
                 defaultValue={this.state.name}
                 margin="normal"
@@ -148,7 +148,7 @@ class Signup extends React.Component {
               <br />
               <TextField
                 id="outlined-bare"
-                placeholder={"email"}
+                placeholder={"Email"}
                 style={textfieldStyle}
                 defaultValue={this.state.email}
                 margin="normal"
