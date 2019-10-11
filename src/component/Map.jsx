@@ -7,33 +7,19 @@ import {
 } from "react-google-maps";
 import BaseMap from "../component/BaseMap";
 
-// function myMap(clinics) {
-//   return (
-//     <GoogleMap
-//       defaultZoom={10}
-//       defaultCenter={{ lat: 40.725288, lng: -74.007854 }}
-//     >
-//       {clinics.map(clinic => {
-//         return <Marker key={clinic._id} position={clinic.location} />;
-//       })}
-//     </GoogleMap>
-//   );
-// // }
-// const WrapperMap = withScriptjs(withGoogleMap());
-
 const WrapperMap = withScriptjs(withGoogleMap(BaseMap));
 
 class Map extends Component {
   constructor(props) {
     super(props);
-    // this.state = {
-    //   clinics: []
-    // };
   }
 
   render() {
+    let width = window.innerWidth;
+    let styleMap = width < 600 ? hightMovil : hightDesktop;
+
     return (
-      <div style={{ width: this.props.w, height: this.props.h, zIndex: "-1" }}>
+      <div style={{ height: "100%", width: "100%" }}>
         <WrapperMap
           googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_API_GOOGLE_KEY}`}
           loadingElement={<div style={{ height: "100%" }} />}
@@ -47,3 +33,14 @@ class Map extends Component {
   }
 }
 export default Map;
+
+const hightMovil = {
+  width: "100%",
+  height: "calc(100vh - 250px)",
+  zIndex: "-1"
+};
+const hightDesktop = {
+  width: "100%",
+  height: "calc(100vh - 170px)",
+  zIndex: "-1"
+};

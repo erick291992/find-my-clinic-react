@@ -20,9 +20,10 @@ import Footer from "../../component/Footer";
 
 const styles = theme => ({
   root: {
-    flexGrow: 1,
-    width: "100vw",
-    margin: "0px"
+    width: "100%",
+    height: "calc(100vh - 250px)",
+    zIndex: "-1",
+    paddingTop: "10px"
   },
   paper: {
     width: "100%",
@@ -124,7 +125,6 @@ class ResultsDetails extends Component {
         <div style={divStyle}>
           <Paper className={classes.paper}>{listOfClinics}</Paper>
         </div>
-        <Footer />
       </div>
     );
   }
@@ -148,6 +148,7 @@ export default connect(
 
 const divStyle = {
   overflowY: "scroll",
-  height: "65vh",
+  height: `calc(100vh - ${window.innerWidth < 600 ? "250px" : "170px"})`,
+  //height: "65vh",
   margin: 0
 };

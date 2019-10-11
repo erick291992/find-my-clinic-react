@@ -16,7 +16,7 @@ import SubscriptionPopup from "../component/SubscriptionPopup";
 
 const styles = theme => ({
   root: {
-    [theme.breakpoints.down("sm")]: {
+    [theme.breakpoints.down("xs")]: {
       margin: 0,
       paddingLeft: theme.spacing(4),
       paddingRight: theme.spacing(4),
@@ -43,7 +43,7 @@ const DialogTitle = withStyles(styles)(props => {
   const { children, classes, onClose } = props;
   return (
     <MuiDialogTitle disableTypography className={classes.root}>
-      <Typography variant="h6">{children}</Typography>
+      <Typography variant={"h6"}>{children}</Typography>
       {onClose ? (
         <IconButton
           aria-label="close"
@@ -59,12 +59,12 @@ const DialogTitle = withStyles(styles)(props => {
 
 const DialogContent = withStyles(theme => ({
   root: {
-    [theme.breakpoints.down("sm")]: {
-      paddingLeft: theme.spacing(0),
-      paddingRight: theme.spacing(0),
-      paddingBottom: theme.spacing(0)
+    [theme.breakpoints.down("xs")]: {
+      paddingLeft: theme.spacing(1),
+      paddingRight: theme.spacing(1),
+      paddingBottom: theme.spacing(1)
     },
-    [theme.breakpoints.down("sm")]: {
+    [theme.breakpoints.up("md")]: {
       paddingLeft: theme.spacing(6),
       paddingRight: theme.spacing(6),
       paddingBottom: theme.spacing(6)
@@ -127,7 +127,7 @@ class Signup extends React.Component {
           open={this.state.open}
         >
           <DialogTitle id="customized-dialog-title" onClose={this.handleClose}>
-            <Typography gutterBottom variant="h5">
+            <Typography gutterBottom variant={"h5"}>
               Want to receive updates
               <br /> about our site?
             </Typography>
@@ -139,8 +139,8 @@ class Signup extends React.Component {
                 placeholder={"Name"}
                 style={textfieldStyle}
                 defaultValue={this.state.name}
-                margin="normal"
-                variant="outlined"
+                margin={"normal"}
+                variant={"outlined"}
                 onChange={this.handleName}
               />
               <br />
@@ -149,8 +149,8 @@ class Signup extends React.Component {
                 placeholder={"Email"}
                 style={textfieldStyle}
                 defaultValue={this.state.email}
-                margin="normal"
-                variant="outlined"
+                margin={"normal"}
+                variant={"outlined"}
                 onChange={this.handleEmail}
               />
               <center>
@@ -159,7 +159,7 @@ class Signup extends React.Component {
                   <br />
                   Legalforall’s{" "}
                   <Link
-                    color="primary"
+                    color={"primary"}
                     //underline
                     onClick={() => this.props.history.push("/terms-of-service")}
                   >
@@ -167,7 +167,7 @@ class Signup extends React.Component {
                   </Link>{" "}
                   and{" "}
                   <Link
-                    color="primary"
+                    color={"primary"}
                     //underline
                     onClick={() => this.props.history.push("/privacy-policy")}
                   >
@@ -179,8 +179,8 @@ class Signup extends React.Component {
                 <Button
                   onClick={this.handleSubscription}
                   style={submitStyle}
-                  color="default"
                   autoFocus
+                  color={"default"}
                 >
                   SIGN UP
                 </Button>

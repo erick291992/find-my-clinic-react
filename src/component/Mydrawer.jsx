@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { createBrowserHistory } from "history";
+import { Router, Switch, Route } from "react-router-dom";
 import { withRouter } from "react-router-dom";
 import Signup from "./Signup";
 import { useTheme } from "@material-ui/core/styles";
@@ -28,8 +30,8 @@ class Mydrawer extends Component {
     return (
       <Drawer
         className={drawer}
-        variant="persistent"
-        anchor="right"
+        variant={"persistent"}
+        anchor={"right"}
         open={open}
         classes={{
           paper: drawerPaper
@@ -46,6 +48,13 @@ class Mydrawer extends Component {
         </div>
         <Divider />
         <List>
+          <ListItem button>
+            <ListItemText
+              primary={"Home"}
+              onClick={() => this.props.history.push("/")}
+            />
+          </ListItem>
+          <Divider />
           <ListItem button>
             <Signup />
           </ListItem>

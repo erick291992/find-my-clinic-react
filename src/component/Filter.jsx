@@ -169,10 +169,9 @@ class Filter extends Component {
       <div>
         <center>
           <Button
-            variant="outlined"
+            variant={"outlined"}
             className={classes.buttonSearch}
-            //color={this.state.categoriesSelected.length > 0 ? "secondary" : ""}
-            color={this.props.myfilters.length > 0 ? "secondary" : ""}
+            color={this.props.myfilters.length > 0 ? "secondary" : "default"}
             onClick={this.handleClickOpen}
           >
             <SearchIcon />
@@ -188,7 +187,7 @@ class Filter extends Component {
           </Button>
           <br />
           <Button
-            variant="contained"
+            variant={"contained"}
             color={"primary"}
             className={classes.buttonUnFilter}
             onClick={() => this.handleNoFilter()}
@@ -208,7 +207,7 @@ class Filter extends Component {
           </DialogTitle>
           <DialogContent dividers>
             <div>
-              <Typography variant="subtitle2" gutterBottom>
+              <Typography variant={"subtitle2"} gutterBottom>
                 {bannerSelectedCategories.join(" , ")}
               </Typography>
               <center>
@@ -219,7 +218,6 @@ class Filter extends Component {
                         key={cate._id}
                         variant={"contained"}
                         style={buttonStyle}
-                        color="default"
                         onClick={() => this.handleFilterSelection(cate.name)}
                       >
                         {cate.name}
@@ -239,7 +237,7 @@ class Filter extends Component {
                 </table>
                 <div style={{ textAlign: "left", marginLeft: "8px" }}>
                   <Typography
-                    variant="subtitle2"
+                    variant={"subtitle2"}
                     gutterBottom
                     style={{ marginTop: "5px" }}
                   >
@@ -251,7 +249,7 @@ class Filter extends Component {
                     placeholder="ZIPCODE"
                     value={this.state.zipcode}
                     margin="normal"
-                    variant="outlined"
+                    variant={"outlined"}
                     inputProps={{ "aria-label": "bare" }}
                     onChange={this.handleZipcode}
                   />

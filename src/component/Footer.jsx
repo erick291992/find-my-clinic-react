@@ -7,15 +7,16 @@ import Link from "@material-ui/core/Link";
 
 const useStyles = makeStyles(theme => ({
   root: {
-    //position: "absolute",
+    position: "absolute",
+    width: "100%",
     bottom: "0",
     marginLeft: "0",
     marginRight: "0",
     padding: "5px 10px",
-    textAlign: "left"
+    textAlign: "left",
+    height: "50px"
   },
   link: {
-    //margin: theme.spacing(1),
     color: "#566573",
     cursor: "pointer",
     marginRight: "10px",
@@ -26,8 +27,8 @@ const useStyles = makeStyles(theme => ({
 function Footer(props) {
   let classes = useStyles();
   return (
-    <Grid fluid className={classes.root}>
-      <Grid xs={12}>
+    <Grid fluid={true} className={classes.root}>
+      <Grid item xs={12}>
         <Typography>
           <Link
             className={classes.link}

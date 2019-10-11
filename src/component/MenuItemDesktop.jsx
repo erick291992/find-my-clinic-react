@@ -31,28 +31,25 @@ function DenseAppBar(props) {
 
   return (
     <div className={classes.root}>
-      <Grid container justify="flex-end">
-        <Grid item>
-          <Button>
-            <Signup style={linkStyle} />
-          </Button>
-          <Button>
-            <Link
-              style={linkStyle}
-              onClick={() => props.history.push("/lawyer")}
-            >
-              NEED A LAWYER
-            </Link>
-          </Button>
-          <Button>
-            <Link
-              style={linkStyle}
-              onClick={() => props.history.push("/about")}
-            >
-              About us
-            </Link>
-          </Button>
-        </Grid>
+      <Grid container justify={"flex-end"} fluid={true}>
+        <Button>
+          <Link style={linkStyle} onClick={() => props.history.push("/")}>
+            HOME
+          </Link>
+        </Button>
+        <Button>
+          <Signup style={linkStyle} />
+        </Button>
+        <Button>
+          <Link style={linkStyle} onClick={() => props.history.push("/lawyer")}>
+            NEED A LAWYER
+          </Link>
+        </Button>
+        <Button>
+          <Link style={linkStyle} onClick={() => props.history.push("/about")}>
+            About us
+          </Link>
+        </Button>
       </Grid>
     </div>
   );
@@ -64,5 +61,3 @@ const linkStyle = {
   color: "#000000",
   cursor: "pointer"
 };
-
-//href={"/about"}

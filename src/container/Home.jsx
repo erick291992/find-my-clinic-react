@@ -3,7 +3,6 @@ import { addClinics } from "../store/clinic/action";
 import { connect } from "react-redux";
 import Map from "../component/Map";
 import { getClinics } from "../service/clinicService";
-import Footer from "../component/Footer";
 
 class Home extends Component {
   constructor(props) {
@@ -28,11 +27,10 @@ class Home extends Component {
 
   render() {
     let width = window.innerWidth;
-    let heightMap = width < 600 ? "64vh" : "74vh";
+    let sizeContent = width < 600 ? hightMovil : hightDesktop;
     return (
-      <div>
-        <Map w={"100vw"} h={heightMap} list={this.state.clinics} />
-        <Footer />
+      <div style={sizeContent}>
+        <Map list={this.state.clinics} />
       </div>
     );
   }
@@ -42,3 +40,14 @@ export default connect(
   null,
   { addClinics }
 )(Home);
+
+const hightMovil = {
+  width: "100%",
+  height: "calc(100vh - 250px)",
+  zIndex: "-1"
+};
+const hightDesktop = {
+  width: "100%",
+  height: "calc(100vh - 170px)",
+  zIndex: "-1"
+};

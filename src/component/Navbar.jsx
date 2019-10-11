@@ -45,7 +45,7 @@ function Navbar(props) {
     width < 600 ? (
       ""
     ) : (
-      <p
+      <div
         style={{
           textAlign: "left",
           marginTop: "25px",
@@ -56,14 +56,14 @@ function Navbar(props) {
           NYC’s legal aid providers. All in one place
         </label>
         <Filter />
-      </p>
+      </div>
     );
 
   let linksMovil = (
-    <Grid container justify="flex-end">
-      <Grid item>
+    <Grid container justify={"flex-end"}>
+      <Grid item fluid={true}>
         <IconButton
-          color="inherit"
+          color={"inherit"}
           aria-label="open drawer"
           edge="end"
           onClick={() => handleDrawerOpen()}
@@ -76,12 +76,12 @@ function Navbar(props) {
   );
 
   let mymenu = window.innerWidth < 600 ? linksMovil : linksDesktop;
-  let heightAppBar = window.innerWidth < 600 ? "auto" : "120px";
+  let heightAppBar = window.innerWidth < 600 ? "200px" : "120px";
   let filterMovil = window.innerWidth < 600 ? <Filter /> : "";
 
   return (
     <AppBar
-      position="absolute"
+      position={"absolute"}
       style={{
         paddingTop: "10px",
         height: heightAppBar,
@@ -97,7 +97,7 @@ function Navbar(props) {
             width="100"
           />
         </Link>
-        <div>{filterDesktop}</div>
+        {filterDesktop}
         {mymenu}
       </Toolbar>
       <div style={{ width: "90%", margin: "20px 5% 5px 5%" }}>

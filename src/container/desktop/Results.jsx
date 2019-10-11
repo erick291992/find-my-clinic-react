@@ -12,8 +12,6 @@ import {
 import { addFiltered } from "../../store/clinic/action";
 import { withStyles } from "@material-ui/core";
 import PropTypes from "prop-types";
-import Footer from "../../component/Footer";
-
 import {
   saveSelectedClinic,
   getSelectedClinic,
@@ -24,10 +22,14 @@ import { MESSAGE_EMPTY_RESULTS } from "../../utils/constants";
 
 const styles = theme => ({
   root: {
-    flexGrow: 1,
-    width: "98%",
-    margin: "0px",
-    paddingTop: "3px"
+    [theme.breakpoints.down("xs")]: {
+      width: "100%",
+      height: "calc(100vh - 250px)"
+    },
+    [theme.breakpoints.up("md")]: {
+      width: "100%",
+      height: "calc(100vh - 170px)"
+    }
   },
   paper: {
     padding: theme.spacing(0),
@@ -134,27 +136,18 @@ class Results extends Component {
     }
 
     return (
-      <div className={classes.root}>
-        <Grid container spacing={0}>
-          <Grid item xs={12} md={6} lg={6}>
-            <div style={divStyle}>
-              <div style={showList}>
-                <Paper className={classes.paper}>
-                  {listOfClinics.length > 0
-                    ? listOfClinics
-                    : MESSAGE_EMPTY_RESULTS}
-                </Paper>
-              </div>
-            </div>
-          </Grid>
-          <Grid item xs={12} md={6} lg={6}>
+      <Grid container spacing={0} div>
+        <Grid item xs={12} md={6} lg={6} className={classes.root}>
+          <div style={divStyle}>
             <Paper className={classes.paper}>
-              <Map w={"100%"} h={"75vh"} list={clinics} />
+              {listOfClinics.length > 0 ? listOfClinics : MESSAGE_EMPTY_RESULTS}
             </Paper>
-          </Grid>
+          </div>
         </Grid>
-        <Footer />
-      </div>
+        <Grid item xs={12} md={6} lg={6} className={classes.root}>
+          <Map list={clinics} />
+        </Grid>
+      </Grid>
     );
   }
 }
@@ -176,6 +169,6 @@ const showListStyle = {
 };
 const divStyle = {
   overflowY: "scroll",
-  height: "75vh",
+  height: `calc(100vh - ${window.innerWidth < 600 ? "250px" : "170px"})`,
   margin: 0
 };

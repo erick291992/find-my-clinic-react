@@ -1,4 +1,6 @@
 import React from 'react';
+// import { createBrowserHistory } from 'history';
+// import {Router, Switch, Route } from 'react-router-dom';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import createBrowserHistory from 'history/createBrowserHistory';
 import Navbar from './component/Navbar'
@@ -19,12 +21,14 @@ import MenuItemDesktop from "./component/MenuItemDesktop";
 import Mydrawer from './component/Mydrawer'
 import Termsofservice from './container/Termsofservice';
 import PrivacyPolicy from './container/PrivacyPolicy';
+import Footer from "./component/Footer";
 const drawerWidth = 240;
 
 
 const useStyles = makeStyles(theme => ({
   root: {
-    display: "flex"
+    display: "flex",
+    height:"100%"
   },
   appBar: {
     transition: theme.transitions.create(["margin", "width"], {
@@ -97,7 +101,7 @@ function App() {
   let linksDesktop = <MenuItemDesktop />;
 
   let linksMovil = (
-    <Grid container justify="flex-end">
+    <Grid container justify={"flex-end"}>
       <Grid item>
         <IconButton
           color="inherit"
@@ -144,9 +148,10 @@ function App() {
           open={open}
           handleDrawerClose={handleDrawerClose}
           drawer={classes.drawer} 
-          drawerPaper={classes.drawerPaper} 
+          drawerPaper={classes.drawerPaper}
           drawerHeader={classes.drawerHeader}/>
     </div>
+    <Footer />
     </Router>
   );
 }

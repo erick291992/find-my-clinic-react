@@ -15,22 +15,27 @@ import { cleanFilterStorage } from "../../utils/utils";
 
 const styles = theme => ({
   root: {
-    flexGrow: 1,
     width: "100%",
-    margin: "10px 0 0 0px"
+    height: "calc(100vh - 250px)",
+    paddingTop: "25px"
+  },
+  rootMap: {
+    width: "100%",
+    height: "calc(100vh - 300px)"
   },
   paper: {
     padding: theme.spacing(0),
     textAlign: "center",
-    margin: "0px"
+    margin: "0px",
+    height: "50px"
   },
   buttonAction: {
     width: "45%",
     margin: "2.5%",
     padding: "5px",
-    fontSize: "8px",
+    fontSize: "10px",
     cursor: "pointer",
-    color: "#FFFFFF",
+    color: "#000000",
     backgroundColor: "#A6ACAF"
   }
 });
@@ -89,9 +94,10 @@ class Results extends Component {
                   See list of search results
                 </Button>
               </div>
-              <Map w={"100%"} h={"60vh"} list={list} />
             </Paper>
-            <Footer />
+            <div className={classes.rootMap}>
+              <Map list={list} />
+            </div>
           </Grid>
         </Grid>
       </div>
