@@ -33,8 +33,9 @@ const useStyles = makeStyles(theme => ({
       padding: theme.spacing(3),
       textAlign: "left",
       margin: "0px",
-      height: "70vh",
-      paddingTop: "5px"
+      height: "65vh",
+      paddingTop: "5px",
+      overflow: "auto"
     },
     [theme.breakpoints.up("md")]: {
       padding: theme.spacing(3),

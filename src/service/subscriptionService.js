@@ -1,6 +1,7 @@
+import {urls} from "../utils/constants"
+
 export const subscription = async(userName,userEmail) => {
     let statusResponse = false
-    const url = process.env.REACT_APP_API_SERVER + 'subscribedUser'
     let requestBody = {
         method: 'post',
         headers: {'Content-Type':'application/json'},
@@ -9,7 +10,7 @@ export const subscription = async(userName,userEmail) => {
             email:userEmail            
           })
       }
-    const response = await fetch(url,requestBody)
+    const response = await fetch(urls.USER_SUBSCRIPTION,requestBody)
     const res = await response.status
 
     if(res===200){

@@ -16,8 +16,8 @@ import { cleanFilterStorage } from "../../utils/utils";
 const styles = theme => ({
   root: {
     flexGrow: 1,
-    width: "98%",
-    margin: "0px"
+    width: "100%",
+    margin: "10px 0 0 0px"
   },
   paper: {
     padding: theme.spacing(0),
@@ -90,8 +90,8 @@ class Results extends Component {
                 </Button>
               </div>
               <Map w={"100%"} h={"60vh"} list={list} />
-              <Footer />
             </Paper>
+            <Footer />
           </Grid>
         </Grid>
       </div>

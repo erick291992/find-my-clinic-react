@@ -65,7 +65,6 @@ class ResultsDetails extends Component {
 
   render() {
     const { classes } = this.props;
-    console.log(">>>>", this.props.mylistfiltered);
     let clinics =
       this.props.mylistfiltered.length === 0
         ? this.props.myclinics
@@ -89,7 +88,7 @@ class ResultsDetails extends Component {
               title={clinic.name}
               subtitle=""
               hours={openingHours}
-              categories={clinic.searchCategories.toString()}
+              categories={clinic.searchCategories.join(" , ")}
               url={clinic.email}
               active={selected[0]._id === clinic._id ? true : false}
               style={{ margin: "0px", border: "1 solid #85C1E9" }}
@@ -110,7 +109,7 @@ class ResultsDetails extends Component {
               title={clinic.name}
               subtitle=""
               hours={openingHours}
-              categories={clinic.searchCategories.toString()}
+              categories={clinic.searchCategories.join(" , ")}
               url={clinic.email}
               active={false}
               style={{ margin: "0px" }}
@@ -124,8 +123,8 @@ class ResultsDetails extends Component {
       <div className={classes.root}>
         <div style={divStyle}>
           <Paper className={classes.paper}>{listOfClinics}</Paper>
-          <Footer />
         </div>
+        <Footer />
       </div>
     );
   }
@@ -149,6 +148,6 @@ export default connect(
 
 const divStyle = {
   overflowY: "scroll",
-  height: "70vh",
+  height: "65vh",
   margin: 0
 };

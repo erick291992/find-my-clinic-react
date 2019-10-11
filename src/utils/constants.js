@@ -14,3 +14,12 @@ export const MESSAGE_EMPTY_RESULTS = "We don't have any clinic searching with th
 
 //Links:
 export const LINK_RESULT_MOVIL = ""
+
+
+// LINKS FOR SERVICES
+export var urls = {
+ BASE: process.env.REACT_APP_API_SERVER,
+ CLINICS: `${process.env.REACT_APP_API_SERVER}clinics`,
+ SEARCH_CATEGORIES:`${process.env.REACT_APP_API_SERVER}searchCategory`,
+ USER_SUBSCRIPTION:`${process.env.REACT_APP_API_SERVER}subscribedUser`
+} 
