@@ -13,6 +13,7 @@ COPY ./default.conf /etc/nginx/conf.d/default.conf
 
 # Copy our optimized build into the web folder that we point to in default.conf
 COPY ./build/ /var/www/
+EXPOSE 80
 
 # # Convenicne just in case we want to add more configuration later
 # COPY entrypoint.sh /  
