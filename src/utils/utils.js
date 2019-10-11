@@ -58,6 +58,25 @@ export let reOrderList = (clinic,list) =>{
         return newList;
 }
 
+export let newOrderList = (id,list) => {
+    let indexNumber=-1
+    let selected = null
+    let num =null 
+    list.forEach(item=>{
+    indexNumber=indexNumber+1
+    if(item.id===id){
+        num = indexNumber
+        selected= item
+        return
+    }
+    })
+
+    delete list[num]
+    list.splice(num,1)
+    list.unshift(selected)
+    return list
+}
+
 export let findIconPath = (categoryName) =>{
     switch(categoryName){
         case "Housing": return "./icons/housing-icon.png"

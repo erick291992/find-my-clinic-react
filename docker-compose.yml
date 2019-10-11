@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 services:
   client:
     env_file: .env.local
@@ -7,7 +7,7 @@ services:
       dockerfile: local.dockerfile # name of docker file
     command: npm start
     volumes:
-      - '.:/usr/src/app' # . means current directory so it will mount current to /usr/src/app
-      - '/usr/src/app/node_modules' # this will prevent the local node_modules folder from being mounted to the container. This will mount the node_modules directory from container to the host machine using the buildtime directory.
+      - ".:/usr/src/app" # . means current directory so it will mount current to /usr/src/app
+      - "/usr/src/app/node_modules" # this will prevent the local node_modules folder from being mounted to the container. This will mount the node_modules directory from container to the host machine using the buildtime directory.
     ports:
       - "3000:3000"

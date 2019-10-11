@@ -57,6 +57,13 @@ class CardEntity extends Component {
             <Typography variant="body1" color="textSecondary">
               {this.props.hours}
             </Typography>
+            {/* {this.props.categories.map(item => {
+              return (
+                <Typography variant="overline" color="textSecondary">
+                  {item}
+                </Typography>
+              );
+            })} */}
             <Typography variant="overline" color="textSecondary">
               {this.props.categories}
             </Typography>

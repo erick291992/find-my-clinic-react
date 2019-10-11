@@ -11,6 +11,7 @@ export const getClinics = async()=>{
 export const getCategories = async() => {
     const url = process.env.REACT_APP_API_SERVER + 'searchCategory'
     const response = await fetch(url)
+    console.log("categories : ", response)
     const res = await response.json()
     return res
 }
