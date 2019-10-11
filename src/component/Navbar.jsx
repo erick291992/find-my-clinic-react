@@ -52,7 +52,7 @@ function Navbar(props) {
           paddingLeft: "40px"
         }}
       >
-        <label style={{ color: "#000000", color: "#000000" }}>
+        <label style={{ color: "#000000" }}>
           NYC’s legal aid providers. All in one place
         </label>
         <Filter />
@@ -76,12 +76,17 @@ function Navbar(props) {
   );
 
   let mymenu = window.innerWidth < 600 ? linksMovil : linksDesktop;
+  let heightAppBar = window.innerWidth < 600 ? "auto" : "120px";
   let filterMovil = window.innerWidth < 600 ? <Filter /> : "";
 
   return (
     <AppBar
       position="absolute"
-      style={{ padding: "10px 0", backgroundColor: "#FFFFFF" }}
+      style={{
+        paddingTop: "10px",
+        height: heightAppBar,
+        backgroundColor: "#FFFFFF"
+      }}
     >
       <Toolbar>
         <Link onClick={() => props.history.push("/")}>

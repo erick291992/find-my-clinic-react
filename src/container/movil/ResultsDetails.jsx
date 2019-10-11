@@ -6,7 +6,10 @@ import Paper from "@material-ui/core/Paper";
 import CardEntity from "../../component/CardEntity";
 import { connect } from "react-redux";
 import { addFiltered } from "../../store/clinic/action";
-import { selectFilteredClinics } from "../../store/clinic/reducer";
+import {
+  selectFilteredClinics,
+  selectActiveClinics
+} from "../../store/clinic/reducer";
 import { getFilteredClinics } from "../../service/clinicService";
 import {
   saveSelectedClinic,
@@ -47,7 +50,11 @@ class ResultsDetails extends Component {
 
   handleSelection = clinicId => {
     let listSelected = [];
-    this.props.mylistfiltered.forEach(clinic => {
+    let list =
+      this.props.mylistfiltered.length > 0
+        ? this.props.mylistfiltered
+        : this.props.myclinics;
+    list.forEach(clinic => {
       if (clinic._id === clinicId) {
         listSelected.push(clinic);
         saveSelectedClinic(listSelected);
@@ -58,7 +65,11 @@ class ResultsDetails extends Component {
 
   render() {
     const { classes } = this.props;
-    let clinics = this.props.mylistfiltered;
+    console.log(">>>>", this.props.mylistfiltered);
+    let clinics =
+      this.props.mylistfiltered.length === 0
+        ? this.props.myclinics
+        : this.props.mylistfiltered;
     console.log("Total Clinics: ", clinics);
 
     let selected = getSelectedClinic() ? getSelectedClinic() : null;
@@ -66,7 +77,7 @@ class ResultsDetails extends Component {
     let listOfClinics = "";
     let listForMap = [];
     if (selected != null) {
-      let listForMap = reOrderList(selected[0], this.props.mylistfiltered);
+      let listForMap = reOrderList(selected[0], clinics);
       listOfClinics = listForMap.map(clinic => {
         let openingHours = "";
         clinic.operatingHours.forEach(hours => {
@@ -126,7 +137,8 @@ ResultsDetails.propTypes = {
 
 const mapStateToProps = state => {
   return {
-    mylistfiltered: selectFilteredClinics(state)
+    mylistfiltered: selectFilteredClinics(state),
+    myclinics: selectActiveClinics(state)
   };
 };
 

@@ -154,9 +154,9 @@ function App() {
 export default App;
 
 const MainStyleDesktop ={
-  paddingTop:"52px"
+  paddingTop:"58px"
 }
 
 const MainStyleMovil ={
-  paddingTop:"102px"
+  paddingTop:"120px"
 }

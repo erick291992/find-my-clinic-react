@@ -24,7 +24,7 @@ const useStyles = makeStyles(theme => ({
       flexGrow: 1,
       width: "100vw",
       margin: "0px",
-      paddingTop: "30px"
+      paddingTop: "3px"
     }
   },
   paper: {
@@ -33,14 +33,14 @@ const useStyles = makeStyles(theme => ({
       textAlign: "left",
       margin: "0px",
       height: "70vh",
-      paddingTop: "40px"
+      paddingTop: "5px"
     },
     [theme.breakpoints.up("md")]: {
       padding: theme.spacing(3),
       textAlign: "left",
       margin: "0px",
       height: "70vh",
-      paddingTop: "40px"
+      paddingTop: "5px"
     }
   },
   contentDetail: {
@@ -72,7 +72,7 @@ function Details(props) {
   const rowMap = (
     <Grid item xs={12} md={6} lg={6}>
       <Paper>
-        <Map w={"100%"} h={"70vh"} list={clinic} />
+        <Map w={"100%"} h={"70vh"} z={16} list={clinic} />
       </Paper>
     </Grid>
   );
@@ -153,15 +153,17 @@ function Details(props) {
                           size="small"
                           variant="outlined"
                           disabled
-                          style={{ margin: "0 5px" }}
+                          style={{ margin: "0 5px", fontSize: "8px" }}
                         >
                           <img
                             src={findIconPath(category)}
                             alt="Legal4All"
                             height="auto"
-                            width="15px"
-                            height="15px"
+                            width="12px"
+                            height="12px"
+                            style={{ marginRight: "5px" }}
                           />
+                          {category}
                         </Button>
                       );
                     })}

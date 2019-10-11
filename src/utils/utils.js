@@ -12,11 +12,6 @@ export let removeCategory = (list, category) =>{
     });
 }
 
-//get path variable as string
-export let getVariablePathString = (isFirst, variableName,value) => {
-        return isFirst?"?"+variableName+"="+value:"&"+variableName+"="+value
-}
-
 // save filters(category)
 export let saveFilters = (filters) => {
     localStorage.setItem("filters",JSON.stringify(filters))
@@ -35,7 +30,10 @@ export let getZipcode = () => {
 }
 
 export let cleanFilterStorage = () => {
-    localStorage.clear()
+    //localStorage.clear()
+    localStorage.removeItem('zipcode');
+    localStorage.removeItem('filters');
+    localStorage.removeItem('selectedClinic');
 }
 
 //Save Selected Clinic from map
@@ -58,6 +56,25 @@ export let reOrderList = (clinic,list) =>{
         });
         console.log("Re order: ", newList.length);
         return newList;
+}
+
+export let newOrderList = (id,list) => {
+    let indexNumber=-1
+    let selected = null
+    let num =null 
+    list.forEach(item=>{
+    indexNumber=indexNumber+1
+    if(item.id===id){
+        num = indexNumber
+        selected= item
+        return
+    }
+    })
+
+    delete list[num]
+    list.splice(num,1)
+    list.unshift(selected)
+    return list
 }
 
 export let findIconPath = (categoryName) =>{

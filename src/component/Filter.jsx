@@ -1,8 +1,10 @@
 import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
+import PropTypes from "prop-types";
 import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
+import SearchIcon from "@material-ui/icons/Search";
 import MuiDialogTitle from "@material-ui/core/DialogTitle";
 import MuiDialogContent from "@material-ui/core/DialogContent";
 import MuiDialogActions from "@material-ui/core/DialogActions";
@@ -10,8 +12,10 @@ import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import Typography from "@material-ui/core/Typography";
 import { withRouter } from "react-router-dom";
-import { getFilteredClinics } from "../service/clinicService";
+import { getFilteredClinics, getClinics } from "../service/clinicService";
 import { addFiltered } from "../store/clinic/action";
+import { selectActiveFilter } from "../store/filter/reducer";
+import { addFilter, removeFilter } from "../store/filter/action";
 import { connect } from "react-redux";
 import {
   removeCategory,
@@ -32,6 +36,14 @@ const styles = theme => ({
     right: theme.spacing(1),
     top: theme.spacing(1),
     color: theme.palette.grey[500]
+  },
+  buttonSearch: { width: "100%" },
+  buttonUnFilter: { width: "100%", marginTop: "4px" },
+  buttonText: {
+    color: "#A6ACAF"
+  },
+  buttonTextActivate: {
+    color: "#F08080"
   }
 });
 
@@ -72,18 +84,6 @@ class Filter extends Component {
 
     this.state = {
       dropdownOpen: false,
-      isHousingActivate: false,
-      isConsumerActivate: false,
-      isTrustActivate: false,
-      isMedicalActivate: false,
-      isFamilyActivate: false,
-      isLegalActivate: false,
-      isBusinessActivate: false,
-      isRealActivate: false,
-      isCriminal: false,
-      isEmployment: false,
-      isImigration: false,
-      isGeneral: false,
       categories: [],
       categoriesSelected: [],
       zipcode: null,
@@ -108,55 +108,47 @@ class Filter extends Component {
   };
 
   handleClose = () => {
-    this.cleanStates();
     this.setState({ open: false });
   };
 
-  cleanStates = () => {
-    this.setState({
-      isHousingActivate: false,
-      isConsumerActivate: false,
-      isTrustActivate: false,
-      isMedicalActivate: false,
-      isFamilyActivate: false,
-      isLegalActivate: false,
-      isBusinessActivate: false,
-      isRealActivate: false,
-      isCriminal: false,
-      isEmployment: false,
-      isImigration: false,
-      isGeneral: false,
-      categoryList: [],
-      categoriesSelected: [],
-      open: false
-    });
-  };
-
   loadClinics = () => {
-    const res = getFilteredClinics();
-    res.then(clinicsList => {
-      this.props.addFiltered(clinicsList);
-    });
+    if (this.props.myfilters.length === 0 && this.state.zipcode === null) {
+      const res = getClinics();
+      res.then(clinicsList => {
+        this.props.addFiltered(clinicsList);
+      });
+    } else {
+      const res = getFilteredClinics();
+      res.then(clinicsList => {
+        this.props.addFiltered(clinicsList);
+      });
+    }
   };
 
   handleFilter = () => {
-    this.cleanStates();
-    saveFilters(this.state.categoriesSelected);
+    saveFilters(this.props.myfilters);
     saveZipcode(this.state.zipcode);
     this.loadClinics();
     this.props.history.push("/results");
     this.handleClose();
   };
 
+  handleNoFilter = () => {
+    this.props.removeFilter();
+    cleanFilterStorage();
+    this.setState({ categoriesSelected: [], zipcode: null });
+    this.loadClinics();
+    this.props.history.push("/results");
+  };
+
   handleZipcode = event => {
-    console.log("handle zipcode");
     let zip = Object.assign({}, this.state.zipcode);
     zip = event.target.value;
     this.setState({ zipcode: zip });
   };
 
   handleFilterSelection = selection => {
-    let categories = Object.assign([], this.state.categoriesSelected);
+    let categories = this.props.myfilters;
 
     if (categories.includes(selection) === true) {
       let newlist = removeCategory(categories, selection);
@@ -164,20 +156,44 @@ class Filter extends Component {
     } else {
       categories.push(selection);
     }
+    this.props.addFilter(categories);
     this.setState({ categoriesSelected: categories });
   };
 
   render() {
+    const { classes } = this.props;
     let bannerSelectedCategories = this.state.categoriesSelected;
     let isFullScreen = window.innerWidth < 600 ? true : false;
 
     return (
       <div>
         <center>
-          <Button variant="outlined" onClick={this.handleClickOpen}>
-            <label style={{ color: "#A6ACAF" }}>
+          <Button
+            variant="outlined"
+            className={classes.buttonSearch}
+            //color={this.state.categoriesSelected.length > 0 ? "secondary" : ""}
+            color={this.props.myfilters.length > 0 ? "secondary" : ""}
+            onClick={this.handleClickOpen}
+          >
+            <SearchIcon />
+            <label
+              className={
+                this.props.myfilters.length > 0
+                  ? classes.buttonTextActivate
+                  : classes.buttonText
+              }
+            >
               What can we help you with?
             </label>
+          </Button>
+          <br />
+          <Button
+            variant="contained"
+            color={"primary"}
+            className={classes.buttonUnFilter}
+            onClick={() => this.handleNoFilter()}
+          >
+            Unfilter
           </Button>
         </center>
 
@@ -188,7 +204,7 @@ class Filter extends Component {
           fullScreen={isFullScreen}
         >
           <DialogTitle id="customized-dialog-title" onClose={this.handleClose}>
-            Select All that apply
+            Select all that apply
           </DialogTitle>
           <DialogContent dividers>
             <div>
@@ -222,10 +238,17 @@ class Filter extends Component {
                   })}
                 </table>
                 <div style={{ textAlign: "left", marginLeft: "8px" }}>
+                  <Typography
+                    variant="subtitle2"
+                    gutterBottom
+                    style={{ marginTop: "5px" }}
+                  >
+                    What is your zip code?
+                  </Typography>
                   <TextField
+                    style={{ marginTop: "-5px" }}
                     id="filled-number"
                     placeholder="ZIPCODE"
-                    type="number"
                     value={this.state.zipcode}
                     margin="normal"
                     variant="outlined"
@@ -256,10 +279,20 @@ class Filter extends Component {
   }
 }
 
+Filter.propTypes = {
+  classes: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => {
+  return {
+    myfilters: selectActiveFilter(state)
+  };
+};
+
 export default connect(
-  null,
-  { addFiltered }
-)(withRouter(Filter));
+  mapStateToProps,
+  { addFiltered, addFilter, removeFilter }
+)(withRouter(withStyles(styles)(Filter)));
 
 const buttonStyle = {
   border: "1px solid #000000",

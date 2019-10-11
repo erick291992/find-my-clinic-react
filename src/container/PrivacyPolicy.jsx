@@ -11,9 +11,11 @@ const useStyles = makeStyles(theme => ({
 
 export default function PrivacyPolicy() {
   let classes = useStyles();
+  let width = window.innerWidth;
+  let heighContent = width < 600 ? "64vh" : "70vh";
   return (
     <div className={classes.root}>
-      <div style={{ padding: "50px 10px" }}>
+      <div style={{ padding: "50px 10px", height: heighContent }}>
         <Typography variant="h2">Privacy Policy Page</Typography>
       </div>
       <Footer />

@@ -6,6 +6,7 @@ import Grid from "@material-ui/core/Grid";
 import { connect } from "react-redux";
 import { selectFilteredClinics } from "../../store/clinic/reducer";
 import { addClinics, addFiltered } from "../../store/clinic/action";
+import { addFilter, removeFilter } from "../../store/filter/action";
 import { withStyles, Button } from "@material-ui/core";
 import PropTypes from "prop-types";
 import Footer from "../../component/Footer";
@@ -56,6 +57,7 @@ class Results extends Component {
 
   removeAllFilters = () => {
     cleanFilterStorage();
+    this.props.removeFilter();
     this.props.history.push("/");
   };
 
@@ -109,5 +111,5 @@ Results.propTypes = {
 
 export default connect(
   mapStateToProps,
-  { addFiltered }
+  { addFiltered, removeFilter }
 )(withRouter(withStyles(styles)(Results)));
