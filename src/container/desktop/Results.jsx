@@ -102,7 +102,7 @@ class Results extends Component {
               title={clinic.name}
               subtitle=""
               hours={openingHours}
-              categories={clinic.searchCategories.toString()}
+              categories={clinic.searchCategories.join(" , ")}
               url={clinic.email}
               active={selected[0]._id === clinic._id ? true : false}
               style={{ margin: "0px", border: "1 solid #85C1E9" }}
@@ -123,7 +123,7 @@ class Results extends Component {
               title={clinic.name}
               subtitle=""
               hours={openingHours}
-              categories={clinic.searchCategories.toString()}
+              categories={clinic.searchCategories.join(" , ")}
               url={clinic.email}
               active={false}
               style={{ margin: "0px" }}

@@ -209,7 +209,7 @@ class Filter extends Component {
           <DialogContent dividers>
             <div>
               <Typography variant="subtitle2" gutterBottom>
-                {bannerSelectedCategories.toString()}
+                {bannerSelectedCategories.join(" , ")}
               </Typography>
               <center>
                 <table>

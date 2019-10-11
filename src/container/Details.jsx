@@ -1,5 +1,6 @@
 import React from "react";
 import Map from "../component/Map";
+import { withRouter } from "react-router-dom";
 import Paper from "@material-ui/core/Paper";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
@@ -168,6 +169,16 @@ function Details(props) {
                       );
                     })}
                   </div>
+                  <br />
+                  <Button
+                    size="medium"
+                    color="primary"
+                    variant="contained"
+                    onClick={() => props.history.push("/results")}
+                    style={{ margin: "0 5px", fontSize: "8px" }}
+                  >
+                    Go Back
+                  </Button>
                 </div>
               );
             })}
@@ -180,4 +191,4 @@ function Details(props) {
   );
 }
 
-export default Details;
+export default withRouter(Details);

@@ -99,13 +99,11 @@ class Signup extends React.Component {
   };
 
   handleName = e => {
-    console.log("NAME: ", e.target.value);
     this.setState({ userName: e.target.value });
   };
 
   handleEmail = e => {
     this.setState({ userEmail: e.target.value });
-    console.log("EMAIL: ", e.target.value);
   };
 
   handleSubscription = () => {

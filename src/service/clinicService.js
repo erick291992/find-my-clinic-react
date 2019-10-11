@@ -1,5 +1,5 @@
 import { async } from "q";
-import {getVariablePathString,getFilters,getZipcode} from "../utils/utils"
+import {getFilters,getZipcode} from "../utils/utils"
 
 export const getClinics = async()=>{
     const url = process.env.REACT_APP_API_SERVER + 'clinics'
@@ -23,15 +23,15 @@ export const getFilteredClinics = async() => {
     let zipcode = getZipcode()
     if(filters.lenght > 0 && zipcode == null){
         categoryList.forEach(category => {
-            path += "&searchCategories="+category//getVariablePathString(isFirst,"searchCategories", category)
+            path += "&searchCategories="+category
         });
     }else if(filters.length == 0 && zipcode != null){
-            path+="&zipcode="+zipcode//getVariablePathString(isFirst,"zipcode",zipcode)
+            path+="&zipcode="+zipcode
     }else{
         filters.forEach(category => {
-            path += "&searchCategories="+category//getVariablePathString(isFirst,"searchCategories", category)
+            path += "&searchCategories="+category
         });
-        path+="&zipcode="+zipcode//getVariablePathString(isFirst,"zipcode",zipcode)
+        path+="&zipcode="+zipcode
     }
     
     console.log("Searching Path : " + path)
