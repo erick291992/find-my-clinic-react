@@ -25,6 +25,9 @@ const theme = createMuiTheme({
     typography: {
       fontFamily: "Verdana"
     },
+    subtitle2:{
+        fontFamily: "Verdana"
+    },
     link: {
         fontFamily: "Verdana"
       }
