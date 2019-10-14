@@ -1,6 +1,6 @@
 @font-face {
   font-family: "Verdana";
-  src: local("Verdana"), url(./fonts/Verdana.ttf) format("truetype");
+  src: local("Verdana"), url(./assets/fonts/Verdana.ttf) format("truetype");
 }
 
 body {

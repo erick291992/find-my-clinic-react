@@ -1,9 +1,9 @@
 import React from "react";
+import { ReactComponent as FacebokIcon } from "../../src/assets/icons/facebook.svg";
 import { makeStyles } from "@material-ui/core/styles";
 import { withRouter } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import Link from "@material-ui/core/Link";
-import { SvgIcon } from "@material-ui/core";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -28,11 +28,13 @@ const useStyles = makeStyles(theme => ({
   linkSocialMedia: {
     [theme.breakpoints.down("xs")]: {
       textAlign: "right",
-      paddingRight: "5px"
+      paddingRight: "5px",
+      marginLeft: "50px"
     },
     [theme.breakpoints.up("sm")]: {
       textAlign: "right",
-      paddingRight: "20px"
+      paddingRight: "20px",
+      display: "table"
     }
   },
   link: {
@@ -40,6 +42,22 @@ const useStyles = makeStyles(theme => ({
     cursor: "pointer",
     marginRight: "10px",
     textAlign: "left"
+  },
+  facebookLink: {
+    color: "#566573",
+    cursor: "pointer",
+    textDecoration: "none",
+    cursor: "pointer"
+  },
+  facebookLinkLabel: {
+    [theme.breakpoints.down("xs")]: {
+      display: "none"
+    },
+    [theme.breakpoints.up("md")]: {
+      display: "table-cell",
+      verticalAlign: "middle",
+      paddingLeft: "5px"
+    }
   }
 }));
 
@@ -67,7 +85,16 @@ function Footer(props) {
           Terms of Use
         </Link>
       </Grid>
-      <Grid sm={6} className={classes.linkSocialMedia}></Grid>
+      <Grid sm={6} className={classes.linkSocialMedia}>
+        <a
+          className={classes.facebookLink}
+          href="https://www.facebook.com/Legalforall-111044213603661/?view_public_for=111044213603661"
+          target="_blank"
+        >
+          <FacebokIcon width="25px" height="25px" />
+          <label className={classes.facebookLinkLabel}>Have a quiestion?</label>
+        </a>
+      </Grid>
     </Grid>
   );
 }
