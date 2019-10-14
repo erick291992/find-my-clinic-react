@@ -13,7 +13,7 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import '../src/fonts/Verdana.ttf'
+import '../src/assets/fonts/Verdana.ttf'
 import './index.css';
 import App from './App';
 import { Provider } from 'react-redux';
