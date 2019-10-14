@@ -10,7 +10,8 @@ import Signup from "../component/Signup";
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
-    marginBottom: "0px"
+    marginBottom: "0px",
+    fontFamily: "Verdana"
   },
   menuButton: {
     marginRight: theme.spacing(2)
@@ -33,9 +34,9 @@ function DenseAppBar(props) {
     <div className={classes.root}>
       <Grid container justify={"flex-end"} fluid={true}>
         <Button>
-          <Link style={linkStyle} onClick={() => props.history.push("/")}>
+          <label style={linkStyle} onClick={() => props.history.push("/")}>
             HOME
-          </Link>
+          </label>
         </Button>
         <Button>
           <Signup style={linkStyle} />

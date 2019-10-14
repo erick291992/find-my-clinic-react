@@ -1,6 +1,5 @@
 // import React from 'react';
 // import ReactDOM from 'react-dom';
-// import './index.css';
 // import App from './App';
 // import * as serviceWorker from './serviceWorker';
 
@@ -14,16 +13,29 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
+import '../src/fonts/Verdana.ttf'
 import './index.css';
 import App from './App';
-
 import { Provider } from 'react-redux';
 import store from './store';
+import { createMuiTheme } from "@material-ui/core/styles";
+import { ThemeProvider } from '@material-ui/styles'
+
+const theme = createMuiTheme({
+    typography: {
+      fontFamily: "Verdana"
+    },
+    link: {
+        fontFamily: "Verdana"
+      }
+  });
 
 const Application = () => (
-    <Provider store={store}>
-        <App />
-    </Provider>
+        <ThemeProvider theme={theme}>
+            <Provider store={store}>
+                <App />
+            </Provider>
+        </ThemeProvider>
 );
 
 
