@@ -1,6 +1,4 @@
 import React from 'react';
-// import { createBrowserHistory } from 'history';
-// import {Router, Switch, Route } from 'react-router-dom';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import createBrowserHistory from 'history/createBrowserHistory';
 import Navbar from './component/Navbar'
@@ -28,7 +26,8 @@ const drawerWidth = 240;
 const useStyles = makeStyles(theme => ({
   root: {
     display: "flex",
-    height:"100%"
+    height:"100%",
+    fontFamily:"Arial"
   },
   appBar: {
     transition: theme.transitions.create(["margin", "width"], {

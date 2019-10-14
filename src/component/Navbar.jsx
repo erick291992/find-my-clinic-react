@@ -85,7 +85,8 @@ function Navbar(props) {
       style={{
         paddingTop: "10px",
         height: heightAppBar,
-        backgroundColor: "#FFFFFF"
+        backgroundColor: "#FFFFFF",
+        fontFamily: "Verdana"
       }}
     >
       <Toolbar>
