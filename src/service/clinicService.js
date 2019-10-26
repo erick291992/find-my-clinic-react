@@ -1,4 +1,4 @@
-import { async } from "q";
+
 import {getFilters,getZipcode} from "../utils/utils"
 import {urls} from "../utils/constants"
 
@@ -19,11 +19,11 @@ export const getFilteredClinics = async() => {
     let categoryList = getFilters()
     let filters = categoryList?categoryList:[]
     let zipcode = getZipcode()
-    if(filters.lenght > 0 && zipcode == null){
+    if(filters.lenght > 0 && zipcode === null){
         categoryList.forEach(category => {
             path += `&searchCategories=${category}`
         });
-    }else if(filters.length == 0 && zipcode != null){
+    }else if(filters.length === 0 && zipcode !== null){
             path+=`&zipcode=${zipcode}`
     }else{
         filters.forEach(category => {

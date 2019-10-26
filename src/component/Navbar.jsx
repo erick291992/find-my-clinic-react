@@ -61,7 +61,7 @@ function Navbar(props) {
 
   let linksMovil = (
     <Grid container justify={"flex-end"}>
-      <Grid item fluid={true}>
+      <Grid item>
         <IconButton
           color={"inherit"}
           aria-label="open drawer"

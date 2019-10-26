@@ -17,7 +17,6 @@ class Home extends Component {
   }
 
   loadClinics = () => {
-    console.log("home");
     const res = getClinics();
     res.then(clinicsList => {
       this.setState({ clinics: clinicsList });

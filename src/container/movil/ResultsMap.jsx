@@ -8,8 +8,8 @@ import {
   selectFilteredClinics,
   selectActiveClinics
 } from "../../store/clinic/reducer";
-import { addClinics, addFiltered } from "../../store/clinic/action";
-import { addFilter, removeFilter } from "../../store/filter/action";
+import { addFiltered } from "../../store/clinic/action";
+import { removeFilter } from "../../store/filter/action";
 import { withStyles, Button } from "@material-ui/core";
 import PropTypes from "prop-types";
 import { getFilteredClinics } from "../../service/clinicService";

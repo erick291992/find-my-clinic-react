@@ -1,8 +1,6 @@
 import React from "react";
 import Map from "../component/Map";
 import { withRouter } from "react-router-dom";
-import Paper from "@material-ui/core/Paper";
-import Container from "@material-ui/core/Container";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import PlaceIcon from "@material-ui/icons/Place";
@@ -156,9 +154,10 @@ function Details(props) {
               </th>
               <th className={classes.cellname}>
                 {clinic[0].languages.length > 0
-                  ? clinic[0].languages.map(language => {
+                  ? clinic[0].languages.map((language, index) => {
                       return (
                         <Typography
+                          key={index}
                           variant={"subtitle2"}
                           display={"inline"}
                           style={{ marginLeft: "5px" }}
@@ -178,9 +177,10 @@ function Details(props) {
             </tr>
           </table>
           <div style={{ marginTop: "40px" }}>
-            {clinic[0].searchCategories.map(category => {
+            {clinic[0].searchCategories.map((category, index) => {
               return (
                 <Button
+                  key={index}
                   size={"small"}
                   variant={"outlined"}
                   color={"default"}
@@ -190,9 +190,8 @@ function Details(props) {
                   <img
                     src={findIconPath(category)}
                     alt="Legal4All"
-                    height="auto"
-                    width="12px"
                     height="12px"
+                    width="12px"
                     style={{ marginRight: "5px" }}
                   />
                   {category}

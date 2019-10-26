@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { makeStyles, useTheme } from "@material-ui/core/styles";
 import { withStyles } from "@material-ui/core";
 import PropTypes from "prop-types";
 import Card from "@material-ui/core/Card";
@@ -25,10 +24,6 @@ const styles = theme => ({
 });
 
 class CardEntity extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     const width = window.innerWidth;
     const { classes } = this.props;

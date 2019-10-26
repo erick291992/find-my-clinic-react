@@ -4,7 +4,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import Link from "@material-ui/core/Link";
-import Filter from "./Filter";
 import Signup from "../component/Signup";
 
 const useStyles = makeStyles(theme => ({
@@ -20,7 +19,6 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: "transparent",
     border: "none",
     "&:hover": {
-      //you want this to be the same as the backgroundColor above
       backgroundColor: "transparent",
       border: "none"
     }
@@ -32,7 +30,7 @@ function DenseAppBar(props) {
 
   return (
     <div className={classes.root}>
-      <Grid container justify={"flex-end"} fluid={true}>
+      <Grid container justify={"flex-end"}>
         <Button>
           <label style={linkStyle} onClick={() => props.history.push("/")}>
             HOME
