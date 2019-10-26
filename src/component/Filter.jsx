@@ -198,7 +198,7 @@ class Filter extends Component {
             className={classes.buttonUnFilter}
             onClick={() => this.handleNoFilter()}
           >
-            Unfilter
+            Remove Filters
           </Button>
         </center>
 
