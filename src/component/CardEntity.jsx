@@ -9,12 +9,10 @@ import Typography from "@material-ui/core/Typography";
 
 const styles = theme => ({
   cardMovil: {
-    //display: "flex",
     margin: "0",
-    width: "100vW"
+    width: "100%"
   },
   cardDesktop: {
-    //display: "flex",
     margin: "0",
     width: "100%"
   },
@@ -23,9 +21,6 @@ const styles = theme => ({
   },
   detailsNoActive: {
     backgroundColor: "#FFFFFF"
-  },
-  content: {
-    //flex: "1 0 auto"
   }
 });
 
@@ -76,15 +71,3 @@ CardEntity.propTypes = {
 };
 
 export default withStyles(styles)(CardEntity);
-
-const cardDescriptionStyleActive = {
-  padding: "3%",
-  backgroundColor: "#F4F6F6",
-  border: "1px solid #000000",
-  borderRadius: "5px"
-};
-
-const cardDescriptionStyleNoActive = {
-  padding: "3%",
-  backgroundColor: "#FFFFFF"
-};

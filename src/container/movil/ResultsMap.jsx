@@ -4,14 +4,17 @@ import Map from "../../component/Map";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import { connect } from "react-redux";
-import { selectFilteredClinics } from "../../store/clinic/reducer";
+import {
+  selectFilteredClinics,
+  selectActiveClinics
+} from "../../store/clinic/reducer";
 import { addClinics, addFiltered } from "../../store/clinic/action";
 import { addFilter, removeFilter } from "../../store/filter/action";
 import { withStyles, Button } from "@material-ui/core";
 import PropTypes from "prop-types";
-import Footer from "../../component/Footer";
 import { getFilteredClinics } from "../../service/clinicService";
 import { cleanFilterStorage } from "../../utils/utils";
+import TotalNumberClinic from "../../component/TotalNumberClinic";
 
 const styles = theme => ({
   root: {
@@ -21,7 +24,8 @@ const styles = theme => ({
   },
   rootMap: {
     width: "100%",
-    height: "calc(100vh - 300px)"
+    height: "calc(100vh - 328px)",
+    marginTop: "28px"
   },
   paper: {
     padding: theme.spacing(0),
@@ -72,7 +76,10 @@ class Results extends Component {
 
   render() {
     const { classes } = this.props;
-    let list = this.props.mylistfiltered;
+    let list =
+      this.props.mylistfiltered > 0
+        ? this.props.mylistfiltered
+        : this.props.myclinics;
     return (
       <div className={classes.root}>
         <Grid container spacing={0}>
@@ -94,6 +101,7 @@ class Results extends Component {
                   See list of search results
                 </Button>
               </div>
+              <TotalNumberClinic total={list.length} />
             </Paper>
             <div className={classes.rootMap}>
               <Map list={list} />
@@ -107,7 +115,8 @@ class Results extends Component {
 
 const mapStateToProps = state => {
   return {
-    mylistfiltered: selectFilteredClinics(state)
+    mylistfiltered: selectFilteredClinics(state),
+    myclinics: selectActiveClinics(state)
   };
 };
 

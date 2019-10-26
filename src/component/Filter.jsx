@@ -13,7 +13,7 @@ import CloseIcon from "@material-ui/icons/Close";
 import Typography from "@material-ui/core/Typography";
 import { withRouter } from "react-router-dom";
 import { getFilteredClinics, getClinics } from "../service/clinicService";
-import { addFiltered } from "../store/clinic/action";
+import { addFiltered, addClinics } from "../store/clinic/action"; //
 import { selectActiveFilter } from "../store/filter/reducer";
 import { addFilter, removeFilter } from "../store/filter/action";
 import { connect } from "react-redux";
@@ -116,11 +116,13 @@ class Filter extends Component {
       const res = getClinics();
       res.then(clinicsList => {
         this.props.addFiltered(clinicsList);
+        this.props.addClinics(clinicsList); //
       });
     } else {
       const res = getFilteredClinics();
       res.then(clinicsList => {
         this.props.addFiltered(clinicsList);
+        this.props.addClinics(clinicsList); //
       });
     }
   };
@@ -137,8 +139,12 @@ class Filter extends Component {
     this.props.removeFilter();
     cleanFilterStorage();
     this.setState({ categoriesSelected: [], zipcode: null });
-    this.loadClinics();
-    this.props.history.push("/results");
+    const res = getClinics();
+    res.then(clinicsList => {
+      this.props.addFiltered(clinicsList);
+      this.props.addClinics(clinicsList);
+      this.props.history.push("/results");
+    });
   };
 
   handleZipcode = event => {
@@ -289,7 +295,7 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { addFiltered, addFilter, removeFilter }
+  { addFiltered, addFilter, removeFilter, addClinics }
 )(withRouter(withStyles(styles)(Filter)));
 
 const buttonStyle = {

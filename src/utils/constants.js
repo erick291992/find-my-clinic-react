@@ -20,6 +20,7 @@ export const LINK_RESULT_MOVIL = ""
 export var urls = {
  BASE: process.env.REACT_APP_API_SERVER,
  CLINICS: `${process.env.REACT_APP_API_SERVER}clinics`,
+ CLINICS_FILTERED: `${process.env.REACT_APP_API_SERVER}find/clinics`,
  SEARCH_CATEGORIES:`${process.env.REACT_APP_API_SERVER}searchCategory`,
  USER_SUBSCRIPTION:`${process.env.REACT_APP_API_SERVER}subscribedUser`
 } 

@@ -16,19 +16,29 @@ import {
   getSelectedClinic,
   reOrderList
 } from "../../utils/utils";
-import Footer from "../../component/Footer";
+import TotalNumberClinic from "../../component/TotalNumberClinic";
 
 const styles = theme => ({
   root: {
     width: "100%",
     height: "calc(100vh - 250px)",
     zIndex: "-1",
-    paddingTop: "10px"
+    paddingTop: "25px"
   },
   paper: {
     width: "100%",
     textAlign: "left",
     margin: "0px"
+  },
+  rootBox: {
+    [theme.breakpoints.down("sm")]: {
+      overflowY: "scroll",
+      height: `calc(100vh - 250px)`
+    },
+    [theme.breakpoints.up("md")]: {
+      overflowY: "scroll",
+      height: `calc(100vh - 170px)`
+    }
   }
 });
 
@@ -67,10 +77,9 @@ class ResultsDetails extends Component {
   render() {
     const { classes } = this.props;
     let clinics =
-      this.props.mylistfiltered.length === 0
-        ? this.props.myclinics
-        : this.props.mylistfiltered;
-    console.log("Total Clinics: ", clinics);
+      this.props.mylistfiltered.length > 0
+        ? this.props.mylistfiltered
+        : this.props.myclinics;
 
     let selected = getSelectedClinic() ? getSelectedClinic() : null;
 
@@ -122,7 +131,9 @@ class ResultsDetails extends Component {
 
     return (
       <div className={classes.root}>
-        <div style={divStyle}>
+        <div className={classes.rootBox}>
+          <TotalNumberClinic total={listOfClinics.length} />
+          <br />
           <Paper className={classes.paper}>{listOfClinics}</Paper>
         </div>
       </div>
@@ -145,10 +156,3 @@ export default connect(
   mapStateToProps,
   { addFiltered }
 )(withRouter(withStyles(styles)(ResultsDetails)));
-
-const divStyle = {
-  overflowY: "scroll",
-  height: `calc(100vh - ${window.innerWidth < 600 ? "250px" : "170px"})`,
-  //height: "65vh",
-  margin: 0
-};

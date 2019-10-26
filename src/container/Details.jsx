@@ -11,7 +11,6 @@ import AlternateEmailIcon from "@material-ui/icons/AlternateEmail";
 import LanguageIcon from "@material-ui/icons/Language";
 import GTranslateIcon from "@material-ui/icons/GTranslate";
 import { makeStyles } from "@material-ui/core/styles";
-import Footer from "../component/Footer";
 import { getSelectedClinic, findIconPath } from "../utils/utils";
 import { Typography } from "@material-ui/core";
 
@@ -82,14 +81,21 @@ function Details(props) {
   let classes = useStyles();
   let clinic = getSelectedClinic();
   let width = window.innerWidth;
-
+  let path,
+    showMap = "";
   const rowMap = (
     <Grid item xs={12} md={6} lg={6} className={classes.root}>
       <Map z={16} list={clinic} />
     </Grid>
   );
 
-  let showMap = width > 600 ? rowMap : "";
+  if (width < 600) {
+    path = "/clinics";
+    showMap = "";
+  } else {
+    path = "/results";
+    showMap = rowMap;
+  }
 
   return (
     <Grid container spacing={0} className={classes.root}>
@@ -199,7 +205,7 @@ function Details(props) {
             size={"medium"}
             color={"primary"}
             variant={"contained"}
-            onClick={() => props.history.push("/results")}
+            onClick={() => props.history.push(path)}
             style={{ margin: "0 5px", fontSize: "8px" }}
           >
             Go Back
