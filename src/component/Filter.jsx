@@ -129,7 +129,7 @@ class Filter extends Component {
   handleNoFilter = () => {
     this.props.removeFilter();
     cleanFilterStorage();
-    this.setState({ categoriesSelected: [], zipcode: null });
+    this.setState({ categoriesSelected: [], zipcode: "" });
     const res = getClinics();
     res.then(clinicsList => {
       this.props.addFiltered(clinicsList);
@@ -208,7 +208,6 @@ class Filter extends Component {
                 {bannerSelectedCategories.join(" , ")}
               </Typography>
               <center>
-                {/* <table> */}
                 {this.state.categories.map(cate => {
                   return (
                     <Button
@@ -232,7 +231,7 @@ class Filter extends Component {
                     </Button>
                   );
                 })}
-                {/* </table> */}
+
                 <div style={{ textAlign: "left", marginLeft: "8px" }}>
                   <Typography
                     variant={"subtitle2"}

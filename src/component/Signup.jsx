@@ -12,6 +12,7 @@ import Link from "@material-ui/core/Link";
 import TextField from "@material-ui/core/TextField";
 import { subscription } from "../service/subscriptionService";
 import SubscriptionPopup from "../component/SubscriptionPopup";
+import { classes } from "istanbul-lib-coverage";
 
 const styles = theme => ({
   root: {
@@ -35,6 +36,9 @@ const styles = theme => ({
     right: theme.spacing(1),
     top: theme.spacing(1),
     color: theme.palette.grey[500]
+  },
+  title: {
+    fontSize: "18px"
   }
 });
 
@@ -119,7 +123,7 @@ class Signup extends React.Component {
           open={this.state.open}
         >
           <DialogTitle id="customized-dialog-title" onClose={this.handleClose}>
-            <Typography gutterBottom variant={"h5"}>
+            <Typography className={classes.title}>
               Want to receive updates
               <br /> about our site?
             </Typography>

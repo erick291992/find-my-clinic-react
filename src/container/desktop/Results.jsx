@@ -108,6 +108,7 @@ class Results extends Component {
             key={clinic._id}
           >
             <CardEntity
+              key={clinic._id}
               title={clinic.name}
               subtitle=""
               hours={openingHours}
@@ -132,6 +133,7 @@ class Results extends Component {
             key={clinic._id}
           >
             <CardEntity
+              key={clinic._id}
               title={clinic.name}
               subtitle=""
               hours={openingHours}
@@ -146,7 +148,7 @@ class Results extends Component {
     }
 
     return (
-      <Grid container spacing={0} div>
+      <Grid container spacing={0}>
         <Grid item xs={12} md={6} lg={6} className={classes.root}>
           <Paper className={classes.paper}>
             {listOfClinics.length > 0 ? listOfClinics : MESSAGE_EMPTY_RESULTS}
@@ -176,9 +178,3 @@ export default connect(
   mapStateToProps,
   { addFiltered }
 )(withRouter(withStyles(styles)(Results)));
-
-// const divStyle = {
-//   overflowY: "scroll",
-//   height: `calc(100vh - ${window.innerWidth < 600 ? "250px" : "170px"})`,
-//   margin: 0
-// };

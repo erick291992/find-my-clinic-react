@@ -5,15 +5,21 @@ import Map from "../component/Map";
 import { getClinics } from "../service/clinicService";
 
 class Home extends Component {
+  mounted = false;
   constructor(props) {
     super(props);
     this.state = {
       clinics: []
     };
   }
-
+  componentWillUnmount() {
+    this.mounted = false;
+  }
   componentDidMount() {
-    this.loadClinics();
+    this.mounted = true;
+    if (this.mounted) {
+      this.loadClinics();
+    }
   }
 
   loadClinics = () => {
