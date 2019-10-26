@@ -8,7 +8,7 @@ export let changeTo = (path) => {
 
 export let removeCategory = (list, category) =>{
     return list.filter(function(ele){
-        return ele != category;
+        return ele !== category;
     });
 }
 
@@ -50,11 +50,10 @@ export let reOrderList = (clinic,list) =>{
         let newList = [];
         newList.push(clinic);
         list.forEach(lis => {
-          if (clinic._id != lis._id) {
+          if (clinic._id !== lis._id) {
             newList.push(lis);
           }
         });
-        console.log("Re order: ", newList.length);
         return newList;
 }
 
@@ -78,30 +77,34 @@ export let newOrderList = (id,list) => {
 }
 
 export let findIconPath = (categoryName) =>{
+    let pathImage = ""
     switch(categoryName){
-        case "Housing": return "./icons/housing-icon.png"
+        case "Housing": pathImage = "./icons/housing-icon.png"
             break;
-        case "Consumer": return "./icons/consumer-icon.png"
+        case "Consumer": pathImage = "./icons/consumer-icon.png"
             break;
-         case "Family": return "./icons/family-icon.png"
+         case "Family": pathImage = "./icons/family-icon.png"
             break;
-        case "Criminal": return "./icons/criminal-icon.png"
+        case "Criminal": pathImage = "./icons/criminal-icon.png"
             break;
-        case "Business": return "./icons/business-icon.png"
+        case "Business": pathImage = "./icons/business-icon.png"
             break;
-        case "Real Estate": return "./icons/realstate-icon.png"
+        case "Real Estate": pathImage = "./icons/realstate-icon.png"
             break;
-        case "General": return "./icons/general-icon.png"
+        case "General": pathImage = "./icons/general-icon.png"
             break;
-        case "Trusts & Estates": return "./icons/trustandstates-icon.png"
+        case "Trusts & Estates": pathImage = "./icons/trustandstates-icon.png"
             break;
-        case "Medical": return "./icons/medical-icon.png"
+        case "Medical": pathImage = "./icons/medical-icon.png"
             break;
-        case "Legal Procedure": return "./icons/legalprocedure-icon.png"
+        case "Legal Procedure": pathImage = "./icons/legalprocedure-icon.png"
             break;
-        case "Employment": return "./icons/employment-icon.png"
+        case "Employment": pathImage = "./icons/employment-icon.png"
             break;
-        case "Immigration": return "./icons/immigration-icon.png"
+        case "Immigration": pathImage = "./icons/immigration-icon.png"
             break;
+        default:
+            console.log("No path...")
     }
+    return pathImage;
 }

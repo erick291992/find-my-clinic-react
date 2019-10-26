@@ -11,7 +11,7 @@ export default (state = initialState, action) => {
     }
     
     if (action.type === 'REMOVE_FILTER') {
-        console.log("2d remove ", action.payload)
+
         return {
             ...state, //Lo que devuelve un reducer es lo que se quedará en el state, por tanto, debe devolver todo lo que había antes (además de la información que cambia)
             selectedFilter: action.payload

@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
-import Paper from "@material-ui/core/Paper";
 import CardEntity from "../component/CardEntity";
 import { connect } from "react-redux";
 import { selectActiveClinics } from "../store/clinic/reducer";
@@ -13,9 +12,6 @@ const styles = theme => ({
     flexGrow: 1,
     width: "98%",
     margin: "0px"
-    // overflowY: "scroll",
-    // height: "70vh",
-    // margin: 0
   },
   paper: {
     padding: theme.spacing(0),

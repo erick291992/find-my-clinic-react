@@ -45,7 +45,6 @@ class BaseMap extends Component {
     }
 
     let width = window.innerWidth;
-    //let path = width < 600 ? "/clinics" : "/results";
     let path = "";
     let zoomValue = 0;
     if (width < 600) {
@@ -55,7 +54,6 @@ class BaseMap extends Component {
       path = "/results";
       zoomValue = 12;
     }
-    console.log("Epicenter for Map : ", actualEpiCenter);
 
     return (
       <GoogleMap
@@ -81,17 +79,6 @@ class BaseMap extends Component {
           >
             <div>
               <h5>{this.state.selectedClinic.name}</h5>
-              <p>
-                {/* <lable>Address: </lable>
-                {this.state.selectedClinic.address}
-                <br />
-                <lable>Openning: </lable>
-                {this.state.selectedClinic.operatingHours}
-                <br />
-                <lable>Phone: </lable>
-                {this.state.selectedClinic.phone}
-                <br /> */}
-              </p>
             </div>
           </InfoWindow>
         )}

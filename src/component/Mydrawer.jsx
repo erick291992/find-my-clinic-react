@@ -1,11 +1,8 @@
 import React, { Component } from "react";
-import { createBrowserHistory } from "history";
-import { Router, Switch, Route } from "react-router-dom";
 import { withRouter } from "react-router-dom";
 import Signup from "./Signup";
 import { useTheme } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
-import Link from "@material-ui/core/Link";
 import List from "@material-ui/core/List";
 import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
@@ -15,10 +12,6 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 
 class Mydrawer extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     let theme = { useTheme };
     let handlerClose = this.props.handleDrawerClose;

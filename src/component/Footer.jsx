@@ -46,8 +46,7 @@ const useStyles = makeStyles(theme => ({
   facebookLink: {
     color: "#566573",
     cursor: "pointer",
-    textDecoration: "none",
-    cursor: "pointer"
+    textDecoration: "none"
   },
   facebookLinkLabel: {
     [theme.breakpoints.down("xs")]: {
@@ -64,8 +63,8 @@ const useStyles = makeStyles(theme => ({
 function Footer(props) {
   let classes = useStyles();
   return (
-    <Grid fluid={false} container className={classes.root}>
-      <Grid sm={6} className={classes.linkBox}>
+    <Grid container className={classes.root}>
+      <Grid item sm={6} className={classes.linkBox}>
         <Link
           className={classes.link}
           underline={"none"}
@@ -85,11 +84,11 @@ function Footer(props) {
           Terms of Use
         </Link>
       </Grid>
-      <Grid sm={6} className={classes.linkSocialMedia}>
+      <Grid item sm={6} className={classes.linkSocialMedia}>
         <a
           className={classes.facebookLink}
           href="https://www.facebook.com/Legalforall-111044213603661/?view_public_for=111044213603661"
-          target="_blank"
+          rel="_blank"
         >
           <FacebokIcon width="25px" height="25px" />
           <label className={classes.facebookLinkLabel}>Have a quiestion?</label>

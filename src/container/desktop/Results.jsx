@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import Map from "../../component/Map";
 import Paper from "@material-ui/core/Paper";
-import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import CardEntity from "../../component/CardEntity";
 import { connect } from "react-redux";
@@ -18,7 +17,7 @@ import {
   getSelectedClinic,
   reOrderList
 } from "../../utils/utils";
-import { getClinics, getFilteredClinics } from "../../service/clinicService";
+import { getFilteredClinics } from "../../service/clinicService";
 import TotalNumberClinic from "../../component/TotalNumberClinic";
 import { MESSAGE_EMPTY_RESULTS } from "../../utils/constants";
 
@@ -30,13 +29,24 @@ const styles = theme => ({
     },
     [theme.breakpoints.up("md")]: {
       width: "100%",
-      height: "calc(100vh - 170px)"
+      height: "calc(100vh - 200px)"
     }
   },
   paper: {
-    padding: theme.spacing(0),
-    textAlign: "center",
-    margin: "0px"
+    [theme.breakpoints.down("xs")]: {
+      padding: theme.spacing(0),
+      textAlign: "center",
+      margin: "0px",
+      overflowY: "scroll",
+      height: "calc(100vh - 250px)"
+    },
+    [theme.breakpoints.up("md")]: {
+      padding: theme.spacing(0),
+      textAlign: "center",
+      margin: "0px",
+      overflowY: "scroll",
+      height: "calc(100vh - 170px)"
+    }
   }
 });
 
@@ -77,7 +87,6 @@ class Results extends Component {
 
   render() {
     const { classes } = this.props;
-    let showList = window.innerWidth < 600 ? showListStyle : hideListStyle;
     let clinics =
       this.props.mylistfiltered.length === 0
         ? this.props.myclinics
@@ -94,8 +103,12 @@ class Results extends Component {
           openingHours += hours + " ";
         });
         return (
-          <div onClick={() => this.handleSelection(clinic._id)}>
+          <div
+            onClick={() => this.handleSelection(clinic._id)}
+            key={clinic._id}
+          >
             <CardEntity
+              key={clinic._id}
               title={clinic.name}
               subtitle=""
               hours={openingHours}
@@ -115,8 +128,12 @@ class Results extends Component {
           openingHours += hours + " ";
         });
         return (
-          <div onClick={() => this.handleSelection(clinic._id)}>
+          <div
+            onClick={() => this.handleSelection(clinic._id)}
+            key={clinic._id}
+          >
             <CardEntity
+              key={clinic._id}
               title={clinic.name}
               subtitle=""
               hours={openingHours}
@@ -131,13 +148,11 @@ class Results extends Component {
     }
 
     return (
-      <Grid container spacing={0} div>
+      <Grid container spacing={0}>
         <Grid item xs={12} md={6} lg={6} className={classes.root}>
-          <div style={divStyle}>
-            <Paper className={classes.paper}>
-              {listOfClinics.length > 0 ? listOfClinics : MESSAGE_EMPTY_RESULTS}
-            </Paper>
-          </div>
+          <Paper className={classes.paper}>
+            {listOfClinics.length > 0 ? listOfClinics : MESSAGE_EMPTY_RESULTS}
+          </Paper>
         </Grid>
         <Grid item xs={12} md={6} lg={6} className={classes.root}>
           <TotalNumberClinic total={listOfClinics.length} />
@@ -163,15 +178,3 @@ export default connect(
   mapStateToProps,
   { addFiltered }
 )(withRouter(withStyles(styles)(Results)));
-
-const hideListStyle = {
-  display: "block"
-};
-const showListStyle = {
-  display: "none"
-};
-const divStyle = {
-  overflowY: "scroll",
-  height: `calc(100vh - ${window.innerWidth < 600 ? "250px" : "170px"})`,
-  margin: 0
-};

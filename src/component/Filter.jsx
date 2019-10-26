@@ -7,13 +7,12 @@ import Dialog from "@material-ui/core/Dialog";
 import SearchIcon from "@material-ui/icons/Search";
 import MuiDialogTitle from "@material-ui/core/DialogTitle";
 import MuiDialogContent from "@material-ui/core/DialogContent";
-import MuiDialogActions from "@material-ui/core/DialogActions";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import Typography from "@material-ui/core/Typography";
 import { withRouter } from "react-router-dom";
 import { getFilteredClinics, getClinics } from "../service/clinicService";
-import { addFiltered, addClinics } from "../store/clinic/action"; //
+import { addFiltered, addClinics } from "../store/clinic/action";
 import { selectActiveFilter } from "../store/filter/reducer";
 import { addFilter, removeFilter } from "../store/filter/action";
 import { connect } from "react-redux";
@@ -24,7 +23,6 @@ import {
   cleanFilterStorage
 } from "../utils/utils";
 import { getCategories } from "../service/clinicService";
-import { selectFilteredClinics } from "../store/clinic/reducer";
 
 const styles = theme => ({
   root: {
@@ -71,13 +69,6 @@ const DialogContent = withStyles(theme => ({
   }
 }))(MuiDialogContent);
 
-const DialogActions = withStyles(theme => ({
-  root: {
-    margin: 0,
-    padding: theme.spacing(1)
-  }
-}))(MuiDialogActions);
-
 class Filter extends Component {
   constructor(props) {
     super(props);
@@ -86,7 +77,7 @@ class Filter extends Component {
       dropdownOpen: false,
       categories: [],
       categoriesSelected: [],
-      zipcode: null,
+      zipcode: "",
       open: false,
 
       categoryList: [],
@@ -116,13 +107,13 @@ class Filter extends Component {
       const res = getClinics();
       res.then(clinicsList => {
         this.props.addFiltered(clinicsList);
-        this.props.addClinics(clinicsList); //
+        this.props.addClinics(clinicsList);
       });
     } else {
       const res = getFilteredClinics();
       res.then(clinicsList => {
         this.props.addFiltered(clinicsList);
-        this.props.addClinics(clinicsList); //
+        this.props.addClinics(clinicsList);
       });
     }
   };
@@ -138,7 +129,7 @@ class Filter extends Component {
   handleNoFilter = () => {
     this.props.removeFilter();
     cleanFilterStorage();
-    this.setState({ categoriesSelected: [], zipcode: null });
+    this.setState({ categoriesSelected: [], zipcode: "" });
     const res = getClinics();
     res.then(clinicsList => {
       this.props.addFiltered(clinicsList);
@@ -175,7 +166,7 @@ class Filter extends Component {
       <div>
         <center>
           <Button
-            variant={"outlined"}
+            variant="outlined"
             className={classes.buttonSearch}
             color={this.props.myfilters.length > 0 ? "secondary" : "default"}
             onClick={this.handleClickOpen}
@@ -193,8 +184,8 @@ class Filter extends Component {
           </Button>
           <br />
           <Button
-            variant={"contained"}
-            color={"primary"}
+            variant="contained"
+            color="primary"
             className={classes.buttonUnFilter}
             onClick={() => this.handleNoFilter()}
           >
@@ -217,30 +208,30 @@ class Filter extends Component {
                 {bannerSelectedCategories.join(" , ")}
               </Typography>
               <center>
-                <table>
-                  {this.state.categories.map(cate => {
-                    return (
-                      <Button
-                        key={cate._id}
-                        variant={"contained"}
-                        style={buttonStyle}
-                        onClick={() => this.handleFilterSelection(cate.name)}
-                      >
-                        {cate.name}
-                        {cate.image ? (
-                          <img
-                            src={cate.image}
-                            width="18px"
-                            height="18px"
-                            style={{ marginLeft: "10px" }}
-                          />
-                        ) : (
-                          ""
-                        )}
-                      </Button>
-                    );
-                  })}
-                </table>
+                {this.state.categories.map(cate => {
+                  return (
+                    <Button
+                      key={cate._id}
+                      variant="contained"
+                      style={buttonStyle}
+                      onClick={() => this.handleFilterSelection(cate.name)}
+                    >
+                      {cate.name}
+                      {cate.image ? (
+                        <img
+                          alt="my category"
+                          src={cate.image}
+                          width="18px"
+                          height="18px"
+                          style={{ marginLeft: "10px" }}
+                        />
+                      ) : (
+                        ""
+                      )}
+                    </Button>
+                  );
+                })}
+
                 <div style={{ textAlign: "left", marginLeft: "8px" }}>
                   <Typography
                     variant={"subtitle2"}
@@ -269,7 +260,7 @@ class Filter extends Component {
                     marginTop: "10px",
                     border: "1px solid #000000"
                   }}
-                  outline
+                  variant="outlined"
                   onClick={this.handleFilter}
                 >
                   Search

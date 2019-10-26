@@ -87,13 +87,13 @@ class ResultsDetails extends Component {
     let listForMap = [];
     if (selected != null) {
       let listForMap = reOrderList(selected[0], clinics);
-      listOfClinics = listForMap.map(clinic => {
+      listOfClinics = listForMap.map((clinic, index) => {
         let openingHours = "";
         clinic.operatingHours.forEach(hours => {
           openingHours += hours + " ";
         });
         return (
-          <div onClick={() => this.handleSelection(clinic._id)}>
+          <div onClick={() => this.handleSelection(clinic._id)} key={index}>
             <CardEntity
               title={clinic.name}
               subtitle=""
@@ -108,13 +108,13 @@ class ResultsDetails extends Component {
       });
     } else {
       listForMap = clinics;
-      listOfClinics = listForMap.map(clinic => {
+      listOfClinics = listForMap.map((clinic, index) => {
         let openingHours = "";
         clinic.operatingHours.forEach(hours => {
           openingHours += hours + " ";
         });
         return (
-          <div onClick={() => this.handleSelection(clinic._id)}>
+          <div onClick={() => this.handleSelection(clinic._id)} key={index}>
             <CardEntity
               title={clinic.name}
               subtitle=""
