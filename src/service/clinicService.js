@@ -15,7 +15,7 @@ export const getCategories = async() => {
 }
 
 export const getFilteredClinics = async() => {
-    let path =`${urls.CLINICS}?`
+    let path =`${urls.CLINICS_FILTERED}?`
     let categoryList = getFilters()
     let filters = categoryList?categoryList:[]
     let zipcode = getZipcode()
@@ -33,6 +33,7 @@ export const getFilteredClinics = async() => {
     }
     
     const url = path
+    console.log("PATH : " + url)
     const response = await fetch(url)
     const res = await response.json()
     return res

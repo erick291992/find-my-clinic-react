@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import Map from "../../component/Map";
 import Paper from "@material-ui/core/Paper";
+import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import CardEntity from "../../component/CardEntity";
 import { connect } from "react-redux";
@@ -18,6 +19,7 @@ import {
   reOrderList
 } from "../../utils/utils";
 import { getClinics, getFilteredClinics } from "../../service/clinicService";
+import TotalNumberClinic from "../../component/TotalNumberClinic";
 import { MESSAGE_EMPTY_RESULTS } from "../../utils/constants";
 
 const styles = theme => ({
@@ -37,13 +39,6 @@ const styles = theme => ({
     margin: "0px"
   }
 });
-
-const mapStateToProps = state => {
-  return {
-    mylistfiltered: selectFilteredClinics(state),
-    myclinics: selectActiveClinics(state)
-  };
-};
 
 class Results extends Component {
   constructor(props) {
@@ -145,6 +140,7 @@ class Results extends Component {
           </div>
         </Grid>
         <Grid item xs={12} md={6} lg={6} className={classes.root}>
+          <TotalNumberClinic total={listOfClinics.length} />
           <Map list={clinics} />
         </Grid>
       </Grid>
@@ -154,6 +150,13 @@ class Results extends Component {
 
 Results.propTypes = {
   classes: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => {
+  return {
+    mylistfiltered: selectFilteredClinics(state),
+    myclinics: selectActiveClinics(state)
+  };
 };
 
 export default connect(
