@@ -41,7 +41,7 @@ function DenseAppBar(props) {
         </Button>
         <Button>
           <Link style={linkStyle} onClick={() => props.history.push("/lawyer")}>
-            NEED A LAWYER
+            Need a Lawyer?
           </Link>
         </Button>
         <Button>

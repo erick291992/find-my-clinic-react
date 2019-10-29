@@ -54,7 +54,7 @@ class Mydrawer extends Component {
           <Divider />
           <ListItem button>
             <ListItemText
-              primary={"Needs a Lawyer?"}
+              primary={"Need a Lawyer?"}
               onClick={() => this.props.history.push("/lawyer")}
             />
           </ListItem>
