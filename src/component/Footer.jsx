@@ -91,7 +91,7 @@ function Footer(props) {
           rel="_blank"
         >
           <FacebokIcon width="25px" height="25px" />
-          <label className={classes.facebookLinkLabel}>Have a quiestion?</label>
+          <label className={classes.facebookLinkLabel}>Have a question?</label>
         </a>
       </Grid>
     </Grid>
