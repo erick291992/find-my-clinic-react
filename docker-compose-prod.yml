@@ -1,7 +1,7 @@
-version: '3'
+version: "3"
 services:
   client:
-    env_file: .env.prod
+    env_file: .env.production
     build:
       context: . #path to where to find docker file
       dockerfile: prod.dockerfile # name of docker file

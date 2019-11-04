@@ -1,7 +1,7 @@
 version: "3"
 services:
   client:
-    env_file: .env.local
+    env_file: .env.development
     build:
       context: . #path to where to find docker file
       dockerfile: local.dockerfile # name of docker file
