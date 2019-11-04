@@ -8,6 +8,7 @@ import Link from "@material-ui/core/Link";
 const useStyles = makeStyles(theme => ({
   root: {
     position: "absolute",
+    backgroundColor: "#FFFFFF",
     bottom: "0",
     marginLeft: "0",
     marginRight: "0",

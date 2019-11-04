@@ -48,11 +48,11 @@ export default connect(
 
 const hightMovil = {
   width: "100%",
-  height: "calc(100vh - 250px)",
-  zIndex: "-1"
+  height: "calc(100vh - 250px)"
+  //zIndex: "-1"
 };
 const hightDesktop = {
   width: "100%",
-  height: "calc(100vh - 170px)",
-  zIndex: "-1"
+  height: "calc(100vh - 170px)"
+  //zIndex: "-1"
 };
