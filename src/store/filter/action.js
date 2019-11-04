@@ -1,9 +1,16 @@
-const addFilter = (selectedFilter) => {
-    console.log(selectedFilter)
+export const addFilter = (selectedFilter) => {
+
     return {
             type:   'ADD_FILTER',
             payload: selectedFilter
     }
 }
 
-export default addFilter
+export const removeFilter = () => {
+
+    let empty = []
+    return {
+            type:   'REMOVE_FILTER',
+            payload: empty
+    }
+}

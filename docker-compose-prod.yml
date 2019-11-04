@@ -1,0 +1,9 @@
+version: '3'
+services:
+  client:
+    env_file: .env.prod
+    build:
+      context: . #path to where to find docker file
+      dockerfile: prod.dockerfile # name of docker file
+    ports:
+      - "3000:80"
